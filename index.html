@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Rescate — Prototipo Web Interactivo &amp; Experiencia 3D (Los Ángeles, 1981–2026)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@500;600;700&family=Manrope:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="prototype.css" />
+</head>
+<body>
+
+  <!-- ========================================================================
+       FILTRO SVG OCULTO PARA NAVEGACIÓN LÍQUIDA "GOOEY METABALL" (Video 3 Riff)
+       ======================================================================== -->
+  <svg width="0" height="0" style="position:absolute; pointer-events:none;" aria-hidden="true">
+    <defs>
+      <filter id="gooey-metaball">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="7.5" result="blur" />
+        <feColorMatrix
+          in="blur"
+          mode="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -9"
+          result="goo"
+        />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ========================================================================
+       0. PRELOADER CINEMATOGRÁFICO (Video 1 — NEXORA)
+       ======================================================================== -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__emblem">
+      <div class="preloader__diamond"></div>
+    </div>
+    <div class="preloader__meta">
+      <div class="preloader__title">EL RESCATE • LOS ÁNGELES</div>
+      <div class="preloader__bar-wrap">
+        <div class="preloader__bar" id="preloader-bar"></div>
+      </div>
+      <div class="preloader__years" id="preloader-counter">EST. 1981 — 2026</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       1. HEADER FLOTANTE + GOOEY LIQUID METABALL NAV (Video 1 + Video 3)
+       ======================================================================== -->
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <!-- Logotipo Oficial PNG Intacto -->
+      <a href="#inicio" class="brand-pill" aria-label="El Rescate — Inicio">
+        <img
+          src="assets/logo-el-rescate-oficial.png"
+          alt="Logotipo oficial de El Rescate"
+          class="brand-pill__logo"
+        />
+      </a>
+
+      <!-- Cápsula de Navegación Líquida Gooey (Video 3: riff-07c35a71) -->
+      <nav class="gooey-nav-shell" id="gooey-nav-shell" aria-label="Navegación principal">
+        <div class="gooey-stage" aria-hidden="true">
+          <div class="gooey-blob-trail" id="gooey-blob-trail"></div>
+          <div class="gooey-blob-main" id="gooey-blob-main"></div>
+        </div>
+        <ul class="gooey-nav-list" id="gooey-nav-list">
+          <li>
+            <button type="button" class="gooey-nav-btn is-active" data-target="#inicio">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3l9-8z"/></svg>
+              <span data-i18n="nav_home">Inicio</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="gooey-nav-btn" data-target="#nosotros">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+              <span data-i18n="nav_about">Nosotros</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="gooey-nav-btn" data-target="#servicios">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h10v2H4z"/></svg>
+              <span data-i18n="nav_services">Servicios</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="gooey-nav-btn" data-target="#archivo-3d">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zm0 13l-10-5v2l10 5 10-5v-2l-10 5zm0 4l-10-5v2l10 5 10-5v-2l-10 5z"/></svg>
+              <span data-i18n="nav_archive">Archivo 3D</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="gooey-nav-btn" data-target="#historia-3d">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 11h4v2h-6V7h2v6z"/></svg>
+              <span data-i18n="nav_history">Historia 3D</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="gooey-nav-btn" data-target="#clinica-citas">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/></svg>
+              <span data-i18n="nav_clinic">Clínica / Citas</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Selector de Idioma + CTA -->
+      <div class="header-actions">
+        <div class="lang-pill" role="group" aria-label="Selector de idioma">
+          <button type="button" class="lang-pill__btn is-active" data-lang="es">ES</button>
+          <button type="button" class="lang-pill__btn" data-lang="en">EN</button>
+        </div>
+        <a href="#clinica-citas" class="header-cta">
+          <span class="header-cta__dot"></span>
+          <span data-i18n="cta_header">Solicitar orientación</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         2. HERO EDITORIAL V3 + ESCENARIO CON MUESCAS 45° (Video 1 + Video 2 + V3)
+         ====================================================================== -->
+    <section class="hero-section" id="inicio">
+      <!-- Bloque Arquitectónico #173B63 en el cuadrante inferior derecho (V3) -->
+      <div class="hero-architectural-backdrop" aria-hidden="true"></div>
+
+      <div class="hero-grid">
+        <!-- Columna Izquierda: Tipografía Protagonista 100% sobre fondo cálido #F7F6F2 -->
+        <div class="hero-editorial">
+          <div class="hero-kicker">
+            <span class="hero-kicker__line"></span>
+            <span data-i18n="hero_kicker">LOS ÁNGELES, CALIFORNIA • DESDE 1981</span>
+          </div>
+
+          <h1 class="hero-headline">
+            <span class="hero-headline__line">
+              <span class="hero-headline__line-inner" data-i18n="hero_h1_1">Una comunidad</span>
+            </span>
+            <span class="hero-headline__line">
+              <span class="hero-headline__line-inner" data-i18n="hero_h1_2">más fuerte comienza</span>
+            </span>
+            <span class="hero-headline__line">
+              <span class="hero-headline__line-inner hero-headline__line--indented">
+                <span class="hero-headline__rule"></span>
+                <span><span data-i18n="hero_h1_3">con oportunidades</span><span class="hero-headline__dot">.</span></span>
+              </span>
+            </span>
+          </h1>
+
+          <p class="hero-lead" data-i18n="hero_lead">
+            Desde 1981 acompañamos a personas y familias inmigrantes en Los Ángeles con orientación jurídica cercana, defensa de su dignidad y caminos reales hacia el bienestar comunitario.
+          </p>
+
+          <div class="hero-cta-row">
+            <a href="#clinica-citas" class="btn-primary-editorial">
+              <span data-i18n="hero_cta_primary">Reservar charla en clínica</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#servicios" class="link-secondary-editorial">
+              <span data-i18n="hero_cta_secondary">Conoce nuestros servicios</span>
+              <span>→</span>
+            </a>
+          </div>
+
+          <!-- Plano Z-3 del Díptico V3: Contrapunto Urbano (Westlake / MacArthur Park) -->
+          <div class="hero-secondary-plane" id="hero-plane-z3">
+            <div class="hero-secondary-plane__img-wrap">
+              <img
+                src="assets/provisional-documentary-macarthur-park.jpg"
+                alt="Contexto urbano comunitario en Westlake y MacArthur Park, Los Ángeles"
+              />
+            </div>
+            <div>
+              <div class="hero-secondary-plane__tag">PLANO DOCUMENTAL Z-3 • WESTLAKE</div>
+              <div class="hero-secondary-plane__title" data-i18n="hero_z3_title">Cuatro décadas de arraigo en L.A.</div>
+              <p class="hero-secondary-plane__sub" data-i18n="hero_z3_sub">
+                Orientación legal, clínicas de miércoles y sábados y defensa comunitaria sin barreras.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Escenario Fotográfico con Muescas a 45° (Video 2 C&A) + Ruta Viva (Video 1 Nexora) -->
+        <div class="hero-notched-stage" id="hero-notched-stage">
+          <div class="notched-photo-frame" id="hero-tilt-frame">
+            <!-- Muesca Superior Izquierda (Inspirada en Video 2 C&A) -->
+            <div class="chamfer-notch-top">
+              <div class="chamfer-notch-top__pill">
+                <div class="chamfer-notch-top__avatars">
+                  <span>ER</span>
+                  <span>LA</span>
+                  <span>+45</span>
+                </div>
+                <span data-i18n="hero_badge_families">+45,000 familias acompañadas</span>
+              </div>
+            </div>
+
+            <img
+              src="assets/provisional-documentary-la-placita.jpg"
+              alt="Encuentro comunitario en La Placita, Los Ángeles (Fotografía documental de exploración)"
+              class="notched-photo-frame__img"
+              id="hero-main-img"
+            />
+
+            <!-- Tarjeta Flotante de Pulso / Ruta en Vivo (Inspirada en NEXORA Video 1) -->
+            <div class="nexora-route-card">
+              <div class="nexora-route-card__top">
+                <span>● CLÍNICA COMUNITARIA ACTIVA</span>
+                <span>EST. 1981</span>
+              </div>
+              <div class="nexora-route-card__route">
+                <span>Westlake, L.A.</span>
+                <span class="nexora-route-card__line"></span>
+                <span>Comunidad</span>
+              </div>
+              <div class="nexora-route-card__meta">
+                <span>Mié 2–5 PM • Sáb 10–1 PM</span>
+                <span style="color: var(--amber-400); font-weight: 700;">100% Confidencial</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pie de foto limpio sobre el bloque #173B63 (V3) -->
+          <div class="hero-stage-caption">
+            <div>
+              <div class="hero-stage-caption__bar"></div>
+              <div class="hero-stage-caption__title" data-i18n="hero_cap_title">
+                Memoria viva y presente comunitario en Los Ángeles
+              </div>
+              <p class="hero-stage-caption__desc" data-i18n="hero_cap_desc">
+                Nacida en el corazón de Westlake en 1981, El Rescate camina junto a la población inmigrante construyendo arraigo, dignidad y futuro compartido.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         3. MANIFIESTO OSCURO CON SCROLL-SCRUBBING PALABRA POR PALABRA (Video 1)
+            + CONTENEDOR CON MUESCA "WHY CHOOSE EL RESCATE?" (Video 2 C&A)
+         ====================================================================== -->
+    <section class="manifesto-section" id="nosotros">
+      <div class="manifesto-inner">
+        <div class="section-eyebrow">NUESTRA MISIÓN DESDE 1981 • SCROLL REVEAL</div>
+
+        <p class="scrub-manifesto-text" id="scrub-manifesto">
+          Fundada en 1981 por una necesidad humanitaria urgente, nacimos para brindar representación legal ética, refugio comunitario y oportunidades económicas a cada familia inmigrante que construye su vida en Los Ángeles.
+        </p>
+
+        <!-- Contenedor con Pestaña Superior Biselada ("Why choose C&A?" de Video 2) -->
+        <div class="notched-why-box">
+          <div class="notched-why-box__tab" data-i18n="why_tab">¿Por qué confiar en El Rescate?</div>
+          <div class="notched-why-grid">
+            <article class="why-pillar">
+              <div class="why-pillar__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <h3 class="why-pillar__title">Defensa Legal con Historia</h3>
+              <p class="why-pillar__desc">
+                Pioneros desde 1981 en casos de asilo, acuerdos históricos ABC, TPS, NACARA, DACA y reunificación familiar en California.
+              </p>
+            </article>
+
+            <article class="why-pillar">
+              <div class="why-pillar__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              </div>
+              <h3 class="why-pillar__title">Trato Humano y Bilingüe</h3>
+              <p class="why-pillar__desc">
+                Cada consulta se realiza en tu idioma, con respeto absoluto por la historia de tu familia y sin tecnicismos intimidantes.
+              </p>
+            </article>
+
+            <article class="why-pillar">
+              <div class="why-pillar__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              </div>
+              <h3 class="why-pillar__title">Confidencialidad Absoluta</h3>
+              <p class="why-pillar__desc">
+                Tus datos y consultas están protegidos bajo secreto profesional. Jamás compartimos información con autoridades migratorias.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         4. BENTO GRID DE IMPACTO + STICKY SPLIT SCROLL (Video 1 — NEXORA)
+         ====================================================================== -->
+    <section class="bento-impact-section" id="impacto">
+      <div class="section-header-row">
+        <div>
+          <div class="hero-kicker">
+            <span class="hero-kicker__line"></span>
+            <span>IMPACTO COMUNITARIO EN CIFRAS</span>
+          </div>
+          <h2 class="section-title">Soluciones integrales construidas<br />para ir más lejos</h2>
+        </div>
+        <p class="section-subtitle">
+          Combinamos rigor jurídico, clínicas comunitarias semanales y educación financiera para fortalecer a toda la comunidad inmigrante del sur de California.
+        </p>
+      </div>
+
+      <div class="nexora-bento-grid">
+        <div class="bento-card bento-card--hero">
+          <img
+            src="assets/provisional-documentary-la-placita.jpg"
+            alt="Comunidad de Los Ángeles"
+            class="bento-card--hero-bg"
+          />
+          <div style="position:relative; z-index:2;">
+            <span class="hero-kicker" style="color: var(--amber-400);">SEDE HISTÓRICA EN WESTLAKE, L.A.</span>
+            <h3 style="font-family: var(--font-display); font-size: 30px; font-weight: 800; max-width: 480px; margin-top: 8px;">
+              De refugio humanitario en 1981 a institución comunitaria de referencia
+            </h3>
+          </div>
+          <div style="position:relative; z-index:2; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+            <a href="#historia-3d" class="btn-primary-editorial" style="background: var(--amber-500); color: var(--navy-950);">
+              Explorar Autobús Histórico 3D →
+            </a>
+          </div>
+        </div>
+
+        <div class="bento-card bento-card--stat-light">
+          <div class="bento-stat__label">FAMILIAS ACOMPAÑADAS</div>
+          <div class="bento-stat__number" data-count="45">45K+</div>
+        </div>
+
+        <div class="bento-card bento-card--stat-navy">
+          <div class="bento-stat__label">AÑOS DE TRAYECTORIA</div>
+          <div class="bento-stat__number">45+</div>
+        </div>
+
+        <div class="bento-card bento-card--stat-blue">
+          <div class="bento-stat__label">CONFIDENCIALIDAD</div>
+          <div class="bento-stat__number">100%</div>
+        </div>
+
+        <div class="bento-card bento-card--stat-amber">
+          <div class="bento-stat__label">SEGUIMIENTO DE CASOS</div>
+          <div class="bento-stat__number">98%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sticky Split Section ("Built on trust. Driven by performance." — Video 1) -->
+    <section class="sticky-split-section">
+      <div class="sticky-split-grid">
+        <div class="sticky-left-col">
+          <div class="hero-kicker">
+            <span class="hero-kicker__line"></span>
+            <span>MODELO DE ATENCIÓN INTEGRAL</span>
+          </div>
+          <h2 class="section-title">Construido sobre confianza.<br />Impulsado por dignidad.</h2>
+          <p class="section-subtitle" style="margin-top: 14px;">
+            A medida que avanzas, conoce los tres pilares con los que acompañamos a cada persona desde su primera charla hasta la resolución de su caso.
+          </p>
+
+          <div class="sticky-pillar-list" id="sticky-pillar-list">
+            <div class="sticky-pillar-item is-active" data-pillar="0">
+              <div class="sticky-pillar-item__head">
+                <span>Representación y Orientación Legal</span>
+                <span class="sticky-pillar-item__num">01</span>
+              </div>
+              <p class="sticky-pillar-item__body">
+                Evaluación honesta de elegibilidad para asilo, TPS, DACA, peticiones familiares, visas humanitarias (U/VAWA) y naturalización.
+              </p>
+            </div>
+
+            <div class="sticky-pillar-item" data-pillar="1">
+              <div class="sticky-pillar-item__head">
+                <span>Clínicas Legales de Miércoles y Sábados</span>
+                <span class="sticky-pillar-item__num">02</span>
+              </div>
+              <p class="sticky-pillar-item__body">
+                Jornadas semanales de orientación comunitaria con reserva en línea para resolver dudas urgentes en un entorno seguro.
+              </p>
+            </div>
+
+            <div class="sticky-pillar-item" data-pillar="2">
+              <div class="sticky-pillar-item__head">
+                <span>Empoderamiento Económico y Social</span>
+                <span class="sticky-pillar-item__num">03</span>
+              </div>
+              <p class="sticky-pillar-item__body">
+                Asesoría para pequeños negocios migrantes, talleres de ciudadanía y redes de apoyo familiar en Los Ángeles.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sticky-right-stack">
+          <article class="wipe-media-card" data-wipe-card="0">
+            <img src="assets/provisional-documentary-la-placita.jpg" alt="Orientación Legal Comunitaria" />
+            <div class="wipe-media-card__overlay">
+              <span class="wipe-media-card__top-tag">PILAR 01 • DEFENSA JURÍDICA</span>
+              <div class="wipe-media-card__bottom">
+                <div>
+                  <h3 style="font-family:var(--font-display); font-size:24px; font-weight:800; margin-bottom:6px;">
+                    Amparo y Representación Ética
+                  </h3>
+                  <p style="font-size:14px; color:rgba(234,241,246,0.85);">
+                    Más de cuatro décadas defendiendo el derecho a permanecer en familia.
+                  </p>
+                </div>
+                <div class="wipe-media-card__kpis">
+                  <div>
+                    <div class="wipe-kpi__val">98%</div>
+                    <div class="wipe-kpi__lbl">Casos con seguimiento</div>
+                  </div>
+                  <div>
+                    <div class="wipe-kpi__val">1981</div>
+                    <div class="wipe-kpi__lbl">Origen en L.A.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="wipe-media-card" data-wipe-card="1">
+            <img src="assets/provisional-documentary-macarthur-park.jpg" alt="Clínicas Comunitarias en Westlake" />
+            <div class="wipe-media-card__overlay">
+              <span class="wipe-media-card__top-tag">PILAR 02 • CLÍNICAS SEMANALES</span>
+              <div class="wipe-media-card__bottom">
+                <div>
+                  <h3 style="font-family:var(--font-display); font-size:24px; font-weight:800; margin-bottom:6px;">
+                    Charlas Legales Miércoles y Sábados
+                  </h3>
+                  <p style="font-size:14px; color:rgba(234,241,246,0.85);">
+                    Agenda tu horario en menos de un minuto sin compartir datos con terceros.
+                  </p>
+                </div>
+                <div class="wipe-media-card__kpis">
+                  <div>
+                    <div class="wipe-kpi__val">2x</div>
+                    <div class="wipe-kpi__lbl">Jornadas por semana</div>
+                  </div>
+                  <div>
+                    <div class="wipe-kpi__val">100%</div>
+                    <div class="wipe-kpi__lbl">Privacidad garantizada</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="wipe-media-card" data-wipe-card="2">
+            <img src="assets/provisional-documentary-la-placita.jpg" alt="Desarrollo Comunitario en Los Ángeles" />
+            <div class="wipe-media-card__overlay">
+              <span class="wipe-media-card__top-tag">PILAR 03 • COMUNIDAD Y FUTURO</span>
+              <div class="wipe-media-card__bottom">
+                <div>
+                  <h3 style="font-family:var(--font-display); font-size:24px; font-weight:800; margin-bottom:6px;">
+                    Raíz Cultural y Futuro Económico
+                  </h3>
+                  <p style="font-size:14px; color:rgba(234,241,246,0.85);">
+                    Formación cívica, ciudadanía y fortalecimiento del tejido vecinal en Westlake.
+                  </p>
+                </div>
+                <div class="wipe-media-card__kpis">
+                  <div>
+                    <div class="wipe-kpi__val">360°</div>
+                    <div class="wipe-kpi__lbl">Acompañamiento</div>
+                  </div>
+                  <div>
+                    <div class="wipe-kpi__val">ES/EN</div>
+                    <div class="wipe-kpi__lbl">Atención bilingüe</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. SERVICIOS INTERACTIVOS: MAZO "CARD SHUFFLE" (Video 4 RIFF 28)
+            + ARCO 3D EN PERSPECTIVA (Video 2 C&A)
+         ====================================================================== -->
+    <section class="services-showcase-section" id="servicios">
+      <div class="services-showcase-inner">
+        <div class="section-header-row" style="margin-bottom: 36px;">
+          <div>
+            <div class="section-eyebrow">ÁREAS DE PRÁCTICA Y PROGRAMAS • INTERACTIVO</div>
+            <h2 class="section-title" style="color: var(--white);">
+              Explora nuestros servicios en Mazo Shuffle o Arco 3D
+            </h2>
+          </div>
+
+          <!-- Conmutador entre el Mazo Shuffle (Video 4) y el Arco 3D (Video 2) -->
+          <div class="view-mode-switcher" role="tablist" aria-label="Modo de visualización de servicios">
+            <button type="button" class="view-mode-btn is-active" id="btn-mode-shuffle">
+              Mazo Interactivo (Card Shuffle)
+            </button>
+            <button type="button" class="view-mode-btn" id="btn-mode-arc3d">
+              Galería en Arco 3D
+            </button>
+          </div>
+        </div>
+
+        <!-- VISTA 1: RIFF 28 "Card Shuffle" (Video 4) -->
+        <div class="shuffle-view" id="shuffle-view">
+          <div>
+            <div class="hero-kicker" style="color: var(--amber-400);">
+              <span class="hero-kicker__line"></span>
+              <span id="shuffle-detail-kicker">PROGRAMA 01 DE 05 • DEFENSA DE ASILO</span>
+            </div>
+            <h3 id="shuffle-detail-title" style="font-family:var(--font-display); font-size:clamp(1.8rem, 2.8vw, 2.6rem); font-weight:800; margin-bottom:16px;">
+              Asilo, Refugio y Protección Humanitaria
+            </h3>
+            <p id="shuffle-detail-desc" style="font-size:17px; line-height:1.65; color:rgba(234,241,246,0.84); margin-bottom:28px;">
+              Representación legal especializada para personas y familias que buscan protección en Estados Unidos, incluyendo asilo afirmativo y defensivo, visas U para víctimas de delitos y peticiones VAWA.
+            </p>
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+              <a href="#clinica-citas" class="btn-primary-editorial" style="background:var(--amber-500); color:var(--navy-950);">
+                Agendar consulta para este servicio →
+              </a>
+              <button type="button" class="btn-primary-editorial" id="btn-trigger-shuffle" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.22);">
+                Barajar siguiente tarjeta ↻
+              </button>
+            </div>
+          </div>
+
+          <div class="shuffle-deck-stage">
+            <div class="riff-card-stack" id="riff-card-stack">
+              <!-- Tarjetas generadas y animadas por prototype.js (RIFF 28 Card Shuffle) -->
+            </div>
+            <div class="riff-dots" id="riff-dots"></div>
+          </div>
+        </div>
+
+        <!-- VISTA 2: Arco 3D en Perspectiva Cóncava ("Our Services" — Video 2 C&A) -->
+        <div class="arc3d-view" id="arc3d-view">
+          <div class="arc3d-stage">
+            <article class="arc3d-card" data-service-idx="0">
+              <img src="assets/provisional-documentary-la-placita.jpg" alt="Asilo y Refugio" />
+              <div class="arc3d-card__info">
+                <div class="arc3d-card__tag">01 • PROTECCIÓN</div>
+                <div class="arc3d-card__title">Asilo, Refugio y Visas U/VAWA</div>
+              </div>
+            </article>
+            <article class="arc3d-card" data-service-idx="1">
+              <img src="assets/provisional-documentary-macarthur-park.jpg" alt="TPS, DACA y NACARA" />
+              <div class="arc3d-card__info">
+                <div class="arc3d-card__tag">02 • AMPARO LEGAL</div>
+                <div class="arc3d-card__title">Renovaciones TPS, DACA y NACARA</div>
+              </div>
+            </article>
+            <article class="arc3d-card" data-service-idx="2">
+              <img src="assets/provisional-documentary-la-placita.jpg" alt="Residencia y Familia" />
+              <div class="arc3d-card__info">
+                <div class="arc3d-card__tag">03 • REUNIFICACIÓN</div>
+                <div class="arc3d-card__title">Peticiones Familiares y Residencia</div>
+              </div>
+            </article>
+            <article class="arc3d-card" data-service-idx="3">
+              <img src="assets/provisional-documentary-macarthur-park.jpg" alt="Ciudadanía y Educación Cívica" />
+              <div class="arc3d-card__info">
+                <div class="arc3d-card__tag">04 • CIUDADANÍA</div>
+                <div class="arc3d-card__title">Naturalización y Talleres Cívicos</div>
+              </div>
+            </article>
+            <article class="arc3d-card" data-service-idx="4">
+              <img src="assets/provisional-documentary-la-placita.jpg" alt="Clínicas y Comunidad" />
+              <div class="arc3d-card__info">
+                <div class="arc3d-card__tag">05 • COMUNIDAD</div>
+                <div class="arc3d-card__title">Clínicas Semanales y Microfinanzas</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. GALERÍA ESPACIAL 3D ESTILO "UNVEIL® PROJECTS" (Imagen 2)
+         ====================================================================== -->
+    <section class="unveil-stack-section" id="archivo-3d">
+      <div class="unveil-header-bar">
+        <div class="unveil-top-cell">
+          <span>EL RESCATE® ARCHIVO VIVO</span>
+          <span>●</span>
+        </div>
+        <div class="unveil-top-cell">
+          <span>WESTLAKE • LOS ANGELES</span>
+          <span>34.0522° N</span>
+        </div>
+        <div class="unveil-top-cell">
+          <span>CAPAS DE IMPACTO 3D</span>
+          <span id="unveil-active-counter">01 / 07</span>
+        </div>
+        <div class="unveil-top-cell">
+          <span>INTERACCIÓN</span>
+          <span>HOVER / CLICK EN CAPAS</span>
+        </div>
+      </div>
+
+      <div class="unveil-viewport" id="unveil-viewport">
+        <div class="unveil-3d-corridor" id="unveil-3d-corridor">
+          <!-- Láminas 3D en diagonal Z generadas dinámicamente por prototype.js -->
+        </div>
+      </div>
+
+      <div class="unveil-bottom-controls">
+        <div>
+          <div class="unveil-mode-toggle" role="group" aria-label="Cambiar vista de galería 3D">
+            <button type="button" class="unveil-mode-btn is-active" id="unveil-btn-overview">OVERVIEW (CAPAS 3D)</button>
+            <button type="button" class="unveil-mode-btn" id="unveil-btn-index">INDEX (CUADRÍCULA)</button>
+          </div>
+        </div>
+
+        <div class="unveil-filter-pills" id="unveil-filter-pills">
+          <button type="button" class="unveil-filter-pill is-active" data-filter="all">ALL <sup>07</sup></button>
+          <button type="button" class="unveil-filter-pill" data-filter="legal">DEFENSA LEGAL <sup>03</sup></button>
+          <button type="button" class="unveil-filter-pill" data-filter="comunidad">COMUNIDAD &amp; CULTURA <sup>02</sup></button>
+          <button type="button" class="unveil-filter-pill" data-filter="clinica">CLÍNICAS SEMANALES <sup>02</sup></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         7. LÍNEA DEL TIEMPO HISTÓRICA 3D (THREE.JS AUTOBÚS COMUNITARIO 1981–2026)
+            + BARRA DE RUTA INTERACTIVA ESTILO NEXORA (Video 1)
+         ====================================================================== -->
+    <section class="history-3d-section" id="historia-3d">
+      <!-- Barra superior de ruta histórica estilo NEXORA ("Every container, followed to the door") -->
+      <div class="nexora-timeline-route-bar">
+        <div class="nexora-route-bar__head">
+          <div>
+            <div class="section-eyebrow" style="margin-bottom:4px;">RECORRIDO HISTÓRICO INTERACTIVO EN THREE.JS / WEBGL</div>
+            <div class="nexora-route-bar__title">Cada década de compromiso comunitario, seguida paso a paso (1981 — 2026)</div>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:12px; color:var(--amber-400);">
+            Haz clic en cualquier año o usa las flechas para hacer avanzar el autobús 3D
+          </span>
+        </div>
+
+        <div class="nexora-route-nodes" id="nexora-route-nodes">
+          <!-- Nodos 1981, 1991, 2004, 2015, 2026 sincronizados con la escena 3D -->
+        </div>
+      </div>
+
+      <!-- Escenario 3D Three.js del Autobús Comunitario sobre el Planeta Low-Poly -->
+      <div class="bus-3d-stage-wrap">
+        <div id="timeline-canvas-wrap">
+          <canvas id="timeline-canvas"></canvas>
+        </div>
+
+        <div class="bus-3d-header">
+          <h2 class="bus-3d-header__title">EL RESCATE</h2>
+          <p class="bus-3d-header__sub">IMMIGRATION, COMMUNITY &amp; LEGAL SERVICES • ARCHIVO 3D</p>
+        </div>
+
+        <button type="button" class="nav-arrow-btn nav-arrow-btn--prev" id="btn-prev" aria-label="Hito anterior">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+        </button>
+
+        <button type="button" class="nav-arrow-btn nav-arrow-btn--next" id="btn-next" aria-label="Siguiente hito">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+        </button>
+
+        <div class="bus-3d-overlay-grid">
+          <!-- Izquierda: Galería Polaroid -->
+          <aside class="floating-panel polaroid-gallery" id="panel-polaroids">
+            <div class="polaroid-gallery__label">
+              ARCHIVO FOTOGRÁFICO • <span id="polaroid-year-badge">1981</span>
+            </div>
+            <div class="polaroid-stack" id="polaroid-stack"></div>
+          </aside>
+
+          <div aria-hidden="true"></div>
+
+          <!-- Derecha: Portapapeles Legal -->
+          <article class="floating-panel legal-clipboard" id="panel-clipboard">
+            <div class="legal-clipboard__clip">EL RESCATE • LEGAL DOCKET</div>
+            <div class="legal-clipboard__sheet">
+              <div class="legal-clipboard__header">
+                <span id="clip-docket" style="font-weight:700; color:var(--blue-700);">EXP. #ER-1981-001</span>
+                <span id="clip-seal" style="color:var(--amber-500); font-weight:700;">ACTA FUNDACIONAL</span>
+              </div>
+              <div id="clip-kicker" style="font-family:var(--font-mono); font-size:10.5px; color:var(--blue-700);">
+                ORIGEN HUMANITARIO • LOS ÁNGELES
+              </div>
+              <h3 class="legal-clipboard__title" id="clip-title">Fundación de El Rescate</h3>
+              <p class="legal-clipboard__desc" id="clip-desc"></p>
+              <div class="legal-clipboard__metrics">
+                <div class="legal-clipboard__metric-box">
+                  <div class="legal-clipboard__metric-val" id="clip-stat-1-val"></div>
+                  <div class="legal-clipboard__metric-lbl" id="clip-stat-1-lbl"></div>
+                </div>
+                <div class="legal-clipboard__metric-box">
+                  <div class="legal-clipboard__metric-val" id="clip-stat-2-val"></div>
+                  <div class="legal-clipboard__metric-lbl" id="clip-stat-2-lbl"></div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         8. DISPONIBILIDAD DE LA CLÍNICA + TUS DATOS (Imagen 1 Exacta + Funcional)
+         ====================================================================== -->
+    <section class="clinic-booking-section" id="clinica-citas">
+      <div class="clinic-booking-inner">
+        <div class="clinic-header">
+          <div class="hero-kicker" style="justify-content:center;">
+            <span class="hero-kicker__line"></span>
+            <span>ORIENTACIÓN LEGAL PRESENCIAL Y CONFIDENCIAL</span>
+          </div>
+          <h2 class="section-title" style="margin-bottom: 12px;">Agenda tu charla en la clínica</h2>
+          <p style="font-size: 17px; color: var(--text-body);">
+            Selecciona uno de los días marcados en azul (miércoles o sábados), elige tu horario y confirmaremos tu cita.
+          </p>
+        </div>
+
+        <div class="clinic-cards-grid">
+          <!-- TARJETA IZQUIERDA: Disponibilidad de la clínica -->
+          <div class="clinic-card">
+            <h3 class="clinic-card__title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#173B63" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>Disponibilidad de la clínica</span>
+            </h3>
+
+            <div class="clinic-schedule-badges">
+              <div class="schedule-badge">
+                <svg class="schedule-badge__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <div>
+                  <div class="schedule-badge__day">Miércoles</div>
+                  <div class="schedule-badge__hours">2:00 PM – 5:00 PM</div>
+                </div>
+              </div>
+              <div class="schedule-badge">
+                <svg class="schedule-badge__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <div>
+                  <div class="schedule-badge__day">Sábados</div>
+                  <div class="schedule-badge__hours">10:00 AM – 1:00 PM</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="calendar-month-bar">
+              <button type="button" class="calendar-nav-btn" id="cal-prev-month" aria-label="Mes anterior">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <div class="calendar-month-title" id="cal-month-label">Noviembre de 2026</div>
+              <button type="button" class="calendar-nav-btn" id="cal-next-month" aria-label="Mes siguiente">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+
+            <div class="calendar-weekdays">
+              <span>DOM</span><span>LUN</span><span>MAR</span><span>MIÉ</span><span>JUE</span><span>VIE</span><span>SÁB</span>
+            </div>
+
+            <div class="calendar-days-grid" id="calendar-days-grid">
+              <!-- Días de Noviembre/Diciembre 2026 renderizados por prototype.js -->
+            </div>
+
+            <div class="calendar-legend">
+              <span class="calendar-legend__swatch"></span>
+              <span>Días con charla</span>
+            </div>
+
+            <div class="timeslot-heading" id="timeslot-heading">
+              Sábado, 21 De Noviembre – Elige Un Horario
+            </div>
+
+            <div class="timeslot-pills" id="timeslot-pills">
+              <!-- Píldoras de horario renderizadas dinámicamente -->
+            </div>
+          </div>
+
+          <!-- TARJETA DERECHA: Tus datos -->
+          <div class="clinic-card">
+            <h3 class="clinic-card__title">Tus datos</h3>
+
+            <div class="selection-banner" id="selection-banner">
+              <strong>Tu elección:</strong> <span id="selection-summary-text">Sábado, 21 De Noviembre, 11:00 AM – 12:00 PM</span>
+            </div>
+
+            <form id="clinic-booking-form" novalidate>
+              <div class="form-field">
+                <label for="input-name">Nombre completo</label>
+                <input type="text" id="input-name" class="form-input" placeholder="Ej. María Elena Morales" required />
+              </div>
+
+              <div class="form-field">
+                <label for="input-phone">Teléfono</label>
+                <input type="tel" id="input-phone" class="form-input" placeholder="(555) 123-4567" required />
+              </div>
+
+              <div class="form-field">
+                <label for="input-email">Correo electrónico</label>
+                <input type="email" id="input-email" class="form-input" placeholder="correo@ejemplo.com" />
+              </div>
+
+              <div class="form-field">
+                <label for="input-case-type">Tipo de caso</label>
+                <select id="input-case-type" class="form-select" required>
+                  <option value="">Selecciona una opción</option>
+                  <option value="Asilo / Refugio Humanitario">Asilo / Refugio Humanitario</option>
+                  <option value="TPS / Ley NACARA">TPS / Ley NACARA</option>
+                  <option value="Renovación o Consulta DACA">Renovación o Consulta DACA</option>
+                  <option value="Petición Familiar / Residencia">Petición Familiar / Residencia</option>
+                  <option value="Ciudadanía y Naturalización">Ciudadanía y Naturalización</option>
+                  <option value="Visa U / Protección VAWA">Visa U / Protección VAWA</option>
+                  <option value="Orientación General en Clínica">Orientación General en Clínica</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn-book-submit">Reservar mi charla</button>
+
+              <p class="privacy-reassurance">
+                Usamos tus datos solo para confirmar tu charla. Nunca los compartimos con autoridades de inmigración.
+              </p>
+
+              <div class="booking-success-toast" id="booking-success-toast" role="status"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       9. BOTÓN FLOTANTE "💬 Evaluador" + MODAL ASISTENTE (Imagen 1)
+       ======================================================================== -->
+  <button type="button" class="evaluador-fab" id="evaluador-fab" aria-label="Abrir Evaluador de Caso">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+    </svg>
+    <span>Evaluador</span>
+  </button>
+
+  <div class="evaluador-modal-backdrop" id="evaluador-modal" role="dialog" aria-modal="true" aria-labelledby="evaluador-title">
+    <div class="evaluador-drawer">
+      <div class="evaluador-drawer__head">
+        <div>
+          <div style="font-family:var(--font-mono); font-size:10.5px; color:var(--amber-400);">ORIENTACIÓN RÁPIDA Y CONFIDENCIAL</div>
+          <div id="evaluador-title" style="font-family:var(--font-display); font-size:17px; font-weight:800;">Evaluador de Consulta — El Rescate</div>
+        </div>
+        <button type="button" id="evaluador-close" style="background:none; border:none; color:#fff; font-size:22px; cursor:pointer;">×</button>
+      </div>
+      <div class="evaluador-drawer__body">
+        <p style="font-size:14px; color:var(--text-body); margin-bottom:16px;">
+          ¿Sobre qué tema necesitas orientación principal? Selecciona una opción y pre-configuraremos tu cita en la clínica:
+        </p>
+        <button type="button" class="eval-option-btn" data-case="Asilo / Refugio Humanitario">
+          🛡️ Protección de Asilo, Refugio o miedo de regresar
+        </button>
+        <button type="button" class="eval-option-btn" data-case="TPS / Ley NACARA">
+          📋 Renovación de TPS, permiso de trabajo o NACARA
+        </button>
+        <button type="button" class="eval-option-btn" data-case="Renovación o Consulta DACA">
+          🎓 Jóvenes Dreamers / Renovación de DACA
+        </button>
+        <button type="button" class="eval-option-btn" data-case="Petición Familiar / Residencia">
+          👨‍👩‍👧 Petición de familiares o Residencia Permanente
+        </button>
+        <button type="button" class="eval-option-btn" data-case="Ciudadanía y Naturalización">
+          🗳️ Trámite de Ciudadanía y talleres de entrevista
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       10. FOOTER INSTITUCIONAL
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div style="display:flex; align-items:center; gap:16px;">
+        <img src="assets/logo-el-rescate-oficial.png" alt="El Rescate" style="height:36px; background:#fff; padding:4px 8px; border-radius:6px;" />
+        <div>
+          <div style="font-family:var(--font-display); font-weight:800; font-size:15px;">El Rescate — Los Ángeles, California</div>
+          <div style="font-size:13px; color:rgba(234,241,246,0.7);">1501 W. 8th Street, Los Angeles, CA 90017 • Desde 1981 junto a la comunidad inmigrante</div>
+        </div>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--amber-400);">
+        PROTOTIPO INTERACTIVO INTEGRAL • THREE.JS + GSAP + LENIS
+      </div>
+    </div>
+  </footer>
+
+  <!-- Librerías: Three.js, GSAP, ScrollTrigger y Lenis Smooth Scroll -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="prototype.js"></script>
+</body>
+</html>

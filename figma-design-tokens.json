@@ -1,0 +1,165 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$metadata": {
+    "project": "El Rescate — Rediseño Web (https://www.elrescate.org/)",
+    "stage": "Etapa 1 — Design Foundations",
+    "status": "PROVISIONAL — Pendiente de validación oficial por El Rescate",
+    "figmaFileKey": "VGktR37ZboN18jlZNoftLu",
+    "figmaFileUrl": "https://www.figma.com/design/VGktR37ZboN18jlZNoftLu"
+  },
+  "color": {
+    "brand": {
+      "primary-deep-blue": {
+        "$value": "#173B63",
+        "$type": "color",
+        "$description": "[PROVISIONAL] Azul profundo principal. Autoridad institucional, textos primarios, encabezados y botones principales."
+      },
+      "secondary-blue": {
+        "$value": "#245B87",
+        "$type": "color",
+        "$description": "[PROVISIONAL] Azul secundario. Estados interactivos (hover/active), enlaces editoriales y acentos de soporte."
+      },
+      "accent-amber": {
+        "$value": "#E8A04A",
+        "$type": "color",
+        "$description": "[PROVISIONAL] Ámbar cálido. Llamados a la acción (CTA) de alto impacto, etiquetas editoriales y foco de accesibilidad."
+      }
+    },
+    "surface": {
+      "canvas-warm": {
+        "$value": "#F7F6F2",
+        "$type": "color",
+        "$description": "[PROVISIONAL] Fondo cálido principal para evitar frialdad clínica y aportar cercanía humana."
+      },
+      "subtle-blue": {
+        "$value": "#EAF1F6",
+        "$type": "color",
+        "$description": "[PROVISIONAL] Azul claro para bloques informativos secundarios, badges y contenedores de apoyo."
+      },
+      "elevated-white": {
+        "$value": "#FFFFFF",
+        "$type": "color",
+        "$description": "[PROVISIONAL] Blanco puro para tarjetas elevadas (plano Z), navegación y campos de formulario."
+      }
+    },
+    "semantic": {
+      "text-primary": { "$value": "{color.brand.primary-deep-blue}", "$type": "color" },
+      "text-secondary": { "$value": "#4A6583", "$type": "color" },
+      "text-muted": { "$value": "#6E849B", "$type": "color" },
+      "text-on-dark": { "$value": "{color.surface.elevated-white}", "$type": "color" },
+      "border-subtle": { "$value": "#D8E4EE", "$type": "color" },
+      "border-focus": { "$value": "{color.brand.secondary-blue}", "$type": "color" },
+      "feedback-success": { "$value": "#2E7D5B", "$type": "color" },
+      "feedback-warning": { "$value": "#D9822B", "$type": "color" },
+      "feedback-error": { "$value": "#C93B3B", "$type": "color" }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "heading": {
+        "$value": "Manrope",
+        "$type": "fontFamily",
+        "$description": "[PROVISIONAL] Tipografía display y de titulares con carácter editorial contemporáneo."
+      },
+      "body": {
+        "$value": "Source Sans 3",
+        "$type": "fontFamily",
+        "$description": "[PROVISIONAL] Tipografía humanista de alta legibilidad para lectura extensa, formularios e interfaz."
+      }
+    },
+    "scale": {
+      "display-hero": {
+        "desktop": { "fontSize": "64px", "lineHeight": "70px", "letterSpacing": "-0.025em", "fontWeight": 700 },
+        "mobile": { "fontSize": "40px", "lineHeight": "46px", "letterSpacing": "-0.02em", "fontWeight": 700 }
+      },
+      "heading-h1": {
+        "desktop": { "fontSize": "48px", "lineHeight": "54px", "letterSpacing": "-0.02em", "fontWeight": 700 },
+        "mobile": { "fontSize": "32px", "lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": 700 }
+      },
+      "heading-h2": {
+        "desktop": { "fontSize": "36px", "lineHeight": "44px", "letterSpacing": "-0.015em", "fontWeight": 600 },
+        "mobile": { "fontSize": "26px", "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": 600 }
+      },
+      "heading-h3": {
+        "desktop": { "fontSize": "24px", "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": 600 },
+        "mobile": { "fontSize": "20px", "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": 600 }
+      },
+      "heading-h4": {
+        "desktop": { "fontSize": "20px", "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": 600 },
+        "mobile": { "fontSize": "18px", "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": 600 }
+      },
+      "body-large": {
+        "desktop": { "fontSize": "20px", "lineHeight": "32px", "letterSpacing": "0em", "fontWeight": 400 },
+        "mobile": { "fontSize": "18px", "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": 400 }
+      },
+      "body-base": {
+        "desktop": { "fontSize": "16px", "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": 400 },
+        "mobile": { "fontSize": "16px", "lineHeight": "25px", "letterSpacing": "0em", "fontWeight": 400 }
+      },
+      "body-small": {
+        "desktop": { "fontSize": "14px", "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": 400 },
+        "mobile": { "fontSize": "14px", "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": 400 }
+      },
+      "overline-editorial": {
+        "desktop": { "fontSize": "12px", "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": 700, "textTransform": "uppercase" },
+        "mobile": { "fontSize": "12px", "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": 700, "textTransform": "uppercase" }
+      }
+    }
+  },
+  "spacing": {
+    "space-1": { "$value": "4px", "$type": "dimension" },
+    "space-2": { "$value": "8px", "$type": "dimension" },
+    "space-3": { "$value": "12px", "$type": "dimension" },
+    "space-4": { "$value": "16px", "$type": "dimension" },
+    "space-6": { "$value": "24px", "$type": "dimension" },
+    "space-8": { "$value": "32px", "$type": "dimension" },
+    "space-12": { "$value": "48px", "$type": "dimension" },
+    "space-16": { "$value": "64px", "$type": "dimension" },
+    "space-24": { "$value": "96px", "$type": "dimension" },
+    "space-32": { "$value": "128px", "$type": "dimension" }
+  },
+  "radii": {
+    "radius-xs": { "$value": "4px", "$type": "dimension" },
+    "radius-sm": { "$value": "6px", "$type": "dimension" },
+    "radius-md": { "$value": "10px", "$type": "dimension" },
+    "radius-lg": { "$value": "16px", "$type": "dimension" },
+    "radius-xl": { "$value": "24px", "$type": "dimension" },
+    "radius-pill": { "$value": "9999px", "$type": "dimension" }
+  },
+  "elevation": {
+    "level-1-subtle": {
+      "$value": "0px 4px 16px rgba(23, 59, 99, 0.06), 0px 1px 4px rgba(23, 59, 99, 0.04)",
+      "$type": "shadow"
+    },
+    "level-2-hover-3d": {
+      "$value": "0px 12px 32px rgba(23, 59, 99, 0.10), 0px 4px 12px rgba(23, 59, 99, 0.05)",
+      "$type": "shadow"
+    },
+    "level-3-floating": {
+      "$value": "0px 24px 48px rgba(23, 59, 99, 0.14), 0px 8px 16px rgba(23, 59, 99, 0.06)",
+      "$type": "shadow"
+    }
+  },
+  "grid": {
+    "desktop": {
+      "viewport": "1440px",
+      "containerMaxWidth": "1280px",
+      "columns": 12,
+      "margin": "80px",
+      "gutter": "24px"
+    },
+    "tablet": {
+      "viewport": "768px",
+      "columns": 8,
+      "margin": "32px",
+      "gutter": "20px"
+    },
+    "mobile": {
+      "viewport": "390px",
+      "columns": 4,
+      "margin": "20px",
+      "gutter": "16px",
+      "minTouchTarget": "48px"
+    }
+  }
+}

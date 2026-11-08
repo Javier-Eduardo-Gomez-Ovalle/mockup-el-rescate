@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Rescate — Línea del Tiempo Interactiva 3D (1981–2026)</title>
+  <!-- Tipografías: Cormorant Garamond (Serif elegante para Header y Títulos), Source Sans 3 (Cuerpo legal) y JetBrains Mono (Expediente) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@500;600&family=Manrope:wght@600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      /* Tokens Oficiales — El Rescate (elrescate.org + Design System) */
+      --brand-navy: #173B63;
+      --brand-navy-deep: #0F2947;
+      --brand-blue: #245B87;
+      --brand-gold: #D4943A;
+      --brand-gold-bright: #E8A04A;
+      --brand-gold-soft: #F3D7A8;
+      --surface-warm: #F7F6F2;
+      --surface-paper: #FCFBF8;
+      --surface-blue-subtle: #EAF1F6;
+      --text-primary: #173B63;
+      --text-secondary: #3D5673;
+      --text-muted: #647C96;
+
+      /* Curvas de animación Emil Kowalski / animate skill */
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+      --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      background: linear-gradient(180deg, #DAE6F0 0%, #EAF1F6 44%, #F7F6F2 100%);
+      color: var(--text-primary);
+      font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ==========================================================================
+       CONTENEDOR HERO PRINCIPAL (100% VIEWPORT, CERO OVERFLOW HORIZONTAL)
+       ========================================================================== */
+    .timeline-hero {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+    }
+
+    /* Halo solar cálido detrás del horizonte curvo del planeta */
+    .timeline-hero::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      transform: translate(-50%, -50%);
+      width: min(86vw, 980px);
+      height: min(86vw, 980px);
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(232, 160, 74, 0.22) 0%,
+        rgba(255, 248, 231, 0.35) 38%,
+        rgba(234, 241, 246, 0) 70%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Lienzo 3D Three.js a pantalla completa */
+    #timeline-canvas-wrap {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    #timeline-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ==========================================================================
+       1. HEADER FIJO EN PANTALLA (PARTE SUPERIOR CENTRAL)
+       ========================================================================== */
+    .hero-header {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      padding: 24px 24px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .hero-header__badge {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      background: rgba(23, 59, 99, 0.07);
+      border: 1px solid rgba(212, 148, 58, 0.45);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--brand-navy);
+      margin-bottom: 6px;
+    }
+
+    .hero-header__badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--brand-gold-bright);
+      box-shadow: 0 0 0 3px rgba(232, 160, 74, 0.25);
+    }
+
+    /* Texto "EL RESCATE" en tipografía serif elegante (azul marino con bordes dorados) */
+    .hero-header__title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(2.5rem, 4.6vw, 4.35rem);
+      font-weight: 700;
+      line-height: 0.98;
+      letter-spacing: 0.06em;
+      color: var(--brand-navy);
+      -webkit-text-stroke: 1.35px var(--brand-gold);
+      paint-order: stroke fill;
+      text-shadow:
+        0 2px 0 rgba(212, 148, 58, 0.38),
+        0 10px 28px rgba(23, 59, 99, 0.14);
+      margin-bottom: 6px;
+    }
+
+    /* Subtítulo "IMMIGRATION, COMMUNITY & LEGAL SERVICES" */
+    .hero-header__subtitle {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(0.72rem, 1.05vw, 0.92rem);
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      color: var(--brand-blue);
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-top: 1px solid rgba(212, 148, 58, 0.45);
+      border-bottom: 1px solid rgba(212, 148, 58, 0.45);
+      background: linear-gradient(90deg, rgba(247,246,242,0) 0%, rgba(247,246,242,0.85) 50%, rgba(247,246,242,0) 100%);
+    }
+
+    /* ==========================================================================
+       2. ESCENARIO CENTRAL DE INTERFAZ FLOTANTE (GALERÍA POLAROID + PORTAPAPELES)
+       ========================================================================== */
+    .hero-stage {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 88px;
+      display: grid;
+      grid-template-columns: minmax(270px, 340px) 1fr minmax(290px, 370px);
+      align-items: center;
+      gap: 16px;
+      pointer-events: none;
+    }
+
+    /* Transiciones de salida/entrada con blur sutil (emil-design-eng) */
+    .floating-panel {
+      pointer-events: auto;
+      will-change: transform, opacity, filter;
+    }
+
+    /* --------------------------------------------------------------------------
+       PANEL IZQUIERDO: MINI GALERÍA DE FOTOS ESTILO "POLAROID" SUPERPUESTAS
+       -------------------------------------------------------------------------- */
+    .polaroid-gallery {
+      position: relative;
+      height: 390px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .polaroid-gallery__label {
+      position: absolute;
+      top: -10px;
+      left: 8px;
+      z-index: 20;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: var(--brand-navy);
+      color: var(--surface-warm);
+      border: 1px solid var(--brand-gold);
+      border-radius: 6px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      box-shadow: 0 8px 20px rgba(23, 59, 99, 0.18);
+    }
+
+    .polaroid-stack {
+      position: relative;
+      width: 290px;
+      height: 340px;
+    }
+
+    .polaroid-card {
+      position: absolute;
+      width: 236px;
+      background: #FFFFFF;
+      padding: 11px 11px 30px 11px;
+      border-radius: 4px;
+      border: 1px solid rgba(23, 59, 99, 0.12);
+      box-shadow:
+        0 18px 36px rgba(15, 41, 71, 0.18),
+        0 4px 10px rgba(15, 41, 71, 0.08);
+      cursor: pointer;
+      transition:
+        transform 240ms var(--ease-out),
+        box-shadow 240ms var(--ease-out);
+      transform-origin: center center;
+    }
+
+    /* Cinta adhesiva de archivo en la parte superior de cada Polaroid */
+    .polaroid-card::before {
+      content: "";
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      width: 68px;
+      height: 18px;
+      background: rgba(232, 160, 74, 0.32);
+      border: 1px solid rgba(212, 148, 58, 0.45);
+      backdrop-filter: blur(2px);
+      border-radius: 2px;
+    }
+
+    .polaroid-card:nth-child(1) {
+      top: 6px;
+      left: 0px;
+      transform: rotate(-6.5deg);
+      z-index: 1;
+    }
+
+    .polaroid-card:nth-child(2) {
+      top: 32px;
+      left: 44px;
+      transform: rotate(4.8deg);
+      z-index: 2;
+    }
+
+    .polaroid-card:nth-child(3) {
+      top: 64px;
+      left: 16px;
+      transform: rotate(-2.2deg);
+      z-index: 3;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .polaroid-card:hover {
+        z-index: 10 !important;
+        transform: translateY(-8px) rotate(0deg) scale(1.04);
+        box-shadow:
+          0 26px 48px rgba(15, 41, 71, 0.26),
+          0 0 0 2px var(--brand-gold);
+      }
+    }
+
+    .polaroid-card:active {
+      transform: scale(0.97);
+    }
+
+    .polaroid-card__photo-wrap {
+      width: 100%;
+      height: 154px;
+      overflow: hidden;
+      background: var(--brand-navy-deep);
+      position: relative;
+      border: 1px solid rgba(23, 59, 99, 0.1);
+    }
+
+    .polaroid-card__photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: sepia(0.14) contrast(1.04);
+    }
+
+    .polaroid-card__stamp {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      background: rgba(23, 59, 99, 0.86);
+      color: var(--brand-gold-soft);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      border: 1px solid rgba(212, 148, 58, 0.5);
+    }
+
+    .polaroid-card__caption {
+      margin-top: 10px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 15px;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--brand-navy);
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .polaroid-card__sub {
+      margin-top: 3px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Espacio central libre para el Autobús 3D y el Año Flotante 3D */
+    .center-bus-corridor {
+      height: 100%;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      pointer-events: none;
+      padding-bottom: 12px;
+    }
+
+    /* --------------------------------------------------------------------------
+       PANEL DERECHO: PORTAPAPELES LEGAL CORPORATIVO (CORPORATE LEGAL CLIPBOARD)
+       -------------------------------------------------------------------------- */
+    .legal-clipboard {
+      position: relative;
+      background: linear-gradient(165deg, #1B4370 0%, #122E4F 100%);
+      border: 2px solid var(--brand-gold);
+      border-radius: 14px;
+      padding: 26px 14px 16px 14px;
+      box-shadow:
+        0 24px 48px rgba(15, 41, 71, 0.24),
+        0 6px 16px rgba(15, 41, 71, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    }
+
+    /* Pinza metálica dorada superior del portapapeles legal */
+    .legal-clipboard__clip {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 138px;
+      height: 30px;
+      background: linear-gradient(180deg, #F2C478 0%, #D4943A 55%, #A66E1E 100%);
+      border: 1.5px solid #173B63;
+      border-radius: 7px 7px 4px 4px;
+      box-shadow:
+        0 6px 14px rgba(15, 41, 71, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 5;
+    }
+
+    .legal-clipboard__rivet {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #173B63;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
+    }
+
+    .legal-clipboard__clip-title {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: #173B63;
+    }
+
+    /* Hoja de expediente legal marfil */
+    .legal-clipboard__sheet {
+      position: relative;
+      background: var(--surface-paper);
+      border-radius: 8px;
+      padding: 22px 20px 18px;
+      border: 1px solid #D8E0E8;
+      box-shadow:
+        0 3px 0 #E5DEC9,
+        0 6px 0 #D8CFAF,
+        0 10px 20px rgba(15, 41, 71, 0.14);
+      background-image:
+        linear-gradient(to bottom, transparent 95%, rgba(36, 91, 135, 0.06) 100%);
+      background-size: 100% 26px;
+    }
+
+    /* Margen vertical rojo/ámbar sutil de papel legal */
+    .legal-clipboard__sheet::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 14px;
+      width: 1px;
+      background: rgba(212, 148, 58, 0.35);
+    }
+
+    .legal-clipboard__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1.5px solid var(--brand-navy);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .legal-clipboard__docket {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--brand-blue);
+      letter-spacing: 0.04em;
+    }
+
+    .legal-clipboard__seal {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(212, 148, 58, 0.16);
+      border: 1px solid var(--brand-gold);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      font-weight: 600;
+      color: #8F5B14;
+    }
+
+    .legal-clipboard__year-tag {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--brand-gold);
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+    }
+
+    .legal-clipboard__title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.12;
+      color: var(--brand-navy);
+      margin-bottom: 10px;
+    }
+
+    .legal-clipboard__desc {
+      font-size: 14.8px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .legal-clipboard__metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(23, 59, 99, 0.22);
+    }
+
+    .legal-clipboard__metric-box {
+      background: var(--surface-blue-subtle);
+      padding: 7px 10px;
+      border-radius: 6px;
+      border-left: 3px solid var(--brand-gold);
+    }
+
+    .legal-clipboard__metric-val {
+      font-family: "Manrope", sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--brand-navy);
+    }
+
+    .legal-clipboard__metric-lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       3. CONTROLES UI: BOTONES CIRCULARES EN LOS BORDES IZQUIERDO Y DERECHO
+       ========================================================================== */
+    .nav-arrow-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 25;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--brand-navy);
+      color: var(--surface-warm);
+      border: 2px solid var(--brand-gold);
+      box-shadow:
+        0 12px 28px rgba(15, 41, 71, 0.25),
+        0 0 0 4px rgba(247, 246, 242, 0.75);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition:
+        transform 160ms var(--ease-out),
+        background-color 160ms ease,
+        box-shadow 160ms var(--ease-out);
+    }
+
+    .nav-arrow-btn--prev {
+      left: 20px;
+    }
+
+    .nav-arrow-btn--next {
+      right: 20px;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .nav-arrow-btn:hover {
+        background: var(--brand-blue);
+        transform: translateY(-50%) scale(1.06);
+        box-shadow:
+          0 16px 34px rgba(15, 41, 71, 0.32),
+          0 0 0 4px rgba(232, 160, 74, 0.35);
+      }
+    }
+
+    .nav-arrow-btn:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    .nav-arrow-btn:focus-visible {
+      outline: 3px solid var(--brand-gold-bright);
+      outline-offset: 4px;
+    }
+
+    .nav-arrow-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--brand-gold-bright);
+      stroke-width: 2.4;
+      fill: none;
+    }
+
+    .nav-arrow-btn__year-hint {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 9px;
+      color: var(--brand-gold-soft);
+      margin-top: 1px;
+    }
+
+    /* ==========================================================================
+       4. BARRA CRONOLÓGICA INFERIOR (INDICADOR DE PROGRESO DE LA LÍNEA DE TIEMPO)
+       ========================================================================== */
+    .hero-footer-bar {
+      position: relative;
+      z-index: 15;
+      width: 100%;
+      padding: 10px 24px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timeline-track {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(23, 59, 99, 0.90);
+      backdrop-filter: blur(10px);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1.5px solid var(--brand-gold);
+      box-shadow: 0 12px 28px rgba(15, 41, 71, 0.22);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .timeline-step-btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: rgba(247, 246, 242, 0.72);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition:
+        transform 150ms var(--ease-out),
+        background-color 180ms ease,
+        color 180ms ease;
+    }
+
+    .timeline-step-btn[aria-current="true"] {
+      background: var(--brand-gold-bright);
+      color: var(--brand-navy-deep);
+      box-shadow: 0 2px 10px rgba(232, 160, 74, 0.45);
+    }
+
+    .timeline-step-btn:active {
+      transform: scale(0.96);
+    }
+
+    .hero-footer-bar__hint {
+      font-size: 12px;
+      color: var(--brand-navy);
+      font-weight: 600;
+      background: rgba(247, 246, 242, 0.85);
+      padding: 3px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(23, 59, 99, 0.12);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN (TABLET & MOBILE 390px — CERO OVERFLOW HORIZONTAL)
+       ========================================================================== */
+    @media (max-width: 1120px) {
+      .hero-stage {
+        padding: 0 74px;
+        grid-template-columns: 260px 1fr 290px;
+      }
+      .polaroid-stack {
+        width: 240px;
+        height: 300px;
+      }
+      .polaroid-card {
+        width: 198px;
+      }
+      .polaroid-card__photo-wrap {
+        height: 124px;
+      }
+    }
+
+    @media (max-width: 880px) {
+      .timeline-hero {
+        min-height: 100vh;
+        overflow-y: auto;
+      }
+      .hero-header {
+        order: -1;
+        padding: 16px 16px 6px;
+      }
+      #timeline-canvas-wrap {
+        order: 0;
+        position: relative;
+        height: 360px;
+        flex-shrink: 0;
+      }
+      .hero-header__subtitle {
+        letter-spacing: 0.12em;
+        font-size: 0.68rem;
+      }
+      .hero-stage {
+        order: 1;
+        grid-template-columns: 1fr;
+        padding: 12px 16px 24px;
+        gap: 22px;
+      }
+      .hero-footer-bar {
+        order: 2;
+      }
+      .center-bus-corridor {
+        display: none;
+      }
+      .polaroid-gallery {
+        height: 290px;
+        order: 2;
+      }
+      .legal-clipboard {
+        order: 1;
+      }
+      .nav-arrow-btn {
+        top: 230px;
+        width: 46px;
+        height: 46px;
+      }
+      .nav-arrow-btn--prev {
+        left: 10px;
+      }
+      .nav-arrow-btn--next {
+        right: 10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 120ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="timeline-hero" aria-label="Línea de Tiempo Histórica de El Rescate">
+    <!-- Lienzo 3D: Planeta Low-Poly + Camino de Tierra + Autobús Comunitario + Fecha 3D Dorada -->
+    <div id="timeline-canvas-wrap">
+      <canvas id="timeline-canvas"></canvas>
+    </div>
+
+    <!-- 1. HEADER FIJO EN PANTALLA (Parte Superior Central) -->
+    <header class="hero-header">
+      <div class="hero-header__badge">
+        <span class="hero-header__badge-dot"></span>
+        <span>LOS ANGELES, CA • EST. 1981 • ARCHIVO HISTÓRICO INTERACTIVO</span>
+      </div>
+      <h1 class="hero-header__title">EL RESCATE</h1>
+      <p class="hero-header__subtitle">IMMIGRATION, COMMUNITY &amp; LEGAL SERVICES</p>
+    </header>
+
+    <!-- 2. CONTROLES DE NAVEGACIÓN LATERALES (Botones Circulares Elegantes) -->
+    <button
+      type="button"
+      class="nav-arrow-btn nav-arrow-btn--prev"
+      id="btn-prev"
+      aria-label="Hito anterior en la línea de tiempo"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      <span class="nav-arrow-btn__year-hint" id="prev-year-hint">2026</span>
+    </button>
+
+    <button
+      type="button"
+      class="nav-arrow-btn nav-arrow-btn--next"
+      id="btn-next"
+      aria-label="Siguiente hito en la línea de tiempo"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+      <span class="nav-arrow-btn__year-hint" id="next-year-hint">1991</span>
+    </button>
+
+    <!-- 3. INTERFACES FLOTANTES IZQUIERDA (POLAROIDS) Y DERECHA (PORTAPAPELES LEGAL) -->
+    <div class="hero-stage">
+      <!-- Panel Izquierdo: Mini Galería de Fotos Estilo Polaroid Superpuestas -->
+      <aside class="floating-panel polaroid-gallery" id="panel-polaroids" aria-label="Galería fotográfica del año">
+        <div class="polaroid-gallery__label">
+          <span>ARCHIVO FOTOGRÁFICO</span>
+          <span>•</span>
+          <span id="polaroid-year-badge">1981</span>
+        </div>
+        <div class="polaroid-stack" id="polaroid-stack">
+          <!-- Renderizado dinámicamente y animado con GSAP -->
+        </div>
+      </aside>
+
+      <!-- Corredor central reservado para el Autobús Comunitario 3D y el Año Flotante 3D Dorado -->
+      <div class="center-bus-corridor" aria-hidden="true"></div>
+
+      <!-- Panel Derecho: Portapapeles Legal Corporativo -->
+      <article class="floating-panel legal-clipboard" id="panel-clipboard" aria-live="polite">
+        <div class="legal-clipboard__clip">
+          <span class="legal-clipboard__rivet"></span>
+          <span class="legal-clipboard__clip-title">EL RESCATE • LEGAL DOCKET</span>
+          <span class="legal-clipboard__rivet"></span>
+        </div>
+
+        <div class="legal-clipboard__sheet">
+          <div class="legal-clipboard__header">
+            <span class="legal-clipboard__docket" id="clip-docket">EXP. #ER-1981-001</span>
+            <span class="legal-clipboard__seal" id="clip-seal">VERIFIED RECORD</span>
+          </div>
+
+          <div class="legal-clipboard__year-tag" id="clip-kicker">HITO FUNDACIONAL • PICO-UNION, L.A.</div>
+          <h2 class="legal-clipboard__title" id="clip-title">Fundación de El Rescate en Los Ángeles</h2>
+          <p class="legal-clipboard__desc" id="clip-desc">
+            Nacida en 1981 como la primera agencia en Estados Unidos dedicada a brindar representación legal gratuita y refugio humanitario a familias centroamericanas que huían del conflicto armado.
+          </p>
+
+          <div class="legal-clipboard__metrics">
+            <div class="legal-clipboard__metric-box">
+              <div class="legal-clipboard__metric-val" id="clip-stat-1-val">100% Pro Bono</div>
+              <div class="legal-clipboard__metric-lbl" id="clip-stat-1-lbl">Defensa de asilo inicial</div>
+            </div>
+            <div class="legal-clipboard__metric-box">
+              <div class="legal-clipboard__metric-val" id="clip-stat-2-val">Westlake / LA</div>
+              <div class="legal-clipboard__metric-lbl" id="clip-stat-2-lbl">Primera clínica comunitaria</div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- 4. BARRA INFERIOR DE ACCESO DIRECTO A FECHAS -->
+    <footer class="hero-footer-bar">
+      <div class="timeline-track" role="tablist" aria-label="Seleccionar año de la línea de tiempo" id="timeline-tablist">
+        <!-- Botones de año generados dinámicamente -->
+      </div>
+      <p class="hero-footer-bar__hint">
+        Usa las flechas laterales para girar el planeta y recorrer la historia de El Rescate
+      </p>
+    </footer>
+  </section>
+
+  <!-- Librerías Three.js y GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <script>
+    // ============================================================================
+    // DATOS HISTÓRICOS DE LA LÍNEA DE TIEMPO DE EL RESCATE (1981 - 2026)
+    // ============================================================================
+    const TIMELINE_DATA = [
+      {
+        year: "1981",
+        docket: "EXP. #ER-1981-001",
+        seal: "ACTA FUNDACIONAL",
+        kicker: "ORIGEN HUMANITARIO • LOS ÁNGELES",
+        title: "Fundación de El Rescate",
+        description:
+          "Establecida en Los Ángeles para ofrecer representación jurídica de asilo, orientación social y refugio de emergencia a miles de refugiados centroamericanos recién llegados al sur de California.",
+        stat1Val: "1.ª Agencia",
+        stat1Lbl: "De asilo centroamericano en EE. UU.",
+        stat2Val: "Pico-Union",
+        stat2Lbl: "Sede histórica comunitaria",
+        polaroids: [
+          {
+            img: "../assets/provisional-documentary-la-placita.jpg",
+            caption: "Encuentro comunitario en La Placita",
+            sub: "ARCHIVO 1981 • LOS ÁNGELES"
+          },
+          {
+            img: "../assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Entorno vecinal de Westlake",
+            sub: "ARCHIVO 1981 • CORREDOR CENTRAL"
+          },
+          {
+            img: "../assets/provisional-documentary-la-placita.jpg",
+            caption: "Primeras brigadas de orientación legal",
+            sub: "EXPEDIENTE #01 • PRO BONO"
+          }
+        ]
+      },
+      {
+        year: "1991",
+        docket: "EXP. #ER-1991-104",
+        seal: "DEFENSA ABC & TPS",
+        kicker: "LITIGIO HISTÓRICO • DERECHOS MIGRATORIOS",
+        title: "Victoria del Acuerdo ABC y Estatus TPS",
+        description:
+          "Tras una década de incidencia legal, El Rescate lidera las clínicas masivas para inscribir a decenas de miles de inmigrantes bajo el acuerdo American Baptist Churches (ABC) y el Estatus de Protección Temporal.",
+        stat1Val: "+45,000",
+        stat1Lbl: "Solicitudes procesadas en clínicas",
+        stat2Val: "Ley NACARA",
+        stat2Lbl: "Precedente de residencia legal",
+        polaroids: [
+          {
+            img: "../assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Jornadas de registro TPS en MacArthur Park",
+            sub: "ARCHIVO 1991 • DEFENSA CIVIL"
+          },
+          {
+            img: "../assets/provisional-documentary-la-placita.jpg",
+            caption: "Asesoría familiar para permisos de trabajo",
+            sub: "ARCHIVO 1991 • CLÍNICA JURÍDICA"
+          },
+          {
+            img: "../assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Organización vecinal en el corazón de L.A.",
+            sub: "EXPEDIENTE #104 • DERECHOS"
+          }
+        ]
+      },
+      {
+        year: "2004",
+        docket: "EXP. #ER-2004-218",
+        seal: "DESARROLLO INTEGRAL",
+        kicker: "ECONOMÍA SOCIAL • SALUD Y EDUCACIÓN",
+        title: "Clínicas Integrales y Microfinanzas",
+        description:
+          "El Rescate amplía su misión más allá de los tribunales: inaugura programas de alfabetización financiera, apoyo a pequeños comercios de familias migrantes y orientación juvenil en el distrito de Westlake.",
+        stat1Val: "360° Apoyo",
+        stat1Lbl: "Legal, educativo y comunitario",
+        stat2Val: "+12,000",
+        stat2Lbl: "Familias atendidas anualmente",
+        polaroids: [
+          {
+            img: "../assets/provisional-documentary-la-placita.jpg",
+            caption: "Red de comercios y familias emprendedoras",
+            sub: "ARCHIVO 2004 • DESARROLLO LOCAL"
+          },
+          {
+            img: "../assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Talleres comunitarios de ciudadanía",
+            sub: "ARCHIVO 2004 • EDUCACIÓN CÍVICA"
+          },
+          {
+            img: "../assets/provisional-documentary-la-placita.jpg",
+            caption: "Feria de servicios familiares en Olvera St.",
+            sub: "EXPEDIENTE #218 • COMUNIDAD"
+          }
+        ]
+      },
+      {
+        year: "2015",
+        docket: "EXP. #ER-2015-389",
+        seal: "PROTECCIÓN DACA",
+        kicker: "JUVENTUD Y REUNIFICACIÓN • CALIFORNIA",
+        title: "Defensa de Dreamers y Menores No Acompañados",
+        description:
+          "Creación del equipo especializado en representación de jóvenes bajo el programa DACA y defensa humanitaria para menores y madres refugiadas en tribunales de inmigración de Los Ángeles.",
+        stat1Val: "98% Éxito",
+        stat1Lbl: "En renovaciones y amparos DACA",
+        stat2Val: "Bilingüe",
+        stat2Lbl: "Acompañamiento humano continuo",
+        polaroids: [
+          {
+            img: "../assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Juventud universitaria beneficiaria de DACA",
+            sub: "ARCHIVO 2015 • FUTURO JOVEN"
+          },
+          {
+            img: "../assets/provisional-documentary-la-placita.jpg",
+            caption: "Reunificación de familias en Los Ángeles",
+            sub: "ARCHIVO 2015 • AMPARO LEGAL"
+          },
+          {
+            img: "../assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Foro de derechos constitucionales",
+            sub: "EXPEDIENTE #389 • JUSTICIA"
+          }
+        ]
+      },
+      {
+        year: "2026",
+        docket: "EXP. #ER-2026-500",
+        seal: "ERA DIGITAL",
+        kicker: "ACCESO UNIVERSAL • NUEVA PLATAFORMA",
+        title: "Transformación Digital y Alcance Comunitario",
+        description:
+          "Hoy El Rescate conecta cuatro décadas de prestigio jurídico con una plataforma digital accesible y bilingüe para que cada familia inmigrante encuentre orientación confiable sin barreras.",
+        stat1Val: "45 Años",
+        stat1Lbl: "De servicio ininterrumpido en L.A.",
+        stat2Val: "24/7 Acceso",
+        stat2Lbl: "Orientación digital segura",
+        polaroids: [
+          {
+            img: "../assets/provisional-documentary-la-placita.jpg",
+            caption: "Una comunidad más fuerte con oportunidades",
+            sub: "ARCHIVO 2026 • PRESENTE Y FUTURO"
+          },
+          {
+            img: "../assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Atención híbrida presencial y digital",
+            sub: "ARCHIVO 2026 • INNOVACIÓN SOCIAL"
+          },
+          {
+            img: "../assets/provisional-documentary-la-placita.jpg",
+            caption: "Cuatro décadas caminando junto al migrante",
+            sub: "EXPEDIENTE #500 • EL RESCATE"
+          }
+        ]
+      }
+    ];
+
+    // ============================================================================
+    // GENERADOR DE GEOMETRÍA 3D DE DÍGITOS EN DORADO MATE (CERO DEPENDENCIA EXTERNA)
+    // ============================================================================
+    // Construye dígitos 3D extruidos con bisel real en Three.js para que el año
+    // ("1981", "1991", etc.) flote justo sobre el techo del autobús en Dorado Mate.
+    const DIGIT_PATHS = {
+      "0": [
+        [[-0.28, 0.0], [0.28, 0.0], [0.28, 0.92], [-0.28, 0.92]],
+        [[-0.13, 0.15], [0.13, 0.15], [0.13, 0.77], [-0.13, 0.77]]
+      ],
+      "1": [
+        [[-0.22, 0.0], [0.22, 0.0], [0.22, 0.14], [0.08, 0.14], [0.08, 0.92], [-0.07, 0.92], [-0.24, 0.76], [-0.16, 0.65], [-0.07, 0.73], [-0.07, 0.14], [-0.22, 0.14]]
+      ],
+      "2": [
+        [[-0.28, 0.0], [0.28, 0.0], [0.28, 0.16], [-0.08, 0.16], [0.26, 0.54], [0.26, 0.92], [-0.26, 0.92], [-0.26, 0.74], [0.10, 0.74], [0.10, 0.58], [-0.28, 0.16]]
+      ],
+      "4": [
+        [[0.04, 0.0], [0.20, 0.0], [0.20, 0.24], [0.30, 0.24], [0.30, 0.39], [0.20, 0.39], [0.20, 0.92], [0.02, 0.92], [-0.30, 0.36], [-0.30, 0.24], [0.04, 0.24]],
+        [[-0.13, 0.39], [0.04, 0.39], [0.04, 0.69]]
+      ],
+      "5": [
+        [[-0.28, 0.0], [0.26, 0.0], [0.26, 0.54], [-0.12, 0.54], [-0.12, 0.76], [0.25, 0.76], [0.25, 0.92], [-0.27, 0.92], [-0.27, 0.39], [0.10, 0.39], [0.10, 0.16], [-0.28, 0.16]]
+      ],
+      "6": [
+        [[-0.28, 0.0], [0.28, 0.0], [0.28, 0.54], [-0.12, 0.54], [-0.12, 0.76], [0.24, 0.76], [0.24, 0.92], [-0.28, 0.92]],
+        [[-0.12, 0.15], [0.12, 0.15], [0.12, 0.39], [-0.12, 0.39]]
+      ],
+      "8": [
+        [[-0.28, 0.0], [0.28, 0.0], [0.28, 0.92], [-0.28, 0.92]],
+        [[-0.12, 0.14], [0.12, 0.14], [0.12, 0.39], [-0.12, 0.39]],
+        [[-0.12, 0.53], [0.12, 0.53], [0.12, 0.78], [-0.12, 0.78]]
+      ],
+      "9": [
+        [[-0.26, 0.0], [0.28, 0.0], [0.28, 0.92], [-0.28, 0.92], [-0.28, 0.38], [0.12, 0.38], [0.12, 0.16], [-0.26, 0.16]],
+        [[-0.12, 0.53], [0.12, 0.53], [0.12, 0.77], [-0.12, 0.77]]
+      ]
+    };
+
+    function build3DYearMeshGroup(yearStr, matteGoldMaterial, navyOutlineMaterial) {
+      const group = new THREE.Group();
+      const spacing = 0.72;
+      const startX = -((yearStr.length - 1) * spacing) / 2;
+
+      for (let i = 0; i < yearStr.length; i++) {
+        const ch = yearStr[i];
+        const loops = DIGIT_PATHS[ch] || DIGIT_PATHS["0"];
+        const outerPts = loops[0].map(([x, y]) => new THREE.Vector2(x, y));
+        const shape = new THREE.Shape(outerPts);
+
+        for (let h = 1; h < loops.length; h++) {
+          const holePts = loops[h].map(([x, y]) => new THREE.Vector2(x, y));
+          const holePath = new THREE.Path(holePts);
+          shape.holes.push(holePath);
+        }
+
+        const extrudeSettings = {
+          depth: 0.16,
+          bevelEnabled: true,
+          bevelSegments: 3,
+          steps: 1,
+          bevelSize: 0.025,
+          bevelThickness: 0.025
+        };
+
+        const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+        const mesh = new THREE.Mesh(geom, [matteGoldMaterial, navyOutlineMaterial]);
+        mesh.position.set(startX + i * spacing, 0, -0.08);
+        mesh.castShadow = true;
+        group.add(mesh);
+      }
+      return group;
+    }
+
+    // ============================================================================
+    // INICIALIZACIÓN DE LA ESCENA 3D (THREE.JS) + COREOGRAFÍA GSAP
+    // ============================================================================
+    const canvas = document.getElementById("timeline-canvas");
+    const wrap = document.getElementById("timeline-canvas-wrap");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance"
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.08;
+
+    const scene = new THREE.Scene();
+
+    // Cámara Fija en el Centro encuadrando la cima del planeta, el autobús y el año flotante 3D
+    const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 120);
+    camera.position.set(0, 2.05, 8.35);
+    camera.lookAt(0, 1.08, 0);
+
+    // Iluminación Cálida y Editorial
+    const ambientLight = new THREE.AmbientLight(0xEAF1F6, 0.88);
+    scene.add(ambientLight);
+
+    const hemiLight = new THREE.HemisphereLight(0xFFF9EE, 0x173B63, 0.55);
+    scene.add(hemiLight);
+
+    const dirLight = new THREE.DirectionalLight(0xFFF3DC, 1.45);
+    dirLight.position.set(5.5, 9.5, 6.5);
+    dirLight.castShadow = true;
+    dirLight.shadow.mapSize.width = 1024;
+    dirLight.shadow.mapSize.height = 1024;
+    dirLight.shadow.camera.near = 1;
+    dirLight.shadow.camera.far = 26;
+    const d = 6.5;
+    dirLight.shadow.camera.left = -d;
+    dirLight.shadow.camera.right = d;
+    dirLight.shadow.camera.top = d;
+    dirLight.shadow.camera.bottom = -d;
+    scene.add(dirLight);
+
+    // Materiales Corporativos PBR
+    const matGrassLowPoly = new THREE.MeshStandardMaterial({
+      color: 0x35823B,
+      roughness: 0.78,
+      metalness: 0.04,
+      flatShading: true
+    });
+    const matDirtRoad = new THREE.MeshStandardMaterial({
+      color: 0x8F653E,
+      roughness: 0.90,
+      metalness: 0.02,
+      flatShading: true
+    });
+    const matRoadPebble = new THREE.MeshStandardMaterial({
+      color: 0xB8946E,
+      roughness: 0.85,
+      flatShading: true
+    });
+    const matBusNavy = new THREE.MeshPhysicalMaterial({
+      color: 0x173B63,
+      roughness: 0.22,
+      metalness: 0.32,
+      clearcoat: 0.9,
+      clearcoatRoughness: 0.08
+    });
+    const matBusWhite = new THREE.MeshPhysicalMaterial({
+      color: 0xF7F6F2,
+      roughness: 0.25,
+      metalness: 0.06,
+      clearcoat: 0.85
+    });
+    const matBusGold = new THREE.MeshStandardMaterial({
+      color: 0xE09C3E,
+      roughness: 0.28,
+      metalness: 0.82
+    });
+    const matYearMatteGold = new THREE.MeshStandardMaterial({
+      color: 0xE5A140,
+      roughness: 0.44,
+      metalness: 0.65
+    });
+    const matBusGlass = new THREE.MeshPhysicalMaterial({
+      color: 0x1E4B7A,
+      roughness: 0.10,
+      metalness: 0.22,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.06
+    });
+    const matTire = new THREE.MeshStandardMaterial({
+      color: 0x18202C,
+      roughness: 0.82
+    });
+    const matTreeTrunk = new THREE.MeshStandardMaterial({
+      color: 0x5C3A21,
+      roughness: 0.88,
+      flatShading: true
+    });
+    const matLeafDark = new THREE.MeshStandardMaterial({
+      color: 0x24692C,
+      roughness: 0.72,
+      flatShading: true
+    });
+    const matLeafBright = new THREE.MeshStandardMaterial({
+      color: 0x43993E,
+      roughness: 0.68,
+      flatShading: true
+    });
+
+    // Grupo contenedor con orientación 3/4 compartida entre el camino del planeta y el autobús,
+    // garantizando que al rotar el planeta en un único eje (X), el camino pase exactamente bajo las 4 ruedas.
+    const worldHeadingGroup = new THREE.Group();
+    worldHeadingGroup.rotation.y = Math.PI * 0.38;
+    scene.add(worldHeadingGroup);
+
+    // ----------------------------------------------------------------------------
+    // 1. EL TERRENO: PLANETA ESFÉRICO LOW-POLY + CAMINO DE TIERRA + ÁRBOLES Y FLORES
+    // ----------------------------------------------------------------------------
+    const PLANET_RADIUS = 10.5;
+    const planetPivot = new THREE.Group();
+    planetPivot.position.set(0, -PLANET_RADIUS, 0);
+    worldHeadingGroup.add(planetPivot);
+
+    // Esfera Low-Poly con relieve facetado en las laderas y lecho suave bajo el camino
+    const planetGeom = new THREE.IcosahedronGeometry(PLANET_RADIUS, 5);
+    const posAttr = planetGeom.attributes.position;
+    const vTemp = new THREE.Vector3();
+    for (let i = 0; i < posAttr.count; i++) {
+      vTemp.fromBufferAttribute(posAttr, i);
+      const distFromCenterRoad = Math.abs(vTemp.x);
+      if (distFromCenterRoad < 1.32) {
+        vTemp.normalize().multiplyScalar(PLANET_RADIUS - 0.02);
+      } else {
+        const hillNoise =
+          0.18 * Math.sin(vTemp.x * 0.8 + vTemp.y * 0.6) +
+          0.14 * Math.cos(vTemp.z * 0.7 - vTemp.x * 0.5);
+        vTemp.normalize().multiplyScalar(PLANET_RADIUS + Math.max(0, hillNoise));
+      }
+      posAttr.setXYZ(i, vTemp.x, vTemp.y, vTemp.z);
+    }
+    planetGeom.computeVertexNormals();
+    const planetMesh = new THREE.Mesh(planetGeom, matGrassLowPoly);
+    planetMesh.receiveShadow = true;
+    planetPivot.add(planetMesh);
+
+    // Camino de Tierra que bordea toda la circunferencia del planeta (alineado bajo las ruedas)
+    const roadRingGeom = new THREE.CylinderGeometry(
+      PLANET_RADIUS + 0.025,
+      PLANET_RADIUS + 0.025,
+      2.15,
+      96,
+      4,
+      true
+    );
+    roadRingGeom.rotateZ(Math.PI / 2);
+    const rPos = roadRingGeom.attributes.position;
+    for (let i = 0; i < rPos.count; i++) {
+      vTemp.fromBufferAttribute(rPos, i);
+      const angle = Math.atan2(vTemp.z, vTemp.y);
+      const waveX = 0.06 * Math.sin(angle * 5.0);
+      vTemp.x += waveX;
+      vTemp.normalize().multiplyScalar(PLANET_RADIUS + 0.022);
+      rPos.setXYZ(i, vTemp.x, vTemp.y, vTemp.z);
+    }
+    roadRingGeom.computeVertexNormals();
+    const dirtRoadMesh = new THREE.Mesh(roadRingGeom, matDirtRoad);
+    dirtRoadMesh.receiveShadow = true;
+    planetPivot.add(dirtRoadMesh);
+
+    // Función auxiliar para colocar objetos sobre la esfera del planeta según ángulo polar (theta) y desplazamiento lateral (latX)
+    function placeOnPlanet(obj, theta, latX, extraRadius = 0) {
+      const waveX = 0.06 * Math.sin(theta * 5.0);
+      const x = waveX + latX;
+      const y = PLANET_RADIUS * Math.cos(theta);
+      const z = PLANET_RADIUS * Math.sin(theta);
+      const pos = new THREE.Vector3(x, y, z).normalize().multiplyScalar(PLANET_RADIUS + extraRadius);
+      obj.position.copy(pos);
+
+      const normal = pos.clone().normalize();
+      const quat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), normal);
+      obj.quaternion.copy(quat);
+      planetPivot.add(obj);
+    }
+
+    // Marcas viales doradas discontinuas en el centro del camino de tierra (para acentuar la sensación de avance)
+    const dashGeom = new THREE.BoxGeometry(0.10, 0.02, 0.44);
+    for (let i = 0; i < 40; i++) {
+      const theta = (i / 40) * Math.PI * 2;
+      const dash = new THREE.Mesh(dashGeom, matBusGold);
+      placeOnPlanet(dash, theta, 0, 0.025);
+    }
+
+    // Piedrecitas de borde del camino de tierra
+    const pebbleGeom = new THREE.DodecahedronGeometry(0.09, 0);
+    for (let i = 0; i < 140; i++) {
+      const theta = (i / 140) * Math.PI * 2;
+      const side = i % 2 === 0 ? -1 : 1;
+      const pebble = new THREE.Mesh(pebbleGeom, matRoadPebble);
+      pebble.scale.set(1.2, 0.55, 0.9);
+      placeOnPlanet(pebble, theta, side * 1.12, 0.02);
+    }
+
+    // Árboles pequeños Low-Poly (Pinos y Robles facetados alrededor de los 360° del planeta)
+    function createLowPolyTree(variant = 0) {
+      const tree = new THREE.Group();
+      const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.10, 0.42, 6), matTreeTrunk);
+      trunk.position.y = 0.21;
+      trunk.castShadow = true;
+      tree.add(trunk);
+
+      if (variant % 2 === 0) {
+        const c1 = new THREE.Mesh(new THREE.ConeGeometry(0.42, 0.58, 7), matLeafDark);
+        c1.position.y = 0.56;
+        c1.castShadow = true;
+        const c2 = new THREE.Mesh(new THREE.ConeGeometry(0.32, 0.48, 7), matLeafBright);
+        c2.position.y = 0.88;
+        c2.castShadow = true;
+        const c3 = new THREE.Mesh(new THREE.ConeGeometry(0.21, 0.36, 7), matLeafDark);
+        c3.position.y = 1.14;
+        c3.castShadow = true;
+        tree.add(c1, c2, c3);
+      } else {
+        const crown = new THREE.Mesh(new THREE.DodecahedronGeometry(0.42, 0), matLeafBright);
+        crown.position.y = 0.68;
+        crown.scale.set(1, 0.88, 1);
+        crown.castShadow = true;
+        tree.add(crown);
+      }
+      return tree;
+    }
+
+    for (let i = 0; i < 76; i++) {
+      const theta = (i / 76) * Math.PI * 2 + (i % 3) * 0.04;
+      const side = i % 2 === 0 ? -1 : 1;
+      const latX = side * (1.58 + ((i * 37) % 100) / 100 * 3.8);
+      const tree = createLowPolyTree(i);
+      const sc = 0.58 + ((i * 19) % 100) / 100 * 0.52;
+      tree.scale.setScalar(sc);
+      placeOnPlanet(tree, theta, latX, 0.0);
+    }
+
+    // Flores silvestres Low-Poly (Dorado, Blanco y Azul) y Manojos de Césped
+    const flowerColors = [0xE8A04A, 0xFFFFFF, 0x245B87];
+    const flowerMats = flowerColors.map(
+      (c) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.45, flatShading: true })
+    );
+    const flowerStemMat = new THREE.MeshStandardMaterial({ color: 0x499E45, roughness: 0.6, flatShading: true });
+    const petalGeom = new THREE.OctahedronGeometry(0.085, 0);
+    const tuftBladeGeom = new THREE.ConeGeometry(0.055, 0.22, 4);
+
+    for (let i = 0; i < 220; i++) {
+      const theta = (i / 220) * Math.PI * 2;
+      const side = i % 2 === 0 ? -1 : 1;
+      const latX = side * (1.30 + ((i * 53) % 100) / 100 * 4.2);
+
+      const flowerGroup = new THREE.Group();
+      const tuft = new THREE.Mesh(tuftBladeGeom, flowerStemMat);
+      tuft.position.y = 0.11;
+      flowerGroup.add(tuft);
+
+      if (i % 2 === 0) {
+        const blossom = new THREE.Mesh(petalGeom, flowerMats[i % 3]);
+        blossom.position.y = 0.22;
+        blossom.scale.set(1.2, 0.65, 1.2);
+        flowerGroup.add(blossom);
+      }
+      placeOnPlanet(flowerGroup, theta, latX, 0.0);
+    }
+
+    // ----------------------------------------------------------------------------
+    // 2. VEHÍCULO CENTRAL: AUTOBÚS DE TRANSPORTE COMUNITARIO EN 3D
+    //    (Colores corporativos: Azul Marino #173B63, Blanco #F7F6F2 y Dorado #E8A04A)
+    // ----------------------------------------------------------------------------
+    const busAnchor = new THREE.Group();
+    // Situado en el punto más alto del camino (centro de la pantalla) dentro de worldHeadingGroup
+    busAnchor.position.set(0, 0.04, 0);
+    worldHeadingGroup.add(busAnchor);
+
+    const busChassis = new THREE.Group();
+    busAnchor.add(busChassis);
+
+    // Chasis inferior Azul Marino (#173B63)
+    const lowerBody = new THREE.Mesh(new THREE.BoxGeometry(1.28, 0.56, 2.75), matBusNavy);
+    lowerBody.position.set(0, 0.52, 0);
+    lowerBody.castShadow = true;
+    lowerBody.receiveShadow = true;
+    busChassis.add(lowerBody);
+
+    // Cabina superior Blanca (#F7F6F2)
+    const upperCabin = new THREE.Mesh(new THREE.BoxGeometry(1.22, 0.52, 2.62), matBusWhite);
+    upperCabin.position.set(0, 1.04, -0.02);
+    upperCabin.castShadow = true;
+    busChassis.add(upperCabin);
+
+    // Techo abovedado Blanco con detalles Dorados
+    const roofCap = new THREE.Mesh(new THREE.BoxGeometry(1.12, 0.10, 2.46), matBusWhite);
+    roofCap.position.set(0, 1.34, -0.02);
+    busChassis.add(roofCap);
+
+    // Franja Cinturón Dorada Corporativa (#E8A04A)
+    const goldBelt = new THREE.Mesh(new THREE.BoxGeometry(1.31, 0.075, 2.79), matBusGold);
+    goldBelt.position.set(0, 0.79, 0);
+    busChassis.add(goldBelt);
+
+    // Parachoques Delantero y Trasero en Dorado
+    const frontBumper = new THREE.Mesh(new THREE.BoxGeometry(1.36, 0.12, 0.14), matBusGold);
+    frontBumper.position.set(0, 0.28, 1.40);
+    busChassis.add(frontBumper);
+
+    const rearBumper = new THREE.Mesh(new THREE.BoxGeometry(1.36, 0.12, 0.14), matBusGold);
+    rearBumper.position.set(0, 0.28, -1.40);
+    busChassis.add(rearBumper);
+
+    // Parrilla frontal Dorada
+    const frontGrille = new THREE.Mesh(new THREE.BoxGeometry(0.74, 0.22, 0.06), matBusGold);
+    frontGrille.position.set(0, 0.48, 1.37);
+    busChassis.add(frontGrille);
+
+    // Parabrisas y Ventanas Laterales en Cristal (Glass)
+    const windshield = new THREE.Mesh(new THREE.BoxGeometry(1.08, 0.36, 0.08), matBusGlass);
+    windshield.position.set(0, 1.05, 1.28);
+    busChassis.add(windshield);
+
+    const rearWindow = new THREE.Mesh(new THREE.BoxGeometry(1.04, 0.34, 0.08), matBusGlass);
+    rearWindow.position.set(0, 1.05, -1.32);
+    busChassis.add(rearWindow);
+
+    const windowZPositions = [-0.90, -0.32, 0.26, 0.84];
+    windowZPositions.forEach((wz) => {
+      const sideWin = new THREE.Mesh(new THREE.BoxGeometry(1.25, 0.33, 0.44), matBusGlass);
+      sideWin.position.set(0, 1.05, wz);
+      busChassis.add(sideWin);
+    });
+
+    // Rieles Portaequipajes de Techo en Dorado
+    [-0.46, 0.46].forEach((rx) => {
+      const rail = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.045, 2.10), matBusGold);
+      rail.position.set(rx, 1.41, -0.02);
+      busChassis.add(rail);
+    });
+
+    // Faros delanteros luminosos
+    const matHeadlight = new THREE.MeshBasicMaterial({ color: 0xFFF4D2 });
+    [-0.46, 0.46].forEach((hx) => {
+      const hl = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.06, 20), matHeadlight);
+      hl.rotation.x = Math.PI / 2;
+      hl.position.set(hx, 0.50, 1.38);
+      busChassis.add(hl);
+    });
+
+    // Las 4 Ruedas con Rines Dorados y radios visibles (para apreciar claramente su giro)
+    const busWheels = [];
+    const wheelPositions = [
+      [-0.64, 0.28, -0.86],
+      [ 0.64, 0.28, -0.86],
+      [-0.64, 0.28,  0.86],
+      [ 0.64, 0.28,  0.86]
+    ];
+
+    wheelPositions.forEach(([wx, wy, wz]) => {
+      const wheelGroup = new THREE.Group();
+      wheelGroup.position.set(wx, wy, wz);
+
+      const tireMesh = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.28, 0.28, 0.20, 24),
+        matTire
+      );
+      tireMesh.rotation.z = Math.PI / 2;
+      tireMesh.castShadow = true;
+      wheelGroup.add(tireMesh);
+
+      const goldRim = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.15, 0.15, 0.22, 16),
+        matBusGold
+      );
+      goldRim.rotation.z = Math.PI / 2;
+      wheelGroup.add(goldRim);
+
+      // Barra transversal blanca/azul en el rin para visualizar el giro de la rueda con total claridad
+      const spokeA = new THREE.Mesh(
+        new THREE.BoxGeometry(0.23, 0.04, 0.24),
+        matBusWhite
+      );
+      const spokeB = new THREE.Mesh(
+        new THREE.BoxGeometry(0.23, 0.24, 0.04),
+        matBusNavy
+      );
+      wheelGroup.add(spokeA, spokeB);
+
+      busAnchor.add(wheelGroup);
+      busWheels.push(wheelGroup);
+    });
+
+    // ----------------------------------------------------------------------------
+    // 3. FECHA FLOTANTE 3D EN COLOR DORADO MATE JUSTO ENCIMA DEL TECHO DEL AUTOBÚS
+    // ----------------------------------------------------------------------------
+    const floatingYearPivot = new THREE.Group();
+    floatingYearPivot.position.set(0, 1.66, 0);
+    scene.add(floatingYearPivot);
+
+    let currentYearMeshGroup = build3DYearMeshGroup(
+      TIMELINE_DATA[0].year,
+      matYearMatteGold,
+      matBusNavy
+    );
+    floatingYearPivot.add(currentYearMeshGroup);
+
+    // ============================================================================
+    // LÓGICA DE INTERFAZ Y ANIMACIÓN CRÍTICA (GSAP + THREE.JS RENDER LOOP)
+    // ============================================================================
+    let currentIndex = 0;
+    let isTransitioning = false;
+    const motionState = {
+      planetAngle: 0,
+      lastPlanetAngle: 0,
+      busSpeedBoost: 0
+    };
+
+    const polaroidStackEl = document.getElementById("polaroid-stack");
+    const polaroidYearBadge = document.getElementById("polaroid-year-badge");
+    const panelPolaroids = document.getElementById("panel-polaroids");
+    const panelClipboard = document.getElementById("panel-clipboard");
+    const clipDocket = document.getElementById("clip-docket");
+    const clipSeal = document.getElementById("clip-seal");
+    const clipKicker = document.getElementById("clip-kicker");
+    const clipTitle = document.getElementById("clip-title");
+    const clipDesc = document.getElementById("clip-desc");
+    const clipStat1Val = document.getElementById("clip-stat-1-val");
+    const clipStat1Lbl = document.getElementById("clip-stat-1-lbl");
+    const clipStat2Val = document.getElementById("clip-stat-2-val");
+    const clipStat2Lbl = document.getElementById("clip-stat-2-lbl");
+    const prevYearHint = document.getElementById("prev-year-hint");
+    const nextYearHint = document.getElementById("next-year-hint");
+    const tablistEl = document.getElementById("timeline-tablist");
+
+    // Construir botones inferiores de año
+    TIMELINE_DATA.forEach((item, idx) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "timeline-step-btn";
+      btn.textContent = item.year;
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-current", idx === 0 ? "true" : "false");
+      btn.addEventListener("click", () => {
+        if (idx !== currentIndex) {
+          const dir = idx > currentIndex ? 1 : -1;
+          navigateToIndex(idx, dir);
+        }
+      });
+      tablistEl.appendChild(btn);
+    });
+
+    function renderStepDOM(index) {
+      const data = TIMELINE_DATA[index];
+      polaroidYearBadge.textContent = data.year;
+
+      polaroidStackEl.innerHTML = data.polaroids
+        .map(
+          (p, i) => `
+          <figure class="polaroid-card" data-polaroid-idx="${i}">
+            <div class="polaroid-card__photo-wrap">
+              <img class="polaroid-card__photo" src="${p.img}" alt="${p.caption}" loading="eager" />
+              <span class="polaroid-card__stamp">${data.year}</span>
+            </div>
+            <figcaption class="polaroid-card__caption">${p.caption}</figcaption>
+            <div class="polaroid-card__sub">${p.sub}</div>
+          </figure>
+        `
+        )
+        .join("");
+
+      // Permitir traer cualquier Polaroid al frente con un clic
+      polaroidStackEl.querySelectorAll(".polaroid-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          polaroidStackEl.querySelectorAll(".polaroid-card").forEach((c) => {
+            c.style.zIndex = "";
+          });
+          card.style.zIndex = "12";
+        });
+      });
+
+      clipDocket.textContent = data.docket;
+      clipSeal.textContent = data.seal;
+      clipKicker.textContent = data.kicker;
+      clipTitle.textContent = data.title;
+      clipDesc.textContent = data.description;
+      clipStat1Val.textContent = data.stat1Val;
+      clipStat1Lbl.textContent = data.stat1Lbl;
+      clipStat2Val.textContent = data.stat2Val;
+      clipStat2Lbl.textContent = data.stat2Lbl;
+
+      const prevIdx = (index - 1 + TIMELINE_DATA.length) % TIMELINE_DATA.length;
+      const nextIdx = (index + 1) % TIMELINE_DATA.length;
+      prevYearHint.textContent = TIMELINE_DATA[prevIdx].year;
+      nextYearHint.textContent = TIMELINE_DATA[nextIdx].year;
+
+      tablistEl.querySelectorAll(".timeline-step-btn").forEach((b, bIdx) => {
+        b.setAttribute("aria-current", bIdx === index ? "true" : "false");
+      });
+    }
+
+    function swap3DYearGeometry(newYearStr) {
+      if (currentYearMeshGroup) {
+        floatingYearPivot.remove(currentYearMeshGroup);
+        currentYearMeshGroup.traverse((child) => {
+          if (child.geometry) child.geometry.dispose();
+        });
+      }
+      currentYearMeshGroup = build3DYearMeshGroup(newYearStr, matYearMatteGold, matBusNavy);
+      floatingYearPivot.add(currentYearMeshGroup);
+    }
+
+    // Coreografía completa de transición al avanzar o retroceder en el tiempo
+    function navigateToIndex(targetIndex, direction = 1) {
+      if (isTransitioning || targetIndex === currentIndex) return;
+      isTransitioning = true;
+      currentIndex = targetIndex;
+
+      const stepAngle = (Math.PI * 2) / TIMELINE_DATA.length;
+      const targetAngle = motionState.planetAngle + direction * stepAngle;
+
+      if (reduceMotion) {
+        motionState.planetAngle = targetAngle;
+        motionState.lastPlanetAngle = targetAngle;
+        planetPivot.rotation.x = -targetAngle;
+        swap3DYearGeometry(TIMELINE_DATA[currentIndex].year);
+        renderStepDOM(currentIndex);
+        isTransitioning = false;
+        return;
+      }
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          isTransitioning = false;
+        }
+      });
+
+      // 1. Salida rápida de los paneles UI (scale 0.95 + blur 2px + autoAlpha 0) y del Año Flotante 3D
+      tl.to(
+        [panelPolaroids, panelClipboard],
+        {
+          scale: 0.95,
+          y: 12,
+          autoAlpha: 0,
+          filter: "blur(2px)",
+          duration: 0.24,
+          ease: "power2.out",
+          stagger: 0.03
+        },
+        0
+      );
+
+      tl.to(
+        floatingYearPivot.scale,
+        {
+          x: 0.88,
+          y: 0.88,
+          z: 0.88,
+          duration: 0.24,
+          ease: "power2.out"
+        },
+        0
+      );
+
+      tl.to(
+        floatingYearPivot.position,
+        {
+          y: 1.92,
+          duration: 0.24,
+          ease: "power2.out"
+        },
+        0
+      );
+
+      // 2. Rotación de la esfera del terreno sobre su eje (la tierra gira debajo del autobús)
+      //    + aceleración del motor y cabeceo de tracción del chasis
+      tl.to(
+        motionState,
+        {
+          planetAngle: targetAngle,
+          duration: 1.28,
+          ease: "power3.inOut"
+        },
+        0
+      );
+
+      tl.to(
+        motionState,
+        {
+          busSpeedBoost: 1,
+          duration: 0.35,
+          ease: "power2.out",
+          yoyo: true,
+          repeat: 1,
+          repeatDelay: 0.45
+        },
+        0
+      );
+
+      tl.to(
+        busChassis.rotation,
+        {
+          x: direction * -0.032,
+          duration: 0.35,
+          ease: "power2.out"
+        },
+        0
+      );
+
+      // 3. Reemplazo de los datos y del Texto 3D Dorado cuando el autobús está por detenerse
+      tl.add(() => {
+        renderStepDOM(currentIndex);
+        swap3DYearGeometry(TIMELINE_DATA[currentIndex].year);
+      }, 0.86);
+
+      // 4. Asentamiento suave del chasis del autobús al frenar y entrada escalonada de la nueva fecha
+      tl.to(
+        busChassis.rotation,
+        {
+          x: 0,
+          duration: 0.45,
+          ease: "back.out(2.2)"
+        },
+        0.92
+      );
+
+      tl.to(
+        floatingYearPivot.scale,
+        {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: 0.42,
+          ease: "back.out(1.8)"
+        },
+        0.88
+      );
+
+      tl.to(
+        floatingYearPivot.position,
+        {
+          y: 1.66,
+          duration: 0.42,
+          ease: "power3.out"
+        },
+        0.88
+      );
+
+      tl.fromTo(
+        [panelPolaroids, panelClipboard],
+        {
+          scale: 0.95,
+          y: 14,
+          autoAlpha: 0,
+          filter: "blur(2px)"
+        },
+        {
+          scale: 1,
+          y: 0,
+          autoAlpha: 1,
+          filter: "blur(0px)",
+          duration: 0.38,
+          ease: "cubic-bezier(0.23, 1, 0.32, 1)",
+          stagger: 0.055
+        },
+        0.90
+      );
+    }
+
+    document.getElementById("btn-prev").addEventListener("click", () => {
+      const prevIdx = (currentIndex - 1 + TIMELINE_DATA.length) % TIMELINE_DATA.length;
+      navigateToIndex(prevIdx, -1);
+    });
+
+    document.getElementById("btn-next").addEventListener("click", () => {
+      const nextIdx = (currentIndex + 1) % TIMELINE_DATA.length;
+      navigateToIndex(nextIdx, 1);
+    });
+
+    // Inicializar primer hito (1981)
+    renderStepDOM(0);
+
+    // Manejo de resize responsivo
+    function handleResize() {
+      const w = wrap.clientWidth;
+      const h = wrap.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      // Ajustar distancia de cámara en pantallas estrechas para mantener el autobús centrado
+      if (w < 600) {
+        camera.position.set(0, 2.15, 9.6);
+      } else {
+        camera.position.set(0, 2.05, 8.35);
+      }
+      camera.lookAt(0, 1.08, 0);
+      camera.updateProjectionMatrix();
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    // Bucle de animación: sincronización exacta planeta <-> ruedas + rebote sutil de motor encendido
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+
+      // 1. Aplicar la rotación acumulada a la esfera del terreno sobre su eje X local (el camino pasa siempre bajo el autobús)
+      const deltaAngle = motionState.planetAngle - motionState.lastPlanetAngle;
+      motionState.lastPlanetAngle = motionState.planetAngle;
+
+      planetPivot.rotation.x = -motionState.planetAngle;
+
+      // 2. Girar las 4 ruedas del autobús exactamente a la misma velocidad lineal de la superficie
+      const wheelRadius = 0.28;
+      const wheelDelta = deltaAngle * (PLANET_RADIUS / wheelRadius);
+      for (let i = 0; i < busWheels.length; i++) {
+        busWheels[i].rotation.x += wheelDelta;
+      }
+
+      // 3. Animación en bucle muy sutil del chasis (rebote vertical de motor encendido / marcha)
+      if (!reduceMotion) {
+        const idleAmp = 0.014 + motionState.busSpeedBoost * 0.022;
+        const idleFreq = 7.2 + motionState.busSpeedBoost * 6.0;
+        busChassis.position.y = Math.sin(t * idleFreq) * idleAmp;
+        busChassis.rotation.z = Math.cos(t * (idleFreq * 0.5)) * 0.006;
+
+        // Levitación suave del Año 3D Dorado sobre el techo del autobús
+        if (!isTransitioning) {
+          floatingYearPivot.position.y = 1.66 + Math.sin(t * 2.2) * 0.035;
+        }
+        floatingYearPivot.rotation.y = Math.sin(t * 1.4) * 0.08;
+      }
+
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>

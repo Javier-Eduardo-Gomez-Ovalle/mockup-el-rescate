@@ -1,0 +1,2504 @@
+/* ==========================================================================
+   EL RESCATE — PROTOTIPO WEB INTERACTIVO INTEGRAL (PROPUESTA CLIENTE)
+   Arquitectura Visual:
+   - Dirección Artística V3 (Manrope + Source Sans 3 + Cormorant Garamond + JetBrains Mono)
+   - Video 1 (Nexora): Preloader, Hero enmarcado, Scroll-Scrubbed Manifesto, Bento KPIs,
+     Sticky Split Image Wipe y Ruta de Nodos SVG.
+   - Video 2 (C&A): Contenedores con muescas geométricas a 45° (Notched Cards) y Arco 3D.
+   - Video 3 (Gooey Nav): Barra de navegación líquida con filtro SVG Metaball.
+   - Video 4 (RIFF 28 Card Shuffle): Mazo interactivo de tarjetas apiladas con shuffle.
+   - Imagen 1 (Clínica Legal): Calendario interactivo Noviembre 2026 + Formulario + Evaluador.
+   - Imagen 2 (UNVEIL 3D Stack): Galería espacial de láminas translúcidas en diagonal 3D.
+   - Escena 3D Three.js: Autobús comunitario de El Rescate rodando sobre planeta low-poly.
+   ========================================================================== */
+
+:root {
+  /* Paleta Oficial / Foundations El Rescate */
+  --navy-950: #09192C;
+  --navy-900: #0F2642;
+  --navy-800: #173B63;
+  --blue-700: #245B87;
+  --blue-500: #0B65C6;
+  --blue-400: #388BFF;
+  --amber-500: #E8A04A;
+  --amber-400: #F4B668;
+  --amber-300: #FAD49B;
+  --lime-gold: #D4F76B;
+  --warm-bg: #F7F6F2;
+  --warm-card: #FCFBF8;
+  --warm-border: #E2DFD7;
+  --ice-bg: #EAF1F6;
+  --white: #FFFFFF;
+  --text-dark: #132840;
+  --text-body: #2A3F58;
+  --text-muted: #60748A;
+
+  /* Tipografías */
+  --font-display: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Curvas de animación (emil-design-eng & animate skill) */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-quart: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  background-color: var(--warm-bg);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--warm-bg);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+/* ==========================================================================
+   0. PRELOADER CINEMATOGRÁFICO (Inspirado en Video 1 — NEXORA)
+   ========================================================================== */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: radial-gradient(circle at 50% 45%, #173B63 0%, #071322 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: var(--white);
+  clip-path: inset(0 0 0 0);
+  will-change: clip-path, opacity;
+}
+
+.preloader__emblem {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(232, 160, 74, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 48px rgba(232, 160, 74, 0.25);
+}
+
+.preloader__diamond {
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, var(--amber-500) 0%, #FFF3D6 100%);
+  transform: rotate(45deg);
+  border-radius: 4px;
+  animation: pulseDiamond 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes pulseDiamond {
+  from { transform: rotate(45deg) scale(0.88); }
+  to { transform: rotate(45deg) scale(1.08); }
+}
+
+.preloader__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.preloader__title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--amber-400);
+}
+
+.preloader__bar-wrap {
+  width: 200px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.preloader__bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--amber-500), #FFFFFF);
+  border-radius: 999px;
+}
+
+.preloader__years {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(234, 241, 246, 0.72);
+  letter-spacing: 0.1em;
+}
+
+/* ==========================================================================
+   1. HEADER FLOTANTE + GOOEY LIQUID METABALL NAV (Video 1 + Video 3 Riff)
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 16px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0 28px;
+  pointer-events: none;
+}
+
+.site-header__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand-pill {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  padding: 8px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(23, 59, 99, 0.12);
+  box-shadow: 0 10px 30px rgba(9, 25, 44, 0.10);
+  text-decoration: none;
+  transition: transform 180ms var(--ease-out-quart);
+}
+
+.brand-pill:hover {
+  transform: translateY(-1px);
+}
+
+.brand-pill__logo {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+/* Gooey Metaball Navigation Capsule (Video 3: riff-07c35a71) */
+.gooey-nav-shell {
+  pointer-events: auto;
+  position: relative;
+  background: rgba(11, 25, 44, 0.92);
+  backdrop-filter: blur(18px);
+  padding: 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 18px 40px rgba(9, 25, 44, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+}
+
+/* Capa filtrada con SVG Gooey Metaball */
+.gooey-stage {
+  position: absolute;
+  inset: 6px;
+  pointer-events: none;
+  filter: url(#gooey-metaball);
+  z-index: 1;
+}
+
+.gooey-blob-main,
+.gooey-blob-trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #F6B95E 0%, #E8A04A 55%, #FFF1AE 100%);
+  box-shadow: 0 0 24px rgba(232, 160, 74, 0.65);
+  will-change: transform, width;
+}
+
+.gooey-blob-trail {
+  height: 76%;
+  top: 12%;
+}
+
+.gooey-nav-list {
+  position: relative;
+  z-index: 2;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gooey-nav-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: rgba(234, 241, 246, 0.78);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: color 200ms ease, transform 150ms ease;
+  white-space: nowrap;
+}
+
+.gooey-nav-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  transition: transform 220ms var(--ease-spring);
+}
+
+.gooey-nav-btn.is-active {
+  color: var(--navy-950);
+  font-weight: 800;
+}
+
+.gooey-nav-btn.is-active svg {
+  transform: scale(1.12);
+}
+
+.gooey-nav-btn:hover:not(.is-active) {
+  color: var(--white);
+}
+
+/* Utilidades derechas del Header */
+.header-actions {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lang-pill {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(23, 59, 99, 0.14);
+  border-radius: 999px;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  box-shadow: 0 8px 24px rgba(9, 25, 44, 0.08);
+}
+
+.lang-pill__btn {
+  border: none;
+  background: transparent;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.lang-pill__btn.is-active {
+  background: var(--navy-800);
+  color: var(--white);
+}
+
+.header-cta {
+  text-decoration: none;
+  background: var(--navy-800);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 160, 74, 0.45);
+  box-shadow: 0 10px 28px rgba(23, 59, 99, 0.22);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 160ms var(--ease-out-quart), background-color 180ms ease;
+}
+
+.header-cta:hover {
+  background: var(--blue-700);
+  transform: translateY(-1px);
+}
+
+.header-cta:active {
+  transform: scale(0.97);
+}
+
+.header-cta__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber-500);
+  box-shadow: 0 0 0 3px rgba(232, 160, 74, 0.28);
+}
+
+/* ==========================================================================
+   2. HERO V3 + NOTCHED CHAMFERED STAGE (Video 1 Nexora + Video 2 C&A + V3)
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  padding: 108px 28px 64px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Fondo arquitectónico derecho #173B63 de nuestra Dirección Artística V3 */
+.hero-architectural-backdrop {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 58%;
+  height: 60%;
+  background: var(--navy-800);
+  border-top-left-radius: 32px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.02fr 1.18fr;
+  gap: 44px;
+  align-items: start;
+}
+
+/* Columna Editorial Izquierda (100% sobre fondo cálido #F7F6F2) */
+.hero-editorial {
+  padding-top: 28px;
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--blue-700);
+  margin-bottom: 18px;
+}
+
+.hero-kicker__line {
+  width: 28px;
+  height: 2px;
+  background: var(--amber-500);
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.65rem, 4.4vw, 4.15rem);
+  font-weight: 800;
+  line-height: 1.07;
+  letter-spacing: -0.032em;
+  color: var(--navy-800);
+  margin-bottom: 24px;
+}
+
+.hero-headline__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 4px;
+}
+
+.hero-headline__line-inner {
+  display: block;
+  will-change: transform;
+}
+
+.hero-headline__line--indented {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--blue-700);
+}
+
+.hero-headline__rule {
+  width: 42px;
+  height: 4px;
+  background: var(--amber-500);
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+
+.hero-headline__dot {
+  color: var(--amber-500);
+}
+
+.hero-lead {
+  font-size: clamp(1.06rem, 1.25vw, 1.2rem);
+  line-height: 1.62;
+  color: var(--text-body);
+  max-width: 500px;
+  margin-bottom: 32px;
+}
+
+.hero-cta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-bottom: 42px;
+}
+
+.btn-primary-editorial {
+  text-decoration: none;
+  background: var(--navy-800);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  padding: 16px 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 14px 32px rgba(23, 59, 99, 0.22);
+  transition: transform 160ms var(--ease-out-quart), background-color 180ms ease;
+}
+
+.btn-primary-editorial:hover {
+  background: var(--blue-700);
+  transform: translateY(-2px);
+}
+
+.btn-primary-editorial:active {
+  transform: scale(0.97);
+}
+
+.link-secondary-editorial {
+  text-decoration: none;
+  color: var(--navy-800);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  padding-bottom: 6px;
+  border-bottom: 2.5px solid var(--amber-500);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 180ms var(--ease-out-quart), color 180ms ease;
+}
+
+.link-secondary-editorial:hover {
+  gap: 13px;
+  color: var(--blue-700);
+}
+
+/* Tarjeta Secundaria Plano Z-3 en contrapunto espacial (Díptico V3) */
+.hero-secondary-plane {
+  position: relative;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 20px;
+  align-items: center;
+  background: var(--white);
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--warm-border);
+  box-shadow: 0 22px 48px rgba(15, 38, 66, 0.14);
+  max-width: 520px;
+}
+
+.hero-secondary-plane__img-wrap {
+  height: 132px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-secondary-plane__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms var(--ease-out-quart);
+}
+
+.hero-secondary-plane:hover .hero-secondary-plane__img-wrap img {
+  transform: scale(1.06);
+}
+
+.hero-secondary-plane__tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--blue-700);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.hero-secondary-plane__title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy-800);
+  margin-bottom: 6px;
+}
+
+.hero-secondary-plane__sub {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+/* Escenario Derecho con Recortes Geométricos / Muescas a 45° (Video 2 C&A + Video 1 Nexora) */
+.hero-notched-stage {
+  position: relative;
+  width: 100%;
+  padding-top: 8px;
+  perspective: 1200px;
+}
+
+.notched-photo-frame {
+  position: relative;
+  width: 100%;
+  height: 620px;
+  background: var(--navy-900);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 32px 72px rgba(9, 25, 44, 0.35);
+  transform-style: preserve-3d;
+  transition: transform 260ms var(--ease-out-quart);
+}
+
+.notched-photo-frame__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 600ms var(--ease-out-quart);
+  filter: contrast(1.03) saturate(1.04);
+}
+
+.notched-photo-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 25, 44, 0.25) 0%,
+    rgba(9, 25, 44, 0.0) 45%,
+    rgba(9, 25, 44, 0.72) 100%
+  );
+  pointer-events: none;
+}
+
+/* Muesca Superior Izquierda (Estilo C&A Video 2) */
+.chamfer-notch-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  background: var(--warm-bg);
+  padding: 0 24px 14px 0;
+  border-bottom-right-radius: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Muesca biselada con pseudo-elemento */
+.chamfer-notch-top::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -22px;
+  width: 22px;
+  height: 22px;
+  background: radial-gradient(circle at 100% 100%, transparent 22px, var(--warm-bg) 22.5px);
+}
+
+.chamfer-notch-top__pill {
+  background: var(--white);
+  border: 1px solid var(--warm-border);
+  padding: 8px 14px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--navy-800);
+  box-shadow: 0 6px 18px rgba(15, 38, 66, 0.08);
+}
+
+.chamfer-notch-top__avatars {
+  display: flex;
+  align-items: center;
+}
+
+.chamfer-notch-top__avatars span {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--white);
+  margin-left: -7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.chamfer-notch-top__avatars span:first-child {
+  margin-left: 0;
+  background: var(--navy-800);
+}
+.chamfer-notch-top__avatars span:nth-child(2) {
+  background: var(--blue-700);
+}
+.chamfer-notch-top__avatars span:nth-child(3) {
+  background: var(--amber-500);
+  color: var(--navy-950);
+}
+
+/* Widget Flotante de Ruta / Pulso en Vivo (Inspirado en "Shanghai -> Rotterdam" de NEXORA Video 1) */
+.nexora-route-card {
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  z-index: 6;
+  width: 310px;
+  background: rgba(11, 25, 44, 0.88);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  padding: 16px 18px;
+  color: var(--white);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.35);
+}
+
+.nexora-route-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--amber-400);
+  margin-bottom: 10px;
+}
+
+.nexora-route-card__route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.nexora-route-card__line {
+  flex: 1;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.nexora-route-card__line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 40%;
+  height: 100%;
+  background: var(--amber-500);
+  animation: routePulse 2.2s linear infinite;
+}
+
+@keyframes routePulse {
+  to { left: 100%; }
+}
+
+.nexora-route-card__meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(234, 241, 246, 0.76);
+}
+
+/* Pie de foto sobre el bloque arquitectónico #173B63 */
+.hero-stage-caption {
+  margin-top: 20px;
+  padding: 0 12px;
+  color: var(--white);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.hero-stage-caption__bar {
+  width: 32px;
+  height: 3px;
+  background: var(--amber-500);
+  margin-bottom: 8px;
+}
+
+.hero-stage-caption__title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.hero-stage-caption__desc {
+  font-size: 14px;
+  color: rgba(234, 241, 246, 0.84);
+  max-width: 460px;
+}
+
+/* ==========================================================================
+   3. MANIFIESTO OSCURO CON REVELADO PALABRA POR PALABRA + BLOQUE BISELADO C&A
+      (Video 1 Nexora 0:05 + Video 2 "Why choose C&A?" 0:13)
+   ========================================================================== */
+.manifesto-section {
+  background: var(--navy-950);
+  color: var(--white);
+  padding: 110px 28px 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.manifesto-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber-400);
+  margin-bottom: 24px;
+}
+
+.section-eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--amber-500);
+}
+
+.scrub-manifesto-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.95rem, 3.5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+  max-width: 1080px;
+  margin-bottom: 72px;
+}
+
+.scrub-word {
+  display: inline-block;
+  opacity: 0.18;
+  transition: opacity 80ms linear, color 120ms ease;
+  margin-right: 0.24em;
+}
+
+.scrub-word.is-lit {
+  opacity: 1;
+}
+
+.scrub-word--accent.is-lit {
+  color: var(--amber-400);
+}
+
+/* Contenedor con pestaña superior biselada a 45° (Inspirado en "Why choose C&A?" de Video 2) */
+.notched-why-box {
+  position: relative;
+  background: linear-gradient(145deg, #132F52 0%, #0D223C 100%);
+  border: 1px solid rgba(232, 160, 74, 0.28);
+  border-radius: 26px;
+  padding: 56px 48px 48px;
+  box-shadow: 0 28px 64px rgba(0, 0, 0, 0.35);
+}
+
+.notched-why-box__tab {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--amber-500);
+  color: var(--navy-950);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 10px 32px;
+  border-radius: 12px;
+  clip-path: polygon(12px 0%, calc(100% - 12px) 0%, 100% 100%, 0% 100%);
+  box-shadow: 0 10px 24px rgba(232, 160, 74, 0.35);
+}
+
+.notched-why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.why-pillar {
+  background: rgba(9, 25, 44, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 28px;
+  transition: transform 220ms var(--ease-out-quart), border-color 220ms ease;
+}
+
+.why-pillar:hover {
+  transform: translateY(-4px);
+  border-color: rgba(232, 160, 74, 0.5);
+}
+
+.why-pillar__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(232, 160, 74, 0.16);
+  color: var(--amber-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.why-pillar__title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.why-pillar__desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(234, 241, 246, 0.78);
+}
+
+/* ==========================================================================
+   4. BENTO GRID DE IMPACTO + STICKY SPLIT IMAGE WIPE (Video 1 NEXORA 0:08–0:15)
+   ========================================================================== */
+.bento-impact-section {
+  padding: 104px 28px 64px;
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+.section-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.028em;
+  color: var(--navy-800);
+}
+
+.section-subtitle {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text-body);
+  max-width: 460px;
+}
+
+/* Grilla estilo Nexora con bloques KPI apilados a la derecha */
+.nexora-bento-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 0.55fr 0.55fr;
+  grid-template-rows: 210px 210px;
+  gap: 20px;
+}
+
+.bento-card {
+  border-radius: 22px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bento-card--hero {
+  grid-row: 1 / 3;
+  background: var(--navy-800);
+  color: var(--white);
+  box-shadow: 0 24px 52px rgba(23, 59, 99, 0.18);
+}
+
+.bento-card--hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.28;
+  mix-blend-mode: luminosity;
+}
+
+.bento-card--stat-light {
+  background: var(--white);
+  border: 1px solid var(--warm-border);
+  color: var(--navy-800);
+}
+
+.bento-card--stat-navy {
+  background: var(--navy-950);
+  color: var(--white);
+}
+
+.bento-card--stat-blue {
+  background: var(--blue-500);
+  color: var(--white);
+}
+
+.bento-card--stat-amber {
+  background: var(--amber-500);
+  color: var(--navy-950);
+}
+
+.bento-stat__number {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 3.4vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.bento-stat__label {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+/* Sticky Split Section ("Built on trust. Driven by performance." — NEXORA Video 1) */
+.sticky-split-section {
+  padding: 64px 28px 104px;
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+.sticky-split-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.sticky-left-col {
+  position: sticky;
+  top: 120px;
+  padding: 20px 0;
+}
+
+.sticky-pillar-list {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sticky-pillar-item {
+  padding: 20px 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--warm-border);
+  cursor: pointer;
+  transition: all 240ms var(--ease-out-quart);
+}
+
+.sticky-pillar-item.is-active {
+  background: var(--white);
+  border-color: var(--navy-800);
+  box-shadow: 0 16px 36px rgba(23, 59, 99, 0.10);
+  transform: translateX(6px);
+}
+
+.sticky-pillar-item__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--navy-800);
+  margin-bottom: 6px;
+}
+
+.sticky-pillar-item__num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--amber-500);
+}
+
+.sticky-pillar-item__body {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text-body);
+}
+
+.sticky-right-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.wipe-media-card {
+  position: sticky;
+  top: 120px;
+  height: 500px;
+  border-radius: 26px;
+  overflow: hidden;
+  background: var(--navy-900);
+  box-shadow: 0 28px 60px rgba(9, 25, 44, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.wipe-media-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.86);
+}
+
+.wipe-media-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(9,25,44,0.1) 35%, rgba(9,25,44,0.88) 100%);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--white);
+}
+
+.wipe-media-card__top-tag {
+  align-self: flex-start;
+  background: rgba(11, 25, 44, 0.78);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(232, 160, 74, 0.45);
+  color: var(--amber-400);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.wipe-media-card__bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.wipe-media-card__kpis {
+  display: flex;
+  gap: 24px;
+}
+
+.wipe-kpi__val {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--amber-400);
+  line-height: 1;
+}
+
+.wipe-kpi__lbl {
+  font-size: 12px;
+  color: rgba(234, 241, 246, 0.8);
+}
+
+/* ==========================================================================
+   5. SERVICIOS INTERACTIVOS: RIFF 28 "CARD SHUFFLE" (Video 4) + ARCO 3D (Video 2)
+   ========================================================================== */
+.services-showcase-section {
+  background: radial-gradient(circle at 50% 15%, #163356 0%, #081526 100%);
+  color: var(--white);
+  padding: 104px 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.services-showcase-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+.view-mode-switcher {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 5px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  gap: 4px;
+}
+
+.view-mode-btn {
+  border: none;
+  background: transparent;
+  color: rgba(234, 241, 246, 0.74);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.view-mode-btn.is-active {
+  background: var(--amber-500);
+  color: var(--navy-950);
+  font-weight: 800;
+}
+
+/* MODO A: RIFF 28 "Card Shuffle" (Video 4: Grabación_de_pantalla_2026-11-07_191803.mp4) */
+.shuffle-view {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 48px;
+  align-items: center;
+  min-height: 540px;
+}
+
+.shuffle-deck-stage {
+  position: relative;
+  height: 490px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.riff-card-stack {
+  position: relative;
+  width: 340px;
+  height: 420px;
+  perspective: 1200px;
+}
+
+.riff-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  box-shadow:
+    0 24px 50px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform-origin: 50% 85%;
+  will-change: transform, opacity;
+  overflow: hidden;
+}
+
+/* Círculos geométricos sutiles como en RIFF 28 */
+.riff-card::before {
+  content: "";
+  position: absolute;
+  right: -40px;
+  bottom: 20px;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  pointer-events: none;
+}
+
+.riff-card[data-theme="violet"] {
+  background: linear-gradient(155deg, #8B78F6 0%, #5B3FD9 100%);
+  color: #FFFFFF;
+}
+.riff-card[data-theme="amber"] {
+  background: linear-gradient(155deg, #F6CF57 0%, #E8A04A 100%);
+  color: #121824;
+}
+.riff-card[data-theme="mint"] {
+  background: linear-gradient(155deg, #74EBD5 0%, #48C6EF 100%);
+  color: #0D2238;
+}
+.riff-card[data-theme="lavender"] {
+  background: linear-gradient(155deg, #B998FA 0%, #8662EE 100%);
+  color: #121629;
+}
+.riff-card[data-theme="sand"] {
+  background: linear-gradient(155deg, #F3DFB9 0%, #CFA9EC 100%);
+  color: #161D2E;
+}
+
+.riff-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.riff-card__num {
+  font-family: var(--font-display);
+  font-size: 62px;
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
+.riff-card__pill {
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid currentColor;
+  opacity: 0.78;
+}
+
+.riff-card__center-play {
+  align-self: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.85);
+  color: var(--white);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  transition: transform 160ms ease;
+}
+
+.riff-card__center-play:hover {
+  transform: scale(1.08);
+}
+
+.riff-card__bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.riff-card__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.riff-card__sub {
+  font-size: 14px;
+  opacity: 0.84;
+}
+
+.riff-card__next-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.riff-dots {
+  margin-top: 28px;
+  display: flex;
+  gap: 8px;
+}
+
+.riff-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.riff-dot.is-active {
+  background: var(--white);
+  transform: scale(1.25);
+}
+
+/* MODO B: Arco 3D en Perspectiva Cóncava ("Our Services / Portfolio" — Video 2 C&A) */
+.arc3d-view {
+  display: none;
+  padding: 36px 0 20px;
+  perspective: 1400px;
+}
+
+.arc3d-view.is-visible {
+  display: block;
+}
+
+.shuffle-view.is-hidden {
+  display: none;
+}
+
+.arc3d-stage {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  transform-style: preserve-3d;
+  padding: 20px 10px;
+}
+
+.arc3d-card {
+  height: 390px;
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  background: var(--navy-800);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.38);
+  cursor: pointer;
+  transition: transform 420ms var(--ease-out-quart), border-color 260ms ease;
+}
+
+/* Curvatura cóncava en 3D como en el Video 2 */
+.arc3d-card:nth-child(1) { transform: rotateY(22deg) translateZ(-30px); }
+.arc3d-card:nth-child(2) { transform: rotateY(11deg) translateZ(-10px); }
+.arc3d-card:nth-child(3) { transform: rotateY(0deg) translateZ(15px); border-color: var(--amber-500); }
+.arc3d-card:nth-child(4) { transform: rotateY(-11deg) translateZ(-10px); }
+.arc3d-card:nth-child(5) { transform: rotateY(-22deg) translateZ(-30px); }
+
+.arc3d-card:hover {
+  transform: rotateY(0deg) translateZ(42px) scale(1.03) !important;
+  border-color: var(--amber-400);
+  z-index: 10;
+}
+
+.arc3d-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.arc3d-card__info {
+  position: absolute;
+  inset: auto 12px 12px 12px;
+  background: rgba(9, 25, 44, 0.88);
+  backdrop-filter: blur(12px);
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.arc3d-card__title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.arc3d-card__tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--amber-400);
+}
+
+/* ==========================================================================
+   6. GALERÍA ESPACIAL 3D ESTILO "UNVEIL® PROJECTS" (Imagen 2)
+   ========================================================================== */
+.unveil-stack-section {
+  background: #F3F2EE;
+  padding: 96px 28px;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--warm-border);
+  border-bottom: 1px solid var(--warm-border);
+}
+
+.unveil-header-bar {
+  max-width: 1380px;
+  margin: 0 auto 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.unveil-top-cell {
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid #DFDDD6;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--navy-800);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.unveil-viewport {
+  max-width: 1380px;
+  margin: 0 auto;
+  min-height: 540px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1800px;
+}
+
+.unveil-3d-corridor {
+  position: relative;
+  width: 520px;
+  height: 360px;
+  transform-style: preserve-3d;
+  transform: rotateX(12deg) rotateY(-34deg) rotateZ(4deg);
+  transition: transform 600ms var(--ease-out-quart);
+}
+
+.unveil-plane {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: -18px 24px 48px rgba(15, 38, 66, 0.22);
+  cursor: pointer;
+  transition:
+    transform 480ms var(--ease-out-quart),
+    opacity 380ms ease,
+    border-color 260ms ease;
+  backdrop-filter: blur(8px);
+}
+
+.unveil-plane img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.88;
+}
+
+.unveil-plane__glass {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(23, 59, 99, 0.22) 0%, rgba(11, 101, 198, 0.42) 100%);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--white);
+}
+
+.unveil-plane__meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  background: rgba(9, 25, 44, 0.68);
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.unveil-plane__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+/* Vista alternativa INDEX en grilla cuando el usuario pulsa "INDEX" */
+.unveil-viewport.is-index-mode .unveil-3d-corridor {
+  width: 100%;
+  height: auto;
+  transform: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.unveil-viewport.is-index-mode .unveil-plane {
+  position: relative;
+  height: 240px;
+  transform: none !important;
+}
+
+/* Controles inferiores estilo UNVEIL (OVERVIEW/INDEX abajo izq + Píldoras filtro abajo der) */
+.unveil-bottom-controls {
+  max-width: 1380px;
+  margin: 24px auto 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.unveil-mode-toggle {
+  display: inline-flex;
+  background: #E2E0D8;
+  padding: 4px;
+  border-radius: 8px;
+  gap: 4px;
+}
+
+.unveil-mode-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-body);
+  cursor: pointer;
+}
+
+.unveil-mode-btn.is-active {
+  background: var(--white);
+  color: var(--navy-950);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.unveil-filter-pills {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.unveil-filter-pill {
+  border: 1px solid #D5D3CA;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--text-body);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.unveil-filter-pill.is-active,
+.unveil-filter-pill:hover {
+  background: var(--navy-800);
+  color: var(--white);
+  border-color: var(--navy-800);
+}
+
+/* ==========================================================================
+   7. HISTORIA INTERACTIVA 3D (THREE.JS AUTOBÚS COMUNITARIO + RUTA NEXORA)
+   ========================================================================== */
+.history-3d-section {
+  position: relative;
+  background: linear-gradient(180deg, #DAE6F0 0%, #EAF1F6 48%, #F7F6F2 100%);
+  overflow: hidden;
+  padding-top: 40px;
+}
+
+/* Barra superior oscura de Ruta Histórica estilo NEXORA ("Every container, followed to the door") */
+.nexora-timeline-route-bar {
+  max-width: 1320px;
+  margin: 0 auto 24px;
+  background: var(--navy-950);
+  color: var(--white);
+  border-radius: 20px;
+  padding: 22px 32px;
+  border: 1px solid rgba(232, 160, 74, 0.35);
+  box-shadow: 0 20px 44px rgba(9, 25, 44, 0.18);
+  position: relative;
+  z-index: 15;
+}
+
+.nexora-route-bar__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.nexora-route-bar__title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.nexora-route-nodes {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  position: relative;
+}
+
+.nexora-node-btn {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--white);
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.nexora-node-btn.is-active {
+  background: rgba(232, 160, 74, 0.16);
+  border-color: var(--amber-500);
+}
+
+.nexora-node-btn__year {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--amber-400);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.nexora-node-btn__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--amber-500);
+}
+
+.nexora-node-btn__lbl {
+  font-size: 12px;
+  color: rgba(234, 241, 246, 0.8);
+  display: block;
+}
+
+/* Escenario 3D Three.js del Autobús Comunitario */
+.bus-3d-stage-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 760px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#timeline-canvas-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#timeline-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.bus-3d-header {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 12px 24px;
+  pointer-events: none;
+}
+
+.bus-3d-header__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.3rem, 4.2vw, 3.8rem);
+  font-weight: 700;
+  color: var(--navy-800);
+  -webkit-text-stroke: 1.2px var(--amber-500);
+  paint-order: stroke fill;
+  letter-spacing: 0.05em;
+}
+
+.bus-3d-header__sub {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: var(--blue-700);
+  text-transform: uppercase;
+}
+
+.bus-3d-overlay-grid {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 84px;
+  display: grid;
+  grid-template-columns: 320px 1fr 350px;
+  align-items: center;
+  gap: 16px;
+  pointer-events: none;
+  flex: 1;
+}
+
+.floating-panel {
+  pointer-events: auto;
+}
+
+.polaroid-gallery {
+  position: relative;
+  height: 370px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.polaroid-gallery__label {
+  position: absolute;
+  top: -8px;
+  left: 8px;
+  z-index: 20;
+  padding: 5px 12px;
+  background: var(--navy-800);
+  color: var(--white);
+  border: 1px solid var(--amber-500);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.polaroid-stack {
+  position: relative;
+  width: 280px;
+  height: 320px;
+}
+
+.polaroid-card {
+  position: absolute;
+  width: 228px;
+  background: var(--white);
+  padding: 10px 10px 26px;
+  border-radius: 4px;
+  border: 1px solid rgba(23, 59, 99, 0.14);
+  box-shadow: 0 18px 36px rgba(15, 41, 71, 0.18);
+  cursor: pointer;
+  transition: transform 240ms var(--ease-out-quart);
+}
+
+.polaroid-card:nth-child(1) { top: 6px; left: 4px; transform: rotate(-6deg); z-index: 3; }
+.polaroid-card:nth-child(2) { top: 22px; left: 36px; transform: rotate(4.5deg); z-index: 2; }
+.polaroid-card:nth-child(3) { top: 44px; left: 14px; transform: rotate(-1.5deg); z-index: 1; }
+
+.polaroid-card:hover {
+  transform: rotate(0deg) translateY(-6px) scale(1.03);
+  z-index: 10 !important;
+}
+
+.polaroid-card__photo-wrap {
+  position: relative;
+  width: 100%;
+  height: 136px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.polaroid-card__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.polaroid-card__stamp {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(23, 59, 99, 0.88);
+  color: var(--amber-400);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.polaroid-card__caption {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy-800);
+}
+
+.polaroid-card__sub {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-muted);
+}
+
+/* Portapapeles Legal Derecho */
+.legal-clipboard {
+  background: var(--navy-800);
+  padding: 14px 12px 12px;
+  border-radius: 12px;
+  border: 2px solid var(--amber-500);
+  box-shadow: 0 24px 48px rgba(15, 41, 71, 0.24);
+  position: relative;
+}
+
+.legal-clipboard__clip {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 24px;
+  background: linear-gradient(180deg, #F0B45A 0%, #C68328 100%);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--navy-950);
+}
+
+.legal-clipboard__sheet {
+  background: var(--warm-card);
+  border-radius: 8px;
+  padding: 20px 18px 16px;
+  color: var(--text-dark);
+}
+
+.legal-clipboard__header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1.5px dashed rgba(23, 59, 99, 0.2);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.legal-clipboard__title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy-800);
+  margin: 4px 0 8px;
+}
+
+.legal-clipboard__desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-body);
+  margin-bottom: 12px;
+}
+
+.legal-clipboard__metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.legal-clipboard__metric-box {
+  background: var(--ice-bg);
+  padding: 8px 10px;
+  border-radius: 6px;
+}
+
+.legal-clipboard__metric-val {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy-800);
+}
+
+.legal-clipboard__metric-lbl {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.nav-arrow-btn {
+  position: absolute;
+  top: 52%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--navy-800);
+  color: var(--white);
+  border: 2px solid var(--amber-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(15, 41, 71, 0.28);
+  transition: transform 180ms ease;
+}
+
+.nav-arrow-btn:hover {
+  transform: translateY(-50%) scale(1.06);
+}
+
+.nav-arrow-btn--prev { left: 20px; }
+.nav-arrow-btn--next { right: 20px; }
+
+.nav-arrow-btn svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  fill: none;
+}
+
+/* ==========================================================================
+   8. MÓDULO DE CITAS: DISPONIBILIDAD DE LA CLÍNICA + TUS DATOS (Imagen 1)
+   ========================================================================== */
+.clinic-booking-section {
+  background: linear-gradient(180deg, #F4F8FC 0%, #EAF1F6 100%);
+  padding: 104px 28px;
+  border-top: 1px solid #D5E2EE;
+}
+
+.clinic-booking-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.clinic-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 48px;
+}
+
+.clinic-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+}
+
+.clinic-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 36px;
+  border: 1px solid #E1EAF2;
+  box-shadow: 0 20px 50px rgba(15, 45, 82, 0.07);
+}
+
+.clinic-card__title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: #0F2D52;
+  margin-bottom: 22px;
+}
+
+.clinic-schedule-badges {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.schedule-badge {
+  background: #F6F9FC;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.schedule-badge__icon {
+  color: #1B4F82;
+  flex-shrink: 0;
+}
+
+.schedule-badge__day {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: #0F2D52;
+}
+
+.schedule-badge__hours {
+  font-size: 13px;
+  color: #4A637D;
+}
+
+/* Navegador de Mes (Noviembre de 2026) */
+.calendar-month-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.calendar-nav-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1.5px solid #CEDCEB;
+  background: var(--white);
+  color: #173B63;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.calendar-nav-btn:hover {
+  border-color: #0057B8;
+  background: #F0F6FC;
+}
+
+.calendar-month-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+  color: #0F2D52;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #4A637D;
+  margin-bottom: 10px;
+}
+
+.calendar-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.cal-day {
+  height: 42px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: #8CA0B5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cal-day--available {
+  background: #0056B3;
+  color: var(--white);
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 86, 179, 0.22);
+  transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.cal-day--available:hover {
+  background: #004494;
+  transform: translateY(-1px);
+}
+
+.cal-day--selected {
+  background: #0A2547 !important;
+  color: var(--white);
+  box-shadow: 0 0 0 3px rgba(11, 101, 198, 0.28);
+}
+
+.calendar-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #344B63;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #E8EEF5;
+  margin-bottom: 20px;
+}
+
+.calendar-legend__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: #0056B3;
+}
+
+.timeslot-heading {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  color: #0F2D52;
+  margin-bottom: 14px;
+}
+
+.timeslot-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.timeslot-pill {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1.5px solid #2A5C8F;
+  background: var(--white);
+  color: #0F2D52;
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.timeslot-pill.is-selected {
+  background: #0D2D53;
+  border-color: #0D2D53;
+  color: var(--white);
+}
+
+/* Formulario "Tus datos" (Derecha en Imagen 1) */
+.selection-banner {
+  background: #F5F8FC;
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 14px;
+  color: #173B63;
+  margin-bottom: 22px;
+}
+
+.form-field {
+  margin-bottom: 18px;
+}
+
+.form-field label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: #0F2D52;
+  margin-bottom: 8px;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  height: 48px;
+  border-radius: 10px;
+  border: 1.5px solid #CFD9E3;
+  padding: 0 16px;
+  font-size: 15px;
+  color: var(--text-dark);
+  background: var(--white);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #0066CC;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.15);
+}
+
+.btn-book-submit {
+  width: 100%;
+  height: 52px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(90deg, #0058B8 0%, #0073E6 100%);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0, 102, 204, 0.32);
+  margin-top: 6px;
+  margin-bottom: 16px;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.btn-book-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px rgba(0, 102, 204, 0.4);
+}
+
+.privacy-reassurance {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #546A82;
+}
+
+.booking-success-toast {
+  display: none;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #E8F8F0;
+  border: 1px solid #28A745;
+  color: #145A28;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.booking-success-toast.is-visible {
+  display: block;
+}
+
+/* ==========================================================================
+   9. BOTÓN FLOTANTE "💬 EVALUador" Y DRAWER INTERACTIVO (Imagen 1)
+   ========================================================================== */
+.evaluador-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1500;
+  border: none;
+  background: linear-gradient(135deg, #0066CC 0%, #0080FF 100%);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  padding: 14px 24px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow:
+    0 14px 34px rgba(0, 102, 204, 0.42),
+    0 0 0 4px rgba(0, 128, 255, 0.18);
+  transition: transform 180ms var(--ease-spring);
+}
+
+.evaluador-fab:hover {
+  transform: translateY(-3px) scale(1.03);
+}
+
+.evaluador-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(9, 25, 44, 0.62);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 24px;
+}
+
+.evaluador-modal-backdrop.is-open {
+  display: flex;
+}
+
+.evaluador-drawer {
+  width: 100%;
+  max-width: 420px;
+  background: var(--white);
+  border-radius: 22px;
+  border: 1px solid #D5E2EE;
+  box-shadow: 0 28px 68px rgba(9, 25, 44, 0.35);
+  overflow: hidden;
+  animation: drawerUp 260ms var(--ease-drawer);
+}
+
+@keyframes drawerUp {
+  from { transform: translateY(24px) scale(0.96); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.evaluador-drawer__head {
+  background: var(--navy-800);
+  color: var(--white);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.evaluador-drawer__body {
+  padding: 24px;
+}
+
+.eval-option-btn {
+  width: 100%;
+  text-align: left;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #DCE6F0;
+  background: #F9FBFD;
+  color: var(--navy-800);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.eval-option-btn:hover {
+  border-color: #0066CC;
+  background: #EEF5FC;
+}
+
+/* ==========================================================================
+   10. FOOTER EDITORIAL
+   ========================================================================== */
+.site-footer {
+  background: var(--navy-950);
+  color: var(--white);
+  padding: 72px 28px 40px;
+  border-top: 4px solid var(--amber-500);
+}
+
+.site-footer__inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+/* ==========================================================================
+   RESPONSIVE (TABLET & MOBILE 390px)
+   ========================================================================== */
+@media (max-width: 1120px) {
+  .hero-grid,
+  .sticky-split-grid,
+  .shuffle-view,
+  .clinic-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-architectural-backdrop {
+    width: 100%;
+    height: 45%;
+  }
+
+  .nexora-bento-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+
+  .bento-card--hero {
+    grid-column: 1 / -1;
+    min-height: 280px;
+  }
+
+  .notched-why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .arc3d-stage {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .arc3d-card {
+    transform: none !important;
+  }
+
+  .bus-3d-overlay-grid {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  #timeline-canvas-wrap {
+    position: relative;
+    height: 380px;
+  }
+}
+
+@media (max-width: 760px) {
+  .gooey-nav-shell {
+    display: none;
+  }
+
+  .notched-photo-frame {
+    height: 440px;
+  }
+
+  .nexora-route-nodes {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .unveil-header-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+}

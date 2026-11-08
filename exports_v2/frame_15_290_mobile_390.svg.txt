@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="390" height="1060" viewBox="0 0 390 1060" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="shadow-deep" x="-12%" y="-10%" width="128%" height="132%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="-12" dy="28" stdDeviation="28" flood-color="#0B1F36" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0B1F36" flood-opacity="0.16"/>
+    </filter>
+    <filter id="shadow-float" x="-15%" y="-12%" width="135%" height="140%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="20" stdDeviation="22" flood-color="#0B1F36" flood-opacity="0.28"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0B1F36" flood-opacity="0.14"/>
+    </filter>
+    <filter id="shadow-plinth" x="-8%" y="-8%" width="116%" height="124%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#173B63" flood-opacity="0.08"/>
+    </filter>
+    <linearGradient id="photo-vignette" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0D223A" stop-opacity="0.18"/>
+      <stop offset="55%" stop-color="#0D223A" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#0D223A" stop-opacity="0.72"/>
+    </linearGradient>
+    <linearGradient id="monolith-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#173B63"/>
+      <stop offset="100%" stop-color="#0F2947"/>
+    </linearGradient>
+  </defs>
+  <g id="Artboard / Home V2 — Mobile 390px" transform="translate(0, 0)">
+        <rect id="Mobile V2 Canvas #F7F6F2" width="390" height="1060" fill="#F7F6F2" stroke="#D5E0EA" stroke-width="1.5"/>
+
+        <!-- Mobile Architectural Dark Band (Middle-Right Immersion Block) -->
+        <rect id="Mobile Plane Z-1 / Dark Immersion Block" x="84" y="316" width="306" height="432" fill="#173B63"/>
+
+        <!-- Mobile Header V2 (Height 76px) -->
+        <g id="Header V2 / Mobile 390px">
+          <rect width="390" height="76" fill="#F7F6F2"/>
+          <line x1="0" y1="76" x2="390" y2="76" stroke="#D5E0EA" stroke-width="1"/>
+          <!-- Logo Plinth Mobile -->
+          <rect x="16" y="14" width="194" height="48" rx="4" fill="#FFFFFF" stroke="#D5E0EA"/>
+          <rect x="16" y="14" width="3" height="48" fill="#E8A04A"/>
+          <!-- TARGET FOR MOBILE OFFICIAL PNG LOGO (176 x 33 px) -->
+          <rect id="Mobile V2 Official Logo Target" x="26" y="21" width="176" height="33" fill="#254087"/>
+
+          <!-- Compact Language Badge -->
+          <rect x="256" y="18" width="58" height="40" rx="6" fill="#EAF1F6" stroke="#245B87" stroke-width="1"/>
+          <text x="268" y="43" fill="#173B63" font-family="Manrope, Inter, sans-serif" font-size="12" font-weight="800">ES</text>
+          <text x="290" y="43" fill="#64748B" font-family="Manrope, Inter, sans-serif" font-size="11" font-weight="600">EN</text>
+
+          <!-- 48x48 Touch Target Menu Button -->
+          <rect x="324" y="14" width="50" height="48" rx="6" fill="#173B63"/>
+          <line x1="337" y1="30" x2="361" y2="30" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+          <line x1="337" y1="38" x2="355" y2="38" stroke="#E8A04A" stroke-width="2" stroke-linecap="round"/>
+          <line x1="337" y1="46" x2="361" y2="46" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+        </g>
+
+        <!-- Mobile Editorial Kicker + Staggered Headline (Overlaps the Dark Band!) -->
+        <g id="Mobile V2 / Editorial Headline" transform="translate(20, 98)">
+          <rect x="0" y="3" width="8" height="8" fill="#E8A04A"/>
+          <text x="16" y="11" fill="#173B63" font-family="Manrope, Inter, sans-serif" font-size="10" font-weight="800" letter-spacing="1.4">LOS ÁNGELES • DESDE 1981</text>
+
+          <text x="0" y="56" fill="#173B63" font-family="Manrope, Inter, sans-serif" font-size="40" font-weight="800" letter-spacing="-1.2">Una comunidad</text>
+          <rect x="0" y="76" width="28" height="4" fill="#E8A04A"/>
+          <text x="38" y="98" fill="#173B63" font-family="Manrope, Inter, sans-serif" font-size="38" font-weight="800" letter-spacing="-1.2">más fuerte</text>
+          <text x="38" y="138" fill="#173B63" font-family="Manrope, Inter, sans-serif" font-size="38" font-weight="800" letter-spacing="-1.2">comienza con</text>
+          <rect x="0" y="150" width="318" height="48" rx="4" fill="#173B63"/>
+          <text x="12" y="185" fill="#FFFFFF" font-family="Manrope, Inter, sans-serif" font-size="38" font-weight="800" letter-spacing="-1.0">oportunidades<tspan fill="#E8A04A">.</tspan></text>
+          <text x="0" y="214" fill="#64748B" font-family="Source Sans 3, Inter, sans-serif" font-size="11" font-style="italic">[Titular propuesta inicial]</text>
+        </g>
+
+        <!-- Mobile Multi-Plane Documentary Stage (Y=332..736) -->
+        <g id="Mobile V2 / Multi-Plane Photo Stage">
+          <!-- Plane Z-2 Main Photo (334 x 310 px) -->
+          <rect x="36" y="336" width="338" height="314" rx="4" fill="#F7F6F2"/>
+          <!-- TARGET FOR MOBILE MAIN PHOTO -->
+          <rect id="Mobile V2 Hero Main Photo Target" x="40" y="340" width="330" height="306" fill="#245B87"/>
+
+          <!-- Governance Badge Mobile -->
+          <rect x="50" y="352" width="296" height="24" rx="4" fill="#173B63" fill-opacity="0.92" stroke="#E8A04A" stroke-width="1"/>
+          <text x="60" y="368" fill="#FFFFFF" font-family="Manrope, Inter, sans-serif" font-size="9" font-weight="800" letter-spacing="0.6">FOTO PROVISIONAL WIKIMEDIA (LA) • NO INSTITUCIONAL</text>
+
+          <!-- Plane Z-3 Overlapping Secondary Photo (184 x 130 px) -->
+          <rect x="16" y="576" width="192" height="146" rx="4" fill="#173B63" stroke="#E8A04A" stroke-width="2"/>
+          <!-- TARGET FOR MOBILE SECONDARY PHOTO -->
+          <rect id="Mobile V2 Hero Secondary Photo Target" x="20" y="580" width="184" height="114" fill="#245B87"/>
+          <text x="28" y="710" fill="#E8A04A" font-family="Manrope, Inter, sans-serif" font-size="9" font-weight="800">PLANO Z-3 • MACARTHUR PARK</text>
+
+          <!-- Right Dark Caption Strip next to Z-3 -->
+          <text x="220" y="674" fill="#E8A04A" font-family="Manrope, Inter, sans-serif" font-size="10" font-weight="800">DESDE 1981</text>
+          <text x="220" y="694" fill="#FFFFFF" font-family="Source Sans 3, Inter, sans-serif" font-size="12">Memoria viva y apoyo</text>
+          <text x="220" y="712" fill="#EAF1F6" font-family="Source Sans 3, Inter, sans-serif" font-size="12">comunitario en LA.</text>
+        </g>
+
+        <!-- Mobile Copy & Thumb-Zone CTAs (Y=768..1040) -->
+        <g id="Mobile V2 / Lead &amp; Thumb Zone CTAs" transform="translate(20, 772)">
+          <text x="0" y="16" fill="#173B63" font-family="Source Sans 3, Inter, sans-serif" font-size="16" font-weight="600">Acompañamos a personas y familias inmigrantes</text>
+          <text x="0" y="38" fill="#245B87" font-family="Source Sans 3, Inter, sans-serif" font-size="15">con orientación confiable, defensa de su dignidad y</text>
+          <text x="0" y="60" fill="#245B87" font-family="Source Sans 3, Inter, sans-serif" font-size="15">caminos hacia el bienestar comunitario en Los Ángeles.</text>
+
+          <!-- Full-width Primary CTA (54px height) -->
+          <rect x="0" y="86" width="350" height="54" rx="6" fill="#173B63"/>
+          <rect x="0" y="86" width="6" height="54" rx="3" fill="#E8A04A"/>
+          <text x="74" y="119" fill="#FFFFFF" font-family="Manrope, Inter, sans-serif" font-size="16" font-weight="800">Conoce nuestros servicios</text>
+
+          <!-- Secondary CTA + Quick Orientation CTA -->
+          <rect x="0" y="152" width="168" height="48" rx="6" fill="#EAF1F6" stroke="#245B87" stroke-width="1.5"/>
+          <text x="30" y="181" fill="#173B63" font-family="Manrope, Inter, sans-serif" font-size="14" font-weight="700">Quiénes somos</text>
+
+          <rect x="182" y="152" width="168" height="48" rx="6" fill="#E8A04A"/>
+          <text x="200" y="181" fill="#173B63" font-family="Manrope, Inter, sans-serif" font-size="13" font-weight="800">Solicitar orientación</text>
+        </g>
+      </g>
+</svg>

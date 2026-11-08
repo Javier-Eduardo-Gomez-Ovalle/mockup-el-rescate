@@ -1,0 +1,18 @@
+# OS & Editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Dependencies & Build
+node_modules/
+dist/
+.env
+.env.local
+
+# Blender backup files
+*.blend1
+*.blend2
