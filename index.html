@@ -111,12 +111,19 @@
         </ul>
       </nav>
 
-      <!-- Selector de Idioma + CTA -->
+      <!-- Selector de Idioma + Acceso Institucional + CTA -->
       <div class="header-actions">
         <div class="lang-pill" role="group" aria-label="Selector de idioma">
           <button type="button" class="lang-pill__btn is-active" data-lang="es">ES</button>
           <button type="button" class="lang-pill__btn" data-lang="en">EN</button>
         </div>
+        <button type="button" class="header-portal-btn" id="btn-open-auth-view" title="Acceso Institucional y Panel Admin">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span data-i18n="nav_portal">Acceso / Admin</span>
+        </button>
         <a href="#clinica-citas" class="header-cta">
           <span class="header-cta__dot"></span>
           <span data-i18n="cta_header">Solicitar orientación</span>
@@ -1405,6 +1412,979 @@
             <!-- Certificado / Recibo visual al completar la donación -->
             <div class="donation-receipt-box" id="donation-receipt-box" role="status"></div>
           </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       8.6. VISTA DE LOGIN Y CREAR USUARIO (#auth-view / #vista-login)
+            (Referencia: Referencia_login_y_crear_usuario.mp4 + Colorimetría El Rescate)
+       ======================================================================== -->
+  <section class="auth-view-shell" id="auth-view" aria-hidden="true" aria-label="Portal de Acceso Institucional">
+    <!-- Fondo arquitectónico poliédrico facetado 3D (inspirado en el video de referencia con paleta azul profundo y ámbar) -->
+    <div class="auth-faceted-backdrop" id="auth-faceted-backdrop" aria-hidden="true">
+      <svg class="auth-faceted-svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="shard-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#173B63" />
+            <stop offset="100%" stop-color="#09192C" />
+          </linearGradient>
+          <linearGradient id="shard-grad-2" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#245B87" />
+            <stop offset="100%" stop-color="#0D233D" />
+          </linearGradient>
+          <linearGradient id="shard-grad-3" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#0B1D34" />
+            <stop offset="100%" stop-color="#1C4673" />
+          </linearGradient>
+          <linearGradient id="shard-seam-amber" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(232,160,74,0)" />
+            <stop offset="50%" stop-color="rgba(232,160,74,0.65)" />
+            <stop offset="100%" stop-color="rgba(234,241,246,0.8)" />
+          </linearGradient>
+        </defs>
+        <!-- Polígonos biselados estilo Voronoi / 3D Shards -->
+        <g class="auth-shards-group">
+          <polygon points="0,0 380,0 290,260 0,210" fill="url(#shard-grad-1)" stroke="rgba(234,241,246,0.14)" stroke-width="2" />
+          <polygon points="380,0 780,0 640,290 290,260" fill="url(#shard-grad-2)" stroke="rgba(234,241,246,0.16)" stroke-width="2" />
+          <polygon points="780,0 1220,0 1090,270 640,290" fill="url(#shard-grad-3)" stroke="rgba(232,160,74,0.22)" stroke-width="2" />
+          <polygon points="1220,0 1600,0 1600,280 1090,270" fill="url(#shard-grad-1)" stroke="rgba(234,241,246,0.15)" stroke-width="2" />
+          <polygon points="0,210 290,260 220,580 0,520" fill="url(#shard-grad-3)" stroke="rgba(234,241,246,0.14)" stroke-width="2" />
+          <polygon points="290,260 640,290 540,620 220,580" fill="url(#shard-grad-1)" stroke="rgba(234,241,246,0.18)" stroke-width="2" />
+          <polygon points="640,290 1090,270 980,630 540,620" fill="url(#shard-grad-2)" stroke="rgba(232,160,74,0.24)" stroke-width="2" />
+          <polygon points="1090,270 1600,280 1600,640 1310,600 980,630" fill="url(#shard-grad-3)" stroke="rgba(234,241,246,0.2)" stroke-width="2" />
+          <polygon points="0,520 220,580 340,1000 0,1000" fill="url(#shard-grad-2)" stroke="rgba(234,241,246,0.14)" stroke-width="2" />
+          <polygon points="220,580 540,620 690,1000 340,1000" fill="url(#shard-grad-3)" stroke="rgba(232,160,74,0.2)" stroke-width="2" />
+          <polygon points="540,620 980,630 1120,1000 690,1000" fill="url(#shard-grad-1)" stroke="rgba(234,241,246,0.16)" stroke-width="2" />
+          <polygon points="980,630 1310,600 1600,640 1600,1000 1120,1000" fill="url(#shard-grad-2)" stroke="rgba(234,241,246,0.18)" stroke-width="2" />
+          <!-- Destellos de luz en las aristas (como en Referencia_login_y_crear_usuario.mp4) -->
+          <line x1="1090" y1="270" x2="1600" y2="280" stroke="url(#shard-seam-amber)" stroke-width="4" />
+          <line x1="290" y1="260" x2="640" y2="290" stroke="url(#shard-seam-amber)" stroke-width="3" />
+          <line x1="540" y1="620" x2="980" y2="630" stroke="url(#shard-seam-amber)" stroke-width="3.5" />
+        </g>
+      </svg>
+      <div class="auth-ambient-glow" id="auth-ambient-glow"></div>
+    </div>
+
+    <!-- Barra Superior de Navegación del Portal de Acceso -->
+    <header class="auth-topbar">
+      <button type="button" class="auth-topbar__back" id="btn-auth-back-site">
+        <span>←</span>
+        <span data-i18n="auth_back_site">Volver al sitio público</span>
+      </button>
+
+      <div class="auth-topbar__brand">
+        <img src="assets/logo-el-rescate-oficial.png" alt="El Rescate" />
+        <span data-i18n="auth_portal_badge">PORTAL INSTITUCIONAL • EL RESCATE L.A.</span>
+      </div>
+
+      <div class="auth-topbar__actions">
+        <button type="button" class="auth-topbar__admin-shortcut" id="btn-auth-goto-admin">
+          <span class="auth-topbar__dot"></span>
+          <span data-i18n="auth_goto_admin_btn">Ir directo al Panel Admin →</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Contenedor Central con Tarjeta Glassmorphic Dual + Panel Diagonal Deslizante -->
+    <div class="auth-stage-center">
+      <div class="auth-glass-card" id="auth-glass-card">
+        <!-- Resplandor interno animado durante la transición (efecto 00:02 del video) -->
+        <div class="auth-morph-shimmer" id="auth-morph-shimmer" aria-hidden="true"></div>
+
+        <div class="auth-forms-grid">
+          <!-- COLUMNA IZQUIERDA: FORMULARIO DE LOGIN (Visible cuando el panel diagonal está a la derecha) -->
+          <div class="auth-form-col auth-form-col--login" id="auth-col-login">
+            <h2 class="auth-form-title" data-i18n="auth_login_title">Iniciar Sesión</h2>
+
+            <form id="auth-login-form" class="auth-form" novalidate>
+              <div class="auth-input-group">
+                <span class="auth-input-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  id="auth-login-user"
+                  class="auth-underline-input"
+                  value="elrescate_admin"
+                  placeholder="Usuario o correo institucional"
+                  data-i18n-placeholder="auth_login_user_ph"
+                  required
+                />
+                <span class="auth-input-line"></span>
+              </div>
+
+              <div class="auth-input-group">
+                <span class="auth-input-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </span>
+                <input
+                  type="password"
+                  id="auth-login-pass"
+                  class="auth-underline-input"
+                  value="ElRescate1981*"
+                  placeholder="Contraseña"
+                  data-i18n-placeholder="auth_login_pass_ph"
+                  required
+                />
+                <button
+                  type="button"
+                  class="auth-eye-btn"
+                  id="btn-toggle-login-pass"
+                  aria-label="Mostrar u ocultar contraseña"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
+                <span class="auth-input-line"></span>
+              </div>
+
+              <button type="submit" class="auth-submit-pill" id="btn-submit-login">
+                <span data-i18n="auth_login_btn">Iniciar Sesión</span>
+              </button>
+
+              <div class="auth-form-footer">
+                <p>
+                  <span data-i18n="auth_no_account">¿No tienes una cuenta?</span>
+                  <button type="button" class="auth-inline-link" id="link-goto-signup" data-i18n="auth_signup_link">Crear Usuario</button>
+                </p>
+                <button type="button" class="auth-forgot-link" id="btn-forgot-pass" data-i18n="auth_forgot_link">
+                  ¿Olvidaste tu contraseña?
+                </button>
+              </div>
+              <div class="auth-feedback-msg" id="auth-login-feedback" role="status"></div>
+            </form>
+          </div>
+
+          <!-- COLUMNA DERECHA: FORMULARIO CREAR USUARIO (Visible cuando el panel diagonal se desliza a la izquierda) -->
+          <div class="auth-form-col auth-form-col--register" id="auth-col-register">
+            <h2 class="auth-form-title" data-i18n="auth_reg_title">Crear Usuario</h2>
+
+            <form id="auth-register-form" class="auth-form" novalidate>
+              <div class="auth-input-group">
+                <span class="auth-input-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  id="auth-reg-name"
+                  class="auth-underline-input"
+                  placeholder="Nombre completo"
+                  data-i18n-placeholder="auth_reg_name_ph"
+                  required
+                />
+                <span class="auth-input-line"></span>
+              </div>
+
+              <div class="auth-input-group">
+                <span class="auth-input-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </span>
+                <input
+                  type="email"
+                  id="auth-reg-email"
+                  class="auth-underline-input"
+                  placeholder="Correo institucional (@elrescate.org)"
+                  data-i18n-placeholder="auth_reg_email_ph"
+                  required
+                />
+                <span class="auth-input-line"></span>
+              </div>
+
+              <div class="auth-input-group">
+                <span class="auth-input-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </span>
+                <input
+                  type="password"
+                  id="auth-reg-pass"
+                  class="auth-underline-input"
+                  placeholder="Crear contraseña segura"
+                  data-i18n-placeholder="auth_reg_pass_ph"
+                  required
+                />
+                <button
+                  type="button"
+                  class="auth-eye-btn"
+                  id="btn-toggle-reg-pass"
+                  aria-label="Mostrar u ocultar contraseña"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
+                <span class="auth-input-line"></span>
+              </div>
+
+              <button type="submit" class="auth-submit-pill" id="btn-submit-register">
+                <span data-i18n="auth_reg_btn">Registrar Usuario</span>
+              </button>
+
+              <div class="auth-form-footer">
+                <p>
+                  <span data-i18n="auth_already_member">¿Ya eres miembro?</span>
+                  <button type="button" class="auth-inline-link" id="link-goto-login" data-i18n="auth_login_link">Iniciar Sesión</button>
+                </p>
+              </div>
+              <div class="auth-feedback-msg" id="auth-reg-feedback" role="status"></div>
+            </form>
+          </div>
+        </div>
+
+        <!-- PANEL GLASEADO DIAGONAL DESLIZANTE (Referencia_login_y_crear_usuario.mp4) -->
+        <div class="auth-diagonal-overlay" id="auth-diagonal-overlay">
+          <!-- Contenido cuando el overlay cubre la derecha (Modo Login activo) -->
+          <div class="auth-overlay-content auth-overlay-content--hello" id="auth-overlay-hello">
+            <span class="auth-overlay-kicker" data-i18n="auth_ov_hello_kicker">COORDINACIÓN &amp; CLÍNICA LEGAL</span>
+            <h3 class="auth-overlay-heading" data-i18n="auth_ov_hello_title">¡HOLA,<br />EQUIPO!</h3>
+            <p class="auth-overlay-desc" data-i18n="auth_ov_hello_desc">
+              Ingresa tus datos institucionales y comienza a gestionar citas comunitarias y campañas con nosotros.
+            </p>
+            <button type="button" class="auth-overlay-switch-btn" id="btn-overlay-to-register">
+              <span data-i18n="auth_ov_create_btn">Crear Usuario</span>
+              <span>→</span>
+            </button>
+          </div>
+
+          <!-- Contenido cuando el overlay cubre la izquierda (Modo Crear Usuario activo) -->
+          <div class="auth-overlay-content auth-overlay-content--welcome" id="auth-overlay-welcome">
+            <span class="auth-overlay-kicker" data-i18n="auth_ov_welcome_kicker">PORTAL EL RESCATE • DESDE 1981</span>
+            <h3 class="auth-overlay-heading" data-i18n="auth_ov_welcome_title">¡BIENVENIDO<br />DE NUEVO!</h3>
+            <p class="auth-overlay-desc" data-i18n="auth_ov_welcome_desc">
+              ¿Ya eres miembro del equipo? Por favor inicia sesión con tus credenciales institucionales.
+            </p>
+            <button type="button" class="auth-overlay-switch-btn" id="btn-overlay-to-login">
+              <span data-i18n="auth_ov_signin_btn">Iniciar Sesión</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       8.7. VISTA DE PANEL ADMINISTRATIVO (#admin-view / #vista-admin)
+            (Referencia: Referencia_panel_admin.mp4 + Flujo de Citas, Horarios y Donaciones)
+       ======================================================================== -->
+  <section class="admin-view-shell" id="admin-view" aria-hidden="true" aria-label="Panel Administrativo de El Rescate">
+    <div class="admin-dashboard-frame">
+      <!-- BARRA SUPERIOR FLOTANTE ESTILO "Code XR Admin" (Referencia_panel_admin.mp4) -->
+      <header class="admin-top-bar">
+        <div class="admin-brand-pill">
+          <span class="admin-brand-pill__dot"></span>
+          <span class="admin-brand-pill__name" data-i18n="adm_brand_title">El Rescate Admin</span>
+        </div>
+
+        <!-- Píldora central de pestañas del Admin -->
+        <nav class="admin-nav-pills" role="tablist" aria-label="Secciones del Panel Administrativo">
+          <button type="button" class="admin-nav-tab is-active" data-admin-tab="overview" role="tab" aria-selected="true" data-i18n="adm_tab_overview">
+            Resumen
+          </button>
+          <button type="button" class="admin-nav-tab" data-admin-tab="appointments" role="tab" aria-selected="false">
+            <span data-i18n="adm_tab_appts">Citas y Horarios</span>
+            <span class="admin-nav-badge" id="adm-nav-appts-count">12</span>
+          </button>
+          <button type="button" class="admin-nav-tab" data-admin-tab="donations" role="tab" aria-selected="false">
+            <span data-i18n="adm_tab_donations">Donaciones</span>
+            <span class="admin-nav-badge" id="adm-nav-don-count">10</span>
+          </button>
+          <button type="button" class="admin-nav-tab" data-admin-tab="reports" role="tab" aria-selected="false" data-i18n="adm_tab_reports">
+            Reportes
+          </button>
+        </nav>
+
+        <!-- Acciones circulares derechas -->
+        <div class="admin-top-actions">
+          <button type="button" class="admin-icon-circle" id="btn-admin-quick-new-appt" title="Agendar nueva cita manual">
+            +
+          </button>
+          <button type="button" class="admin-action-pill" id="btn-admin-to-login" data-i18n="adm_switch_login">
+            Vista Login
+          </button>
+          <button type="button" class="admin-action-pill admin-action-pill--exit" id="btn-admin-back-site" data-i18n="adm_exit_site">
+            ← Sitio Público
+          </button>
+          <div class="admin-avatar-badge" title="elrescate_admin • Coordinación General">ER</div>
+        </div>
+      </header>
+
+      <!-- ====================================================================
+           PESTAÑA 1: RESUMEN / YOUR STATISTICS (Referencia_panel_admin.mp4 00:00)
+           ==================================================================== -->
+      <div class="admin-tab-panel is-active" id="admin-panel-overview" role="tabpanel">
+        <div class="admin-hero-row">
+          <div>
+            <h1 class="admin-page-title" data-i18n="adm_ov_title">Estadísticas Institucionales</h1>
+            <div class="admin-sub-segmented">
+              <button type="button" class="admin-sub-seg-btn is-active" data-ov-mode="all" data-i18n="adm_ov_seg1">
+                Métricas de Citas y Clínica
+              </button>
+              <button type="button" class="admin-sub-seg-btn" data-ov-mode="donations" data-i18n="adm_ov_seg2">
+                Analítica de Donaciones ONG
+              </button>
+            </div>
+          </div>
+
+          <!-- 3 Píldoras KPI superiores derechas (como $42.5K / 109 / 99.96% en el video) -->
+          <div class="admin-top-kpi-Row">
+            <div class="admin-mini-kpi-pill">
+              <div class="admin-mini-kpi-pill__icon">📊</div>
+              <div>
+                <div class="admin-mini-kpi-pill__val" id="adm-ov-kpi-donations">$242.4K</div>
+                <div class="admin-mini-kpi-pill__lbl" data-i18n="adm_ov_kpi1_lbl">Total recaudado en campañas</div>
+              </div>
+            </div>
+
+            <div class="admin-mini-kpi-pill">
+              <div class="admin-mini-kpi-pill__icon">📅</div>
+              <div>
+                <div class="admin-mini-kpi-pill__val" id="adm-ov-kpi-appts">12 Citas</div>
+                <div class="admin-mini-kpi-pill__lbl" data-i18n="adm_ov_kpi2_lbl">Citas activas en agenda</div>
+              </div>
+            </div>
+
+            <div class="admin-mini-kpi-pill">
+              <div class="admin-mini-kpi-pill__icon">◎</div>
+              <div>
+                <div class="admin-mini-kpi-pill__val" id="adm-ov-kpi-days">14 Días</div>
+                <div class="admin-mini-kpi-pill__lbl" data-i18n="adm_ov_kpi3_lbl">Fechas de clínica habilitadas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento Grid de 3 Columnas (Spotlight Izquierda, Gauge + Dark Card Centro, Analytics Derecha) -->
+        <div class="admin-bento-overview">
+          <!-- Columna 1: Coordinación de Clínica & Desglose de Casos -->
+          <div class="admin-glass-panel admin-spotlight-panel">
+            <div class="admin-panel-head">
+              <span class="admin-panel-title" data-i18n="adm_spot_title">Coordinación de Clínica</span>
+              <span class="admin-pill-tag" data-i18n="adm_spot_tag">Sede Westlake</span>
+            </div>
+
+            <div class="admin-coord-profile">
+              <div class="admin-coord-avatar">EM</div>
+              <div>
+                <div class="admin-coord-name">Dra. Elena Morales</div>
+                <span class="admin-coord-role" data-i18n="adm_coord_role">Directora de Clínica Legal</span>
+              </div>
+            </div>
+
+            <div class="admin-stat-rows" id="adm-overview-case-breakdown">
+              <!-- Generado dinámicamente en prototype.js con conteo por tipo de caso -->
+            </div>
+
+            <div class="admin-coord-footer">
+              <div>
+                <div class="admin-coord-footer__lbl" data-i18n="adm_next_session_lbl">Próxima jornada activa</div>
+                <div class="admin-coord-footer__val" id="adm-next-clinic-label">Miércoles y Sábados</div>
+              </div>
+              <button type="button" class="admin-inline-cta" data-goto-tab="appointments" data-i18n="adm_btn_config_hours">
+                Modificar horarios →
+              </button>
+            </div>
+          </div>
+
+          <!-- Columna 2: Gauge de Meta + Tarjeta Azul Profundo "Tus Reportes / Acciones" -->
+          <div class="admin-mid-stack">
+            <div class="admin-glass-panel admin-gauge-panel">
+              <div class="admin-panel-head">
+                <span class="admin-panel-title" data-i18n="adm_gauge_title">Avance de Campañas</span>
+                <span class="admin-pill-tag admin-pill-tag--amber">+18% mes</span>
+              </div>
+
+              <!-- Arco semicircular estilo Referencia_panel_admin.mp4 -->
+              <div class="admin-gauge-wrap">
+                <svg viewBox="0 0 240 135" class="admin-gauge-svg">
+                  <path
+                    d="M 24 118 A 96 96 0 0 1 216 118"
+                    fill="none"
+                    stroke="rgba(23, 59, 99, 0.14)"
+                    stroke-width="18"
+                    stroke-linecap="round"
+                    stroke-dasharray="4 6"
+                  />
+                  <path
+                    id="adm-gauge-arc"
+                    d="M 24 118 A 96 96 0 0 1 216 118"
+                    fill="none"
+                    stroke="url(#admGaugeGrad)"
+                    stroke-width="18"
+                    stroke-linecap="round"
+                    stroke-dasharray="301.6"
+                    stroke-dashoffset="54"
+                  />
+                  <defs>
+                    <linearGradient id="admGaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#173B63" />
+                      <stop offset="65%" stop-color="#0056B3" />
+                      <stop offset="100%" stop-color="#E8A04A" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="admin-gauge-center">
+                  <div class="admin-gauge-val" id="adm-gauge-total-val">$242.4K</div>
+                  <div class="admin-gauge-sub" id="adm-gauge-sub-text" data-i18n="adm_gauge_sub">
+                    82% de la meta global ($295K USD) • 4 campañas
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta Azul Profundo (#173B63) equivalente a "Your Reports" en el video -->
+            <div class="admin-dark-cta-card">
+              <div class="admin-dark-cta-card__top">
+                <h3 data-i18n="adm_dark_card_title">Control de Agenda y Donantes</h3>
+                <span class="admin-amber-badge" id="adm-dark-badge-count">En vivo</span>
+              </div>
+              <p data-i18n="adm_dark_card_desc">
+                Habilita o bloquea fechas del calendario, edita bloques horarios y audita de quién proviene cada donación.
+              </p>
+              <div class="admin-dark-cta-card__btns">
+                <button type="button" class="admin-dark-btn" data-goto-tab="appointments" data-i18n="adm_dark_btn_appts">
+                  Gestionar Citas y Días →
+                </button>
+                <button type="button" class="admin-dark-btn admin-dark-btn--outline" data-goto-tab="donations" data-i18n="adm_dark_btn_don">
+                  Ver Donantes →
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna 3: Gráfica Analítica de Barras Tipo Píldora (Referencia_panel_admin.mp4) -->
+          <div class="admin-glass-panel admin-analytics-panel">
+            <div class="admin-panel-head">
+              <span class="admin-panel-title" data-i18n="adm_an_title">Analítica por Campaña y Mes</span>
+              <div class="admin-mini-tabs">
+                <button type="button" class="admin-mini-tab is-active" data-chart-mode="campaigns" data-i18n="adm_an_tab1">
+                  Recaudación Campañas
+                </button>
+                <button type="button" class="admin-mini-tab" data-chart-mode="appointments" data-i18n="adm_an_tab2">
+                  Flujo de Citas
+                </button>
+              </div>
+            </div>
+
+            <!-- Barras verticales tipo cápsula con indicador flotante -->
+            <div class="admin-pill-bars-stage" id="adm-overview-bars-stage">
+              <!-- Renderizado dinámico por prototype.js -->
+            </div>
+
+            <div class="admin-analytics-bottom-cards">
+              <div class="admin-an-mini-card admin-an-mini-card--navy">
+                <div class="admin-an-mini-card__lbl" data-i18n="adm_an_c1_lbl">Organización General</div>
+                <div class="admin-an-mini-card__val" id="adm-an-c1-val">$84.5K</div>
+              </div>
+              <div class="admin-an-mini-card">
+                <div class="admin-an-mini-card__lbl" data-i18n="adm_an_c2_lbl">Defensa y Asilo</div>
+                <div class="admin-an-mini-card__val" id="adm-an-c2-val">$62.8K</div>
+              </div>
+              <div class="admin-an-mini-card">
+                <div class="admin-an-mini-card__lbl" data-i18n="adm_an_c3_lbl">DACA + Clínicas</div>
+                <div class="admin-an-mini-card__val" id="adm-an-c3-val">$95.1K</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila inferior de 4 métricas operativas rápidas (como 11 / 6 / 49 / 2.8% en el video) -->
+        <div class="admin-bottom-metrics-strip">
+          <div class="admin-strip-metric">
+            <div class="admin-strip-metric__val" id="adm-strip-wed-slots">3 Bloques</div>
+            <div class="admin-strip-metric__lbl" data-i18n="adm_strip_1">Horarios activos Miércoles</div>
+          </div>
+          <div class="admin-strip-metric">
+            <div class="admin-strip-metric__val" id="adm-strip-sat-slots">3 Bloques</div>
+            <div class="admin-strip-metric__lbl" data-i18n="adm_strip_2">Horarios activos Sábados</div>
+          </div>
+          <div class="admin-strip-metric">
+            <div class="admin-strip-metric__val" id="adm-strip-confirmed">9 Confirmadas</div>
+            <div class="admin-strip-metric__lbl" data-i18n="adm_strip_3">Citas listas para atención</div>
+          </div>
+          <div class="admin-strip-metric">
+            <div class="admin-strip-metric__val" id="adm-strip-avg-don">$24,240</div>
+            <div class="admin-strip-metric__lbl" data-i18n="adm_strip_4">Promedio mensual en campañas</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           PESTAÑA 2: CITAS Y HORARIOS (FLUJO MODIFICAR DÍAS/HORAS + CRUD DE CITAS)
+           ==================================================================== -->
+      <div class="admin-tab-panel" id="admin-panel-appointments" role="tabpanel">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-page-title" data-i18n="adm_appts_title">Gestión de Citas, Días y Horarios</h2>
+            <p class="admin-page-sub" data-i18n="adm_appts_sub">
+              Habilita o deshabilita días del calendario, configura las horas disponibles y crea, modifica o elimina citas agendadas.
+            </p>
+          </div>
+          <button type="button" class="admin-primary-btn" id="btn-open-new-appt-form">
+            <span>+</span>
+            <span data-i18n="adm_btn_new_appt">Crear Nueva Cita</span>
+          </button>
+        </div>
+
+        <!-- 4 Tarjetas de Métricas de Citas Agendadas -->
+        <div class="admin-kpi-grid-4">
+          <div class="admin-glass-kpi-card">
+            <div class="admin-glass-kpi-card__top">
+              <span data-i18n="adm_akpi1_title">Total Citas Agendadas</span>
+              <span class="admin-kpi-dot admin-kpi-dot--blue"></span>
+            </div>
+            <div class="admin-glass-kpi-card__val" id="adm-akpi-total">12</div>
+            <div class="admin-glass-kpi-card__foot" id="adm-akpi-total-sub">Noviembre – Diciembre 2026</div>
+          </div>
+
+          <div class="admin-glass-kpi-card">
+            <div class="admin-glass-kpi-card__top">
+              <span data-i18n="adm_akpi2_title">Confirmadas vs. Pendientes</span>
+              <span class="admin-kpi-dot admin-kpi-dot--amber"></span>
+            </div>
+            <div class="admin-glass-kpi-card__val" id="adm-akpi-status">9 / 3</div>
+            <div class="admin-glass-kpi-card__foot" data-i18n="adm_akpi2_sub">Confirmadas • En revisión</div>
+          </div>
+
+          <div class="admin-glass-kpi-card">
+            <div class="admin-glass-kpi-card__top">
+              <span data-i18n="adm_akpi3_title">Días con Citas Habilitados</span>
+              <span class="admin-kpi-dot admin-kpi-dot--blue"></span>
+            </div>
+            <div class="admin-glass-kpi-card__val" id="adm-akpi-days">14 Días</div>
+            <div class="admin-glass-kpi-card__foot" data-i18n="adm_akpi3_sub">Sincronizados con calendario público</div>
+          </div>
+
+          <div class="admin-glass-kpi-card">
+            <div class="admin-glass-kpi-card__top">
+              <span data-i18n="adm_akpi4_title">Horas Disponibles Activas</span>
+              <span class="admin-kpi-dot admin-kpi-dot--amber"></span>
+            </div>
+            <div class="admin-glass-kpi-card__val" id="adm-akpi-slots">6 Bloques</div>
+            <div class="admin-glass-kpi-card__foot" id="adm-akpi-slots-sub">Miércoles (3) • Sábados (3)</div>
+          </div>
+        </div>
+
+        <!-- Layout de 2 Columnas: [Izquierda: Configurador de Días y Horas] + [Derecha: CRUD de Citas Agendadas] -->
+        <div class="admin-appts-workspace">
+          <!-- COLUMNA IZQUIERDA: FLUJO PARA MODIFICAR DÍAS CON CITAS Y HORAS DISPONIBLES -->
+          <div class="admin-glass-panel admin-schedule-config-card">
+            <div class="admin-panel-head">
+              <div>
+                <h3 class="admin-panel-title" data-i18n="adm_sched_title">1. Modificar Días con Citas y Horas</h3>
+                <p class="admin-panel-hint" data-i18n="adm_sched_hint">
+                  Haz clic en cualquier día del calendario para habilitar o cerrar citas en esa fecha (se refleja en vivo en la página pública).
+                </p>
+              </div>
+              <div class="admin-month-switcher">
+                <button type="button" class="admin-month-btn is-active" data-adm-month="0">Nov 2026</button>
+                <button type="button" class="admin-month-btn" data-adm-month="1">Dic 2026</button>
+              </div>
+            </div>
+
+            <!-- Reglas rápidas por día de la semana -->
+            <div class="admin-weekday-toggles">
+              <span class="admin-weekday-toggles__lbl" data-i18n="adm_Toggle_weekday_lbl">Alternar día completo:</span>
+              <button type="button" class="admin-weekday-chip" data-Toggle-dow="1">Lun</button>
+              <button type="button" class="admin-weekday-chip" data-Toggle-dow="2">Mar</button>
+              <button type="button" class="admin-weekday-chip is-active" data-Toggle-dow="3">Mié</button>
+              <button type="button" class="admin-weekday-chip" data-Toggle-dow="4">Jue</button>
+              <button type="button" class="admin-weekday-chip" data-Toggle-dow="5">Vie</button>
+              <button type="button" class="admin-weekday-chip is-active" data-Toggle-dow="6">Sáb</button>
+            </div>
+
+            <!-- Cuadrícula del calendario administrativo -->
+            <div class="admin-cal-weekdays">
+              <span>DOM</span><span>LUN</span><span>MAR</span><span>MIÉ</span><span>JUE</span><span>VIE</span><span>SÁB</span>
+            </div>
+            <div class="admin-cal-grid" id="admin-cal-grid">
+              <!-- Días generados dinámicamente por prototype.js -->
+            </div>
+
+            <!-- Gestor de Horas Disponibles (Time Slots) -->
+            <div class="admin-slots-editor">
+              <div class="admin-slots-editor__head">
+                <span class="admin-slots-editor__title" data-i18n="adm_slots_title">2. Horas Disponibles por Jornada</span>
+                <div class="admin-slot-daytype-tabs">
+                  <button type="button" class="admin-slot-type-btn is-active" data-slot-group="Miércoles" data-i18n="adm_slot_wed">
+                    Miércoles / Entre semana
+                  </button>
+                  <button type="button" class="admin-slot-type-btn" data-slot-group="Sábado" data-i18n="adm_slot_sat">
+                    Sábados / Fin de semana
+                  </button>
+                </div>
+              </div>
+
+              <div class="admin-slots-pills-list" id="admin-slots-pills-list">
+                <!-- Píldoras de horarios con botón de eliminar (×) -->
+              </div>
+
+              <div class="admin-add-slot-row">
+                <input
+                  type="text"
+                  id="admin-new-slot-input"
+                  class="admin-input"
+                  placeholder="Ej. 9:00 AM – 10:00 AM o 5:00 PM – 6:00 PM"
+                  data-i18n-placeholder="adm_new_slot_ph"
+                />
+                <button type="button" class="admin-secondary-btn" id="btn-admin-add-slot" data-i18n="adm_btn_add_slot">
+                  + Agregar Hora
+                </button>
+              </div>
+
+              <div class="admin-sync-notice" id="admin-schedule-sync-toast" role="status">
+                ✓ Calendario y horarios sincronizados en tiempo real con la vista pública de Clínica Legal.
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA: CREAR, MODIFICAR Y ELIMINAR CITAS AGENDADAS -->
+          <div class="admin-glass-panel admin-appointments-crud-card">
+            <div class="admin-panel-head">
+              <div>
+                <h3 class="admin-panel-title" data-i18n="adm_crud_title">3. Citas Agendadas (Crear, Modificar y Eliminar)</h3>
+                <p class="admin-panel-hint" data-i18n="adm_crud_hint">
+                  Revisa todas las citas programadas, filtra por área legal o edita cualquier registro.
+                </p>
+              </div>
+            </div>
+
+            <!-- Formulario Desplegable para Crear o Modificar Cita -->
+            <form class="admin-appt-editor-form" id="admin-appt-editor-form" hidden>
+              <div class="admin-appt-editor-form__head">
+                <strong id="admin-appt-form-title" data-i18n="adm_form_create_title">Registrar Nueva Cita Legal</strong>
+                <button type="button" class="admin-form-close-btn" id="btn-close-appt-form">×</button>
+              </div>
+              <input type="hidden" id="adm-appt-edit-id" value="" />
+              <div class="admin-form-grid">
+                <div>
+                  <label class="admin-field-label" for="adm-appt-name" data-i18n="adm_lbl_name">Nombre del solicitante</label>
+                  <input type="text" id="adm-appt-name" class="admin-input" placeholder="Ej. María Fernanda López" required />
+                </div>
+                <div>
+                  <label class="admin-field-label" for="adm-appt-phone" data-i18n="adm_lbl_phone">Teléfono</label>
+                  <input type="text" id="adm-appt-phone" class="admin-input" placeholder="(213) 555-0192" required />
+                </div>
+                <div>
+                  <label class="admin-field-label" for="adm-appt-email" data-i18n="adm_lbl_email">Correo electrónico</label>
+                  <input type="email" id="adm-appt-email" class="admin-input" placeholder="correo@ejemplo.com" required />
+                </div>
+                <div>
+                  <label class="admin-field-label" for="adm-appt-case" data-i18n="adm_lbl_case">Tipo de Caso Legal</label>
+                  <select id="adm-appt-case" class="admin-input">
+                    <option value="Asilo y Refugio">Asilo y Refugio</option>
+                    <option value="Renovación DACA">Renovación DACA</option>
+                    <option value="TPS (Estatus de Protección)">TPS (Estatus de Protección)</option>
+                    <option value="Residencia / Petición Familiar">Residencia / Petición Familiar</option>
+                    <option value="Visa U / Protección VAWA">Visa U / Protección VAWA</option>
+                    <option value="Ciudadanía y Naturalización">Ciudadanía y Naturalización</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="admin-field-label" for="adm-appt-date" data-i18n="adm_lbl_date">Fecha de Clínica</label>
+                  <input type="text" id="adm-appt-date" class="admin-input" value="Sábado, 21 De Noviembre" required />
+                </div>
+                <div>
+                  <label class="admin-field-label" for="adm-appt-time" data-i18n="adm_lbl_time">Horario Asignado</label>
+                  <select id="adm-appt-time" class="admin-input"></select>
+                </div>
+                <div>
+                  <label class="admin-field-label" for="adm-appt-status" data-i18n="adm_lbl_status">Estado de la Cita</label>
+                  <select id="adm-appt-status" class="admin-input">
+                    <option value="Confirmada">Confirmada</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Atendida">Atendida</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="admin-field-label" for="adm-appt-notes" data-i18n="adm_lbl_notes">Especialista / Nota</label>
+                  <input type="text" id="adm-appt-notes" class="admin-input" placeholder="Abog. Guardia • Primera vez" />
+                </div>
+              </div>
+              <div class="admin-form-actions">
+                <button type="submit" class="admin-primary-btn" id="btn-save-appt" data-i18n="adm_btn_save_appt">
+                  Guardar Cita
+                </button>
+                <button type="button" class="admin-secondary-btn" id="btn-cancel-appt" data-i18n="adm_btn_cancel">
+                  Cancelar
+                </button>
+              </div>
+            </form>
+
+            <!-- Barra de búsqueda y filtros de citas -->
+            <div class="admin-filter-bar">
+              <input
+                type="search"
+                id="adm-appt-search"
+                class="admin-input admin-input--search"
+                placeholder="Buscar por nombre, teléfono, correo o folio..."
+                data-i18n-placeholder="adm_appt_search_ph"
+              />
+              <select id="adm-appt-filter-case" class="admin-input admin-input--select">
+                <option value="all" data-i18n="adm_filter_all_cases">Todos los tipos de caso</option>
+                <option value="Asilo y Refugio">Asilo y Refugio</option>
+                <option value="Renovación DACA">Renovación DACA</option>
+                <option value="TPS (Estatus de Protección)">TPS (Estatus de Protección)</option>
+                <option value="Residencia / Petición Familiar">Residencia / Petición Familiar</option>
+                <option value="Visa U / Protección VAWA">Visa U / Protección VAWA</option>
+                <option value="Ciudadanía y Naturalización">Ciudadanía y Naturalización</option>
+              </select>
+              <select id="adm-appt-filter-status" class="admin-input admin-input--select">
+                <option value="all" data-i18n="adm_filter_all_status">Todos los estados</option>
+                <option value="Confirmada">Confirmada</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Atendida">Atendida</option>
+              </select>
+            </div>
+
+            <!-- Lista de Citas Agendadas -->
+            <div class="admin-appointments-list" id="admin-appointments-list" data-lenis-prevent>
+              <!-- Tarjetas/filas de citas generadas dinámicamente por prototype.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           PESTAÑA 3: DONACIONES Y CAMPAÑAS (MÉTRICAS + QUIÉN DONÓ Y A QUÉ CAMPAÑA)
+           ==================================================================== -->
+      <div class="admin-tab-panel" id="admin-panel-donations" role="tabpanel">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-page-title" data-i18n="adm_don_title">Métricas de Donaciones y Trazabilidad por Campaña</h2>
+            <p class="admin-page-sub" data-i18n="adm_don_sub">
+              Consulta el monto recaudado por campaña, identifica de quién proviene cada aporte y hacia qué programa institucional fue destinado.
+            </p>
+          </div>
+          <div class="admin-header-btn-group">
+            <button type="button" class="admin-secondary-btn" id="btn-admin-export-don-csv" data-i18n="adm_btn_export_csv">
+              ↓ Exportar CSV 501(c)(3)
+            </button>
+            <button type="button" class="admin-primary-btn" id="btn-admin-new-donation" data-i18n="adm_btn_add_don">
+              + Registrar Donación
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 KPI Cards de Donaciones (Inspirado en Finance 00:04 de Referencia_panel_admin.mp4) -->
+        <div class="admin-kpi-grid-4">
+          <div class="admin-glass-kpi-card">
+            <div class="admin-glass-kpi-card__top">
+              <span data-i18n="adm_dkpi1_title">Recaudación Total Consolidada</span>
+              <span class="admin-kpi-dot admin-kpi-dot--blue"></span>
+            </div>
+            <div class="admin-glass-kpi-card__val" id="adm-dkpi-total">$242,400</div>
+            <div class="admin-glass-kpi-card__foot" data-i18n="adm_dkpi1_sub">82.1% de la meta anual ($295,000 USD)</div>
+          </div>
+
+          <div class="admin-glass-kpi-card">
+            <div class="admin-glass-kpi-card__top">
+              <span data-i18n="adm_dkpi2_title">Donantes Verificados</span>
+              <span class="admin-kpi-dot admin-kpi-dot--amber"></span>
+            </div>
+            <div class="admin-glass-kpi-card__val" id="adm-dkpi-donors">10 Registros</div>
+            <div class="admin-glass-kpi-card__foot" data-i18n="adm_dkpi2_sub">100% con certificado fiscal 501(c)(3)</div>
+          </div>
+
+          <div class="admin-glass-kpi-card">
+            <div class="admin-glass-kpi-card__top">
+              <span data-i18n="adm_dkpi3_title">Aporte Promedio</span>
+              <span class="admin-kpi-dot admin-kpi-dot--blue"></span>
+            </div>
+            <div class="admin-glass-kpi-card__val" id="adm-dkpi-avg">$285 USD</div>
+            <div class="admin-glass-kpi-card__foot" data-i18n="adm_dkpi3_sub">60% Donación Única • 40% Mensual</div>
+          </div>
+
+          <div class="admin-glass-kpi-card">
+            <div class="admin-glass-kpi-card__top">
+              <span data-i18n="adm_dkpi4_title">Campaña Principal</span>
+              <span class="admin-kpi-dot admin-kpi-dot--amber"></span>
+            </div>
+            <div class="admin-glass-kpi-card__val" style="font-size:22px;">Organización General</div>
+            <div class="admin-glass-kpi-card__foot">$84,500 USD recaudados (#ER-ORG-2026)</div>
+          </div>
+        </div>
+
+        <!-- Desglose de Metas por Campaña Habilitada -->
+        <div class="admin-campaigns-breakdown-grid" id="admin-campaigns-breakdown-grid">
+          <!-- Tarjetas de progreso de las 4 campañas generadas por prototype.js -->
+        </div>
+
+        <!-- Formulario Rápido para Registrar Nueva Donación desde Admin -->
+        <form class="admin-appt-editor-form" id="admin-donation-editor-form" hidden>
+          <div class="admin-appt-editor-form__head">
+            <strong data-i18n="adm_don_form_title">Registrar Nuevo Aporte Solidario</strong>
+            <button type="button" class="admin-form-close-btn" id="btn-close-don-form">×</button>
+          </div>
+          <div class="admin-form-grid">
+            <div>
+              <label class="admin-field-label" for="adm-don-donor">Nombre del Donante (De quién proviene)</label>
+              <input type="text" id="adm-don-donor" class="admin-input" placeholder="Ej. Fundación Comunitaria L.A." required />
+            </div>
+            <div>
+              <label class="admin-field-label" for="adm-don-email">Correo del Donante</label>
+              <input type="email" id="adm-don-email" class="admin-input" placeholder="donante@organizacion.org" required />
+            </div>
+            <div>
+              <label class="admin-field-label" for="adm-don-campaign">Campaña Destino (Hacia qué campaña donó)</label>
+              <select id="adm-don-campaign" class="admin-input">
+                <option value="organizacion">Organización General (#ER-ORG-2026)</option>
+                <option value="asilo">Defensa Legal y Asilo (#ER-ASILO-2026)</option>
+                <option value="clinicas">Clínicas Comunitarias (#ER-CLINICA-2026)</option>
+                <option value="daca">Futuro Joven &amp; DACA (#ER-DACA-2026)</option>
+              </select>
+            </div>
+            <div>
+              <label class="admin-field-label" for="adm-don-amount">Monto (USD)</label>
+              <input type="number" id="adm-don-amount" class="admin-input" value="150" min="5" required />
+            </div>
+            <div>
+              <label class="admin-field-label" for="adm-don-freq">Frecuencia</label>
+              <select id="adm-don-freq" class="admin-input">
+                <option value="Donación Única">Donación Única</option>
+                <option value="Donación Mensual">Donación Mensual</option>
+              </select>
+            </div>
+            <div>
+              <label class="admin-field-label" for="adm-don-method">Método de Pago</label>
+              <select id="adm-don-method" class="admin-input">
+                <option value="Tarjeta •••• 4829">Tarjeta de Crédito / Débito</option>
+                <option value="PayPal Institucional">PayPal Institucional</option>
+                <option value="Transferencia ACH">Transferencia Bancaria ACH</option>
+              </select>
+            </div>
+          </div>
+          <div class="admin-form-actions">
+            <button type="submit" class="admin-primary-btn">Guardar Donación</button>
+          </div>
+        </form>
+
+        <!-- Tabla / Registro de Trazabilidad: De quién proviene y hacia qué campaña donó -->
+        <div class="admin-glass-panel admin-donations-ledger-card">
+          <div class="admin-filter-bar">
+            <input
+              type="search"
+              id="adm-don-search"
+              class="admin-input admin-input--search"
+              placeholder="Buscar donante por nombre, correo, ciudad o folio #ER-501C3..."
+              data-i18n-placeholder="adm_don_search_ph"
+            />
+            <select id="adm-don-filter-campaign" class="admin-input admin-input--select">
+              <option value="all" data-i18n="adm_don_filter_all">Todas las campañas destino</option>
+              <option value="organizacion">Organización General (#ER-ORG-2026)</option>
+              <option value="asilo">Defensa Legal y Asilo (#ER-ASILO-2026)</option>
+              <option value="clinicas">Clínicas Comunitarias (#ER-CLINICA-2026)</option>
+              <option value="daca">Futuro Joven &amp; DACA (#ER-DACA-2026)</option>
+            </select>
+          </div>
+
+          <div class="admin-ledger-table-wrap" data-lenis-prevent>
+            <table class="admin-ledger-table">
+              <thead>
+                <tr>
+                  <th data-i18n="adm_th_folio">Folio Fiscal / Fecha</th>
+                  <th data-i18n="adm_th_donor">Donante (De quién proviene)</th>
+                  <th data-i18n="adm_th_campaign">Campaña Destino (Hacia qué donó)</th>
+                  <th data-i18n="adm_th_amount">Monto &amp; Frecuencia</th>
+                  <th data-i18n="adm_th_method">Método &amp; Estado</th>
+                </tr>
+              </thead>
+              <tbody id="admin-donations-tbody">
+                <!-- Filas generadas dinámicamente por prototype.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           PESTAÑA 4: REPORTES CONSOLIDADOS (Referencia_panel_admin.mp4 00:01)
+           ==================================================================== -->
+      <div class="admin-tab-panel" id="admin-panel-reports" role="tabpanel">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-page-title" data-i18n="adm_rep_title">Reportes Ejecutivos de Impacto</h2>
+            <p class="admin-page-sub" data-i18n="adm_rep_sub">
+              Consolidado de desempeño por clínica semanal, origen de casos legales y distribución de fondos humanitarios.
+            </p>
+          </div>
+        </div>
+
+        <div class="admin-reports-bento">
+          <div class="admin-glass-panel">
+            <h3 class="admin-panel-title" data-i18n="adm_rep_c1_title">Rendimiento por Jornada de Clínica</h3>
+            <table class="admin-ledger-table" style="margin-top:14px;">
+              <thead>
+                <tr>
+                  <th>Jornada</th>
+                  <th>Horario</th>
+                  <th>Citas Activas</th>
+                  <th>Ocupación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Miércoles Vespertino</strong></td>
+                  <td>2:00 PM – 5:00 PM</td>
+                  <td>5 familias</td>
+                  <td><span class="admin-status-badge admin-status-badge--confirmed">88% Capacidad</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Sábados Matutino</strong></td>
+                  <td>10:00 AM – 1:00 PM</td>
+                  <td>7 familias</td>
+                  <td><span class="admin-status-badge admin-status-badge--confirmed">96% Capacidad</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="admin-glass-panel">
+            <h3 class="admin-panel-title" data-i18n="adm_rep_c2_title">Canales de Origen de Citas y Donaciones</h3>
+            <table class="admin-ledger-table" style="margin-top:14px;">
+              <thead>
+                <tr>
+                  <th>Canal</th>
+                  <th>Citas</th>
+                  <th>Donantes</th>
+                  <th>Aporte Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Portal Web / Calendario Directo</strong></td>
+                  <td>8</td>
+                  <td>6</td>
+                  <td><strong>$148,200 USD</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Asistente Virtual Pre-Evaluación</strong></td>
+                  <td>4</td>
+                  <td>4</td>
+                  <td><strong>$94,200 USD</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

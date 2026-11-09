@@ -3802,10 +3802,1371 @@
         `;
       }
       donationReceiptBox.classList.add("is-visible");
+      if (typeof window.__registerPublicDonationInAdmin === "function") {
+        window.__registerPublicDonationInAdmin({
+          donorName: fullName,
+          email,
+          campaignKey: activeCampaignKey,
+          amount: Number(activeDonationAmount) || 75,
+          freq: freqLabel
+        });
+      }
     });
   }
 
   syncDonationUI();
+
+  // ==========================================================================
+  // 11.5. AJUSTES #1 Y #2 (NUEVA ETAPA):
+  //       VISTA LOGIN / CREAR USUARIO (#auth-view) & PANEL ADMIN (#admin-view)
+  // ==========================================================================
+  Object.assign(I18N_DICT.es, {
+    nav_portal: "Acceso / Admin",
+    auth_back_site: "Volver al sitio público",
+    auth_portal_badge: "PORTAL INSTITUCIONAL • EL RESCATE L.A.",
+    auth_goto_admin_btn: "Ir directo al Panel Admin →",
+    auth_login_title: "Iniciar Sesión",
+    auth_login_user_ph: "Usuario o correo institucional",
+    auth_login_pass_ph: "Contraseña",
+    auth_login_btn: "Iniciar Sesión",
+    auth_no_account: "¿No tienes una cuenta?",
+    auth_signup_link: "Crear Usuario",
+    auth_forgot_link: "¿Olvidaste tu contraseña?",
+    auth_reg_title: "Crear Usuario",
+    auth_reg_name_ph: "Nombre completo",
+    auth_reg_email_ph: "Correo institucional (@elrescate.org)",
+    auth_reg_pass_ph: "Crear contraseña segura",
+    auth_reg_btn: "Registrar Usuario",
+    auth_already_member: "¿Ya eres miembro?",
+    auth_login_link: "Iniciar Sesión",
+    auth_ov_hello_kicker: "COORDINACIÓN & CLÍNICA LEGAL",
+    auth_ov_hello_title: "¡HOLA,<br />EQUIPO!",
+    auth_ov_hello_desc: "Ingresa tus datos institucionales y comienza a gestionar citas comunitarias y campañas con nosotros.",
+    auth_ov_create_btn: "Crear Usuario",
+    auth_ov_welcome_kicker: "PORTAL EL RESCATE • DESDE 1981",
+    auth_ov_welcome_title: "¡BIENVENIDO<br />DE NUEVO!",
+    auth_ov_welcome_desc: "¿Ya eres miembro del equipo? Por favor inicia sesión con tus credenciales institucionales.",
+    auth_ov_signin_btn: "Iniciar Sesión",
+    adm_brand_title: "El Rescate Admin",
+    adm_tab_overview: "Resumen",
+    adm_tab_appts: "Citas y Horarios",
+    adm_tab_donations: "Donaciones",
+    adm_tab_reports: "Reportes",
+    adm_switch_login: "Vista Login",
+    adm_exit_site: "← Sitio Público",
+    adm_ov_title: "Estadísticas Institucionales",
+    adm_ov_seg1: "Métricas de Citas y Clínica",
+    adm_ov_seg2: "Analítica de Donaciones ONG",
+    adm_ov_kpi1_lbl: "Total recaudado en campañas",
+    adm_ov_kpi2_lbl: "Citas activas en agenda",
+    adm_ov_kpi3_lbl: "Fechas de clínica habilitadas",
+    adm_spot_title: "Coordinación de Clínica",
+    adm_spot_tag: "Sede Westlake",
+    adm_coord_role: "Directora de Clínica Legal",
+    adm_next_session_lbl: "Próxima jornada activa",
+    adm_btn_config_hours: "Modificar horarios →",
+    adm_gauge_title: "Avance de Campañas",
+    adm_gauge_sub: "82% de la meta global ($295K USD) • 4 campañas",
+    adm_dark_card_title: "Control de Agenda y Donantes",
+    adm_dark_card_desc: "Habilita o bloquea fechas del calendario, edita bloques horarios y audita de quién proviene cada donación.",
+    adm_dark_btn_appts: "Gestionar Citas y Días →",
+    adm_dark_btn_don: "Ver Donantes →",
+    adm_an_title: "Analítica por Campaña y Mes",
+    adm_an_tab1: "Recaudación Campañas",
+    adm_an_tab2: "Flujo de Citas",
+    adm_an_c1_lbl: "Organización General",
+    adm_an_c2_lbl: "Defensa y Asilo",
+    adm_an_c3_lbl: "DACA + Clínicas",
+    adm_strip_1: "Horarios activos Miércoles",
+    adm_strip_2: "Horarios activos Sábados",
+    adm_strip_3: "Citas listas para atención",
+    adm_strip_4: "Promedio mensual en campañas",
+    adm_appts_title: "Gestión de Citas, Días y Horarios",
+    adm_appts_sub: "Habilita o deshabilita días del calendario, configura las horas disponibles y crea, modifica o elimina citas agendadas.",
+    adm_btn_new_appt: "Crear Nueva Cita",
+    adm_akpi1_title: "Total Citas Agendadas",
+    adm_akpi2_title: "Confirmadas vs. Pendientes",
+    adm_akpi2_sub: "Confirmadas • En revisión",
+    adm_akpi3_title: "Días con Citas Habilitados",
+    adm_akpi3_sub: "Sincronizados con calendario público",
+    adm_akpi4_title: "Horas Disponibles Activas",
+    adm_sched_title: "1. Modificar Días con Citas y Horas",
+    adm_sched_hint: "Haz clic en cualquier día del calendario para habilitar o cerrar citas en esa fecha (se refleja en vivo en la página pública).",
+    adm_Toggle_weekday_lbl: "Alternar día completo:",
+    adm_slots_title: "2. Horas Disponibles por Jornada",
+    adm_slot_wed: "Miércoles / Entre semana",
+    adm_slot_sat: "Sábados / Fin de semana",
+    adm_new_slot_ph: "Ej. 9:00 AM – 10:00 AM o 5:00 PM – 6:00 PM",
+    adm_btn_add_slot: "+ Agregar Hora",
+    adm_crud_title: "3. Citas Agendadas (Crear, Modificar y Eliminar)",
+    adm_crud_hint: "Revisa todas las citas programadas, filtra por área legal o edita cualquier registro.",
+    adm_appt_search_ph: "Buscar por nombre, teléfono, correo o folio...",
+    adm_filter_all_cases: "Todos los tipos de caso",
+    adm_filter_all_status: "Todos los estados",
+    adm_don_title: "Métricas de Donaciones y Trazabilidad por Campaña",
+    adm_don_sub: "Consulta el monto recaudado por campaña, identifica de quién proviene cada aporte y hacia qué programa institucional fue destinado.",
+    adm_btn_export_csv: "↓ Exportar CSV 501(c)(3)",
+    adm_btn_add_don: "+ Registrar Donación",
+    adm_dkpi1_title: "Recaudación Total Consolidada",
+    adm_dkpi1_sub: "82.1% de la meta anual ($295,000 USD)",
+    adm_dkpi2_title: "Donantes Verificados",
+    adm_dkpi2_sub: "100% con certificado fiscal 501(c)(3)",
+    adm_dkpi3_title: "Aporte Promedio",
+    adm_dkpi3_sub: "60% Donación Única • 40% Mensual",
+    adm_dkpi4_title: "Campaña Principal",
+    adm_don_search_ph: "Buscar donante por nombre, correo, ciudad o folio #ER-501C3...",
+    adm_don_filter_all: "Todas las campañas destino",
+    adm_th_folio: "Folio Fiscal / Fecha",
+    adm_th_donor: "Donante (De quién proviene)",
+    adm_th_campaign: "Campaña Destino (Hacia qué donó)",
+    adm_th_amount: "Monto & Frecuencia",
+    adm_th_method: "Método & Estado",
+    adm_rep_title: "Reportes Ejecutivos de Impacto",
+    adm_rep_sub: "Consolidado de desempeño por clínica semanal, origen de casos legales y distribución de fondos humanitarios.",
+    adm_rep_c1_title: "Rendimiento por Jornada de Clínica",
+    adm_rep_c2_title: "Canales de Origen de Citas y Donaciones"
+  });
+
+  Object.assign(I18N_DICT.en, {
+    nav_portal: "Login / Admin",
+    auth_back_site: "Back to public site",
+    auth_portal_badge: "INSTITUTIONAL PORTAL • EL RESCATE L.A.",
+    auth_goto_admin_btn: "Go directly to Admin Panel →",
+    auth_login_title: "Login",
+    auth_login_user_ph: "Username or institutional email",
+    auth_login_pass_ph: "Password",
+    auth_login_btn: "Login",
+    auth_no_account: "Don't have an account?",
+    auth_signup_link: "Sign Up",
+    auth_forgot_link: "Forgot Password?",
+    auth_reg_title: "Create Account",
+    auth_reg_name_ph: "Full Name",
+    auth_reg_email_ph: "Work Email (@elrescate.org)",
+    auth_reg_pass_ph: "Create Password",
+    auth_reg_btn: "Sign Up",
+    auth_already_member: "Already a Member?",
+    auth_login_link: "Login",
+    auth_ov_hello_kicker: "LEGAL CLINIC & COORDINATION",
+    auth_ov_hello_title: "HELLO,<br />FRIEND!",
+    auth_ov_hello_desc: "Enter your institutional details and start managing community appointments and campaigns with us.",
+    auth_ov_create_btn: "Create Account",
+    auth_ov_welcome_kicker: "EL RESCATE PORTAL • EST. 1981",
+    auth_ov_welcome_title: "WELCOME<br />BACK!",
+    auth_ov_welcome_desc: "Already a Member? Please login with your institutional credentials.",
+    auth_ov_signin_btn: "Sign In",
+    adm_brand_title: "El Rescate Admin",
+    adm_tab_overview: "Overview",
+    adm_tab_appts: "Appointments & Hours",
+    adm_tab_donations: "Donations",
+    adm_tab_reports: "Reports",
+    adm_switch_login: "Login View",
+    adm_exit_site: "← Public Site",
+    adm_ov_title: "Your Statistics",
+    adm_ov_seg1: "Clinic & Appointment Metrics",
+    adm_ov_seg2: "NGO Donation Analytics",
+    adm_ov_kpi1_lbl: "Total raised across campaigns",
+    adm_ov_kpi2_lbl: "Active scheduled appointments",
+    adm_ov_kpi3_lbl: "Enabled clinic dates",
+    adm_spot_title: "Clinic Coordination",
+    adm_spot_tag: "Westlake HQ",
+    adm_coord_role: "Legal Clinic Director",
+    adm_next_session_lbl: "Active clinic schedule",
+    adm_btn_config_hours: "Modify schedule →",
+    adm_gauge_title: "Campaign Performance",
+    adm_gauge_sub: "82% of global goal ($295K USD) • 4 campaigns",
+    adm_dark_card_title: "Schedule & Donor Control",
+    adm_dark_card_desc: "Enable or block calendar dates, edit available time slots, and audit who each donation comes from.",
+    adm_dark_btn_appts: "Manage Appointments & Days →",
+    adm_dark_btn_don: "View Donors →",
+    adm_an_title: "Monthly & Campaign Analytics",
+    adm_an_tab1: "Campaign Revenue",
+    adm_an_tab2: "Appointment Flow",
+    adm_an_c1_lbl: "General Organization",
+    adm_an_c2_lbl: "Legal & Asylum",
+    adm_an_c3_lbl: "DACA + Clinics",
+    adm_strip_1: "Active Wednesday slots",
+    adm_strip_2: "Active Saturday slots",
+    adm_strip_3: "Confirmed appointments ready",
+    adm_strip_4: "Monthly campaign average",
+    adm_appts_title: "Appointments, Days & Available Hours",
+    adm_appts_sub: "Enable or disable calendar dates, configure available time slots, and create, edit, or delete scheduled appointments.",
+    adm_btn_new_appt: "Create Appointment",
+    adm_akpi1_title: "Total Scheduled Appointments",
+    adm_akpi2_title: "Confirmed vs. Pending",
+    adm_akpi2_sub: "Confirmed • Under review",
+    adm_akpi3_title: "Enabled Clinic Days",
+    adm_akpi3_sub: "Synced with public calendar",
+    adm_akpi4_title: "Active Time Slots",
+    adm_sched_title: "1. Modify Clinic Days & Available Hours",
+    adm_sched_hint: "Click any calendar date to enable or close appointments on that day (updates the public page in real time).",
+    adm_Toggle_weekday_lbl: "Toggle full weekday:",
+    adm_slots_title: "2. Available Hours by Session",
+    adm_slot_wed: "Wednesdays / Weekdays",
+    adm_slot_sat: "Saturdays / Weekends",
+    adm_new_slot_ph: "E.g. 9:00 AM – 10:00 AM or 5:00 PM – 6:00 PM",
+    adm_btn_add_slot: "+ Add Time Slot",
+    adm_crud_title: "3. Scheduled Appointments (Create, Edit & Delete)",
+    adm_crud_hint: "Review all scheduled appointments, filter by legal area, or edit any record.",
+    adm_appt_search_ph: "Search by name, phone, email, or folio...",
+    adm_filter_all_cases: "All case types",
+    adm_filter_all_status: "All statuses",
+    adm_don_title: "Donation Metrics & Campaign Traceability",
+    adm_don_sub: "Track total funds raised per campaign, identify who each donation comes from, and see which campaign they supported.",
+    adm_btn_export_csv: "↓ Export 501(c)(3) CSV",
+    adm_btn_add_don: "+ Record Donation",
+    adm_dkpi1_title: "Consolidated Funds Raised",
+    adm_dkpi1_sub: "82.1% of annual goal ($295,000 USD)",
+    adm_dkpi2_title: "Verified Donors",
+    adm_dkpi2_sub: "100% with 501(c)(3) tax certificate",
+    adm_dkpi3_title: "Average Gift",
+    adm_dkpi3_sub: "60% One-Time • 40% Monthly",
+    adm_dkpi4_title: "Leading Campaign",
+    adm_don_search_ph: "Search donor by name, email, city, or #ER-501C3...",
+    adm_don_filter_all: "All target campaigns",
+    adm_th_folio: "Tax Folio / Date",
+    adm_th_donor: "Donor (Who it comes from)",
+    adm_th_campaign: "Target Campaign (Where it went)",
+    adm_th_amount: "Amount & Frequency",
+    adm_th_method: "Payment Method & Status",
+    adm_rep_title: "Executive Impact Reports",
+    adm_rep_sub: "Consolidated performance by weekly clinic session, legal case sources, and humanitarian fund distribution.",
+    adm_rep_c1_title: "Performance by Clinic Session",
+    adm_rep_c2_title: "Appointment & Donation Source Channels"
+  });
+
+  // --------------------------------------------------------------------------
+  // DATOS INICIALES DEL PANEL ADMIN: CITAS AGENDADAS Y TRAZABILIDAD DE DONACIONES
+  // --------------------------------------------------------------------------
+  const ADMIN_APPOINTMENTS = [
+    {
+      id: "CITA-2026-101",
+      name: "María Fernanda López",
+      phone: "(213) 555-0184",
+      email: "mflopez.la@gmail.com",
+      caseType: "Asilo y Refugio",
+      dateLabel: "Sábado, 21 De Noviembre",
+      timeSlot: "10:00 AM – 11:00 AM",
+      status: "Confirmada",
+      notes: "Abog. Carlos Méndez • Solicitud I-589"
+    },
+    {
+      id: "CITA-2026-102",
+      name: "José Roberto Hernández",
+      phone: "(323) 555-0241",
+      email: "jrhernandez88@yahoo.com",
+      caseType: "TPS (Estatus de Protección)",
+      dateLabel: "Sábado, 21 De Noviembre",
+      timeSlot: "11:00 AM – 12:00 PM",
+      status: "Confirmada",
+      notes: "Reinscripción El Salvador + Permiso I-765"
+    },
+    {
+      id: "CITA-2026-103",
+      name: "Valeria Ramírez Castillo",
+      phone: "(213) 555-0915",
+      email: "valeria.dreamer@ucla.edu",
+      caseType: "Renovación DACA",
+      dateLabel: "Sábado, 21 De Noviembre",
+      timeSlot: "12:00 PM – 1:00 PM",
+      status: "Confirmada",
+      notes: "Aplica a beca del Fondo Futuro Joven"
+    },
+    {
+      id: "CITA-2026-104",
+      name: "Ana Lucía Morales",
+      phone: "(818) 555-0377",
+      email: "analucia.morales@outlook.com",
+      caseType: "Visa U / Protección VAWA",
+      dateLabel: "Miércoles, 25 De Noviembre",
+      timeSlot: "2:00 PM – 3:00 PM",
+      status: "Confirmada",
+      notes: "Certificación policial LAPD lista (I-918B)"
+    },
+    {
+      id: "CITA-2026-105",
+      name: "Héctor Manuel Pineda",
+      phone: "(310) 555-0642",
+      email: "hpineda.familia@gmail.com",
+      caseType: "Residencia / Petición Familiar",
+      dateLabel: "Miércoles, 25 De Noviembre",
+      timeSlot: "3:00 PM – 4:00 PM",
+      status: "Pendiente",
+      notes: "Petición I-130 cónyuge ciudadano"
+    },
+    {
+      id: "CITA-2026-106",
+      name: "Rosa Elvira Quintanilla",
+      phone: "(213) 555-0729",
+      email: "rosaquintanilla54@gmail.com",
+      caseType: "Ciudadanía y Naturalización",
+      dateLabel: "Miércoles, 25 De Noviembre",
+      timeSlot: "4:00 PM – 5:00 PM",
+      status: "Confirmada",
+      notes: "Formulario N-400 con exención de inglés (55/15)"
+    },
+    {
+      id: "CITA-2026-107",
+      name: "Diego Alejandro Rivas",
+      phone: "(323) 555-0518",
+      email: "diego.rivas.sv@gmail.com",
+      caseType: "Asilo y Refugio",
+      dateLabel: "Sábado, 28 De Noviembre",
+      timeSlot: "10:00 AM – 11:00 AM",
+      status: "Pendiente",
+      notes: "Preparación de audiencia preliminar EOIR"
+    },
+    {
+      id: "CITA-2026-108",
+      name: "Gabriela Beatriz Orellana",
+      phone: "(213) 555-0833",
+      email: "gb.orellana@gmail.com",
+      caseType: "Renovación DACA",
+      dateLabel: "Sábado, 28 De Noviembre",
+      timeSlot: "11:00 AM – 12:00 PM",
+      status: "Confirmada",
+      notes: "Renovación bianual + consulta Advance Parole"
+    },
+    {
+      id: "CITA-2026-109",
+      name: "Marvin Antonio Zelaya",
+      phone: "(626) 555-0412",
+      email: "marvin.zelaya@hotmail.com",
+      caseType: "TPS (Estatus de Protección)",
+      dateLabel: "Miércoles, 18 De Noviembre",
+      timeSlot: "2:00 PM – 3:00 PM",
+      status: "Atendida",
+      notes: "Expediente enviado a USCIS con recibo"
+    },
+    {
+      id: "CITA-2026-110",
+      name: "Claudia Patricia Mejía",
+      phone: "(213) 555-0690",
+      email: "claudia.mejia.la@gmail.com",
+      caseType: "Visa U / Protección VAWA",
+      dateLabel: "Sábado, 14 De Noviembre",
+      timeSlot: "10:00 AM – 11:00 AM",
+      status: "Atendida",
+      notes: "Autopetición VAWA I-360 confidencial"
+    },
+    {
+      id: "CITA-2026-111",
+      name: "Óscar René Valladares",
+      phone: "(323) 555-0944",
+      email: "oscar.valladares@gmail.com",
+      caseType: "Residencia / Petición Familiar",
+      dateLabel: "Sábado, 5 De Diciembre",
+      timeSlot: "11:00 AM – 12:00 PM",
+      status: "Confirmada",
+      notes: "Revisión de perdón provisional I-601A"
+    },
+    {
+      id: "CITA-2026-112",
+      name: "Karla Vanessa Portillo",
+      phone: "(213) 555-0319",
+      email: "kportillo.westlake@gmail.com",
+      caseType: "Ciudadanía y Naturalización",
+      dateLabel: "Miércoles, 2 De Diciembre",
+      timeSlot: "3:00 PM – 4:00 PM",
+      status: "Pendiente",
+      notes: "Evaluación de exención de tarifa I-912"
+    }
+  ];
+
+  const ADMIN_DONATIONS = [
+    {
+      folio: "ER-501C3-849210",
+      date: "08 Nov 2026",
+      donorName: "Fundación Solidaridad Californiana",
+      email: "grants@solidaridadca.org",
+      city: "Los Ángeles, CA",
+      campaignKey: "organizacion",
+      amount: 1000,
+      freq: "Donación Mensual",
+      method: "Transferencia ACH"
+    },
+    {
+      folio: "ER-501C3-849198",
+      date: "08 Nov 2026",
+      donorName: "Dr. Alejandro Villalobos",
+      email: "avillalobos@cedars-la.org",
+      city: "Pasadena, CA",
+      campaignKey: "asilo",
+      amount: 500,
+      freq: "Donación Única",
+      method: "Tarjeta •••• 4821"
+    },
+    {
+      folio: "ER-501C3-849174",
+      date: "07 Nov 2026",
+      donorName: "Sofía Castellanos & Familia",
+      email: "sofia.castellanos@gmail.com",
+      city: "Santa Monica, CA",
+      campaignKey: "daca",
+      amount: 250,
+      freq: "Donación Mensual",
+      method: "Tarjeta •••• 9104"
+    },
+    {
+      folio: "ER-501C3-849152",
+      date: "07 Nov 2026",
+      donorName: "Colectivo Magisterial Bilingüe L.A.",
+      email: "tesoreria@maestrosbilingues.org",
+      city: "Westlake, L.A.",
+      campaignKey: "clinicas",
+      amount: 500,
+      freq: "Donación Única",
+      method: "Transferencia ACH"
+    },
+    {
+      folio: "ER-501C3-849129",
+      date: "06 Nov 2026",
+      donorName: "Marco Antonio Solís Herrera",
+      email: "masolis.arquitectura@gmail.com",
+      city: "Culver City, CA",
+      campaignKey: "organizacion",
+      amount: 250,
+      freq: "Donación Única",
+      method: "PayPal Institucional"
+    },
+    {
+      folio: "ER-501C3-849105",
+      date: "06 Nov 2026",
+      donorName: "Elena Beatriz Lemus",
+      email: "elena.lemus.abogada@gmail.com",
+      city: "Silver Lake, L.A.",
+      campaignKey: "asilo",
+      amount: 150,
+      freq: "Donación Mensual",
+      method: "Tarjeta •••• 3319"
+    },
+    {
+      folio: "ER-501C3-849088",
+      date: "05 Nov 2026",
+      donorName: "Red de Ex-Becarios Dreamers UCLA",
+      email: "alumni.dreamers@ucla.edu",
+      city: "Westwood, L.A.",
+      campaignKey: "daca",
+      amount: 500,
+      freq: "Donación Única",
+      method: "PayPal Institucional"
+    },
+    {
+      folio: "ER-501C3-849064",
+      date: "04 Nov 2026",
+      donorName: "Restaurante La Pupusa de Oro",
+      email: "contacto@pupusadeorola.com",
+      city: "Pico-Union, L.A.",
+      campaignKey: "clinicas",
+      amount: 150,
+      freq: "Donación Mensual",
+      method: "Tarjeta •••• 7742"
+    },
+    {
+      folio: "ER-501C3-849031",
+      date: "03 Nov 2026",
+      donorName: "Patricia & David Montgomery",
+      email: "pmontgomery@civicjustice.org",
+      city: "Beverly Hills, CA",
+      campaignKey: "asilo",
+      amount: 1000,
+      freq: "Donación Única",
+      method: "Transferencia ACH"
+    },
+    {
+      folio: "ER-501C3-849012",
+      date: "02 Nov 2026",
+      donorName: "Carlos Eduardo Figueroa",
+      email: "ce.figueroa@gmail.com",
+      city: "Koreatown, L.A.",
+      campaignKey: "organizacion",
+      amount: 75,
+      freq: "Donación Única",
+      method: "Tarjeta •••• 5510"
+    }
+  ];
+
+  // Conectar formulario público de citas con la lista del Panel Admin
+  if (bookingForm) {
+    bookingForm.addEventListener("submit", () => {
+      const nameVal = document.getElementById("input-name")?.value.trim() || "Integrante de la comunidad";
+      const phoneVal = document.getElementById("input-phone")?.value.trim() || "(213) 555-0199";
+      const emailVal = document.getElementById("input-email")?.value.trim() || "comunidad@elrescate.org";
+      const caseVal = document.getElementById("input-case-type")?.value || "Asilo y Refugio";
+      const months = getCalendarMonths();
+      const monthObj = months[currentMonthIdx];
+      const dayType = monthObj.availableDays[selectedDay] || "Sábado";
+      const dateStr = `${dayType}, ${selectedDay} De ${monthObj.monthName}`;
+
+      ADMIN_APPOINTMENTS.unshift({
+        id: `CITA-2026-${101 + ADMIN_APPOINTMENTS.length}`,
+        name: nameVal,
+        phone: phoneVal,
+        email: emailVal,
+        caseType: caseVal,
+        dateLabel: dateStr,
+        timeSlot: selectedSlot,
+        status: "Confirmada",
+        notes: "Agendada desde el calendario web público"
+      });
+      refreshAdminUI();
+    });
+  }
+
+  // Conectar formulario público de donaciones (#vista-donacion) con el Panel Admin
+  window.__registerPublicDonationInAdmin = function (payload) {
+    const receiptId = `ER-501C3-${Math.floor(850000 + Math.random() * 99999)}`;
+    ADMIN_DONATIONS.unshift({
+      folio: receiptId,
+      date: "Hoy • En vivo",
+      donorName: payload.donorName || "Donante Solidario",
+      email: payload.email || "donante@comunidad.org",
+      city: "Los Ángeles, CA (Web)",
+      campaignKey: payload.campaignKey || "organizacion",
+      amount: Number(payload.amount) || 75,
+      freq: payload.freq || "Donación Única",
+      method: "Portal Web 501(c)(3)"
+    });
+    refreshAdminUI();
+  };
+
+  // --------------------------------------------------------------------------
+  // CONTROL DE NAVEGACIÓN ENTRE SITIO PÚBLICO, VISTA LOGIN (#auth-view) Y ADMIN (#admin-view)
+  // --------------------------------------------------------------------------
+  const authViewEl = document.getElementById("auth-view");
+  const adminViewEl = document.getElementById("admin-view");
+  const authGlassCard = document.getElementById("auth-glass-card");
+
+  function closeAllSpecialViews() {
+    document.body.classList.remove(
+      "is-donation-checkout-open",
+      "is-auth-view-open",
+      "is-admin-view-open"
+    );
+    if (checkoutViewEl) checkoutViewEl.setAttribute("aria-hidden", "true");
+    if (authViewEl) authViewEl.setAttribute("aria-hidden", "true");
+    if (adminViewEl) adminViewEl.setAttribute("aria-hidden", "true");
+    if (lenis) {
+      lenis.start();
+      requestAnimationFrame(() => lenis.resize());
+    }
+  }
+
+  function openAuthView(startInRegister = false) {
+    closeAllSpecialViews();
+    document.body.classList.add("is-auth-view-open");
+    if (authViewEl) authViewEl.setAttribute("aria-hidden", "false");
+    setAuthCardMode(Boolean(startInRegister));
+    window.scrollTo({ top: 0, behavior: "auto" });
+    if (lenis) {
+      lenis.start();
+      lenis.scrollTo(0, { immediate: true });
+      requestAnimationFrame(() => lenis.resize());
+    }
+    if (window.location.hash !== "#vista-login") {
+      history.pushState({ view: "auth" }, "", "#vista-login");
+    }
+  }
+
+  function openAdminView(initialTab = "overview") {
+    closeAllSpecialViews();
+    document.body.classList.add("is-admin-view-open");
+    if (adminViewEl) adminViewEl.setAttribute("aria-hidden", "false");
+    switchAdminTab(initialTab);
+    refreshAdminUI();
+    window.scrollTo({ top: 0, behavior: "auto" });
+    if (lenis) {
+      lenis.start();
+      lenis.scrollTo(0, { immediate: true });
+      requestAnimationFrame(() => lenis.resize());
+    }
+    if (window.location.hash !== "#vista-admin") {
+      history.pushState({ view: "admin" }, "", "#vista-admin");
+    }
+  }
+
+  // Botón en Header "Acceso / Admin"
+  const btnOpenAuthView = document.getElementById("btn-open-auth-view");
+  if (btnOpenAuthView) {
+    btnOpenAuthView.addEventListener("click", () => openAuthView(false));
+  }
+
+  const btnAuthBackSite = document.getElementById("btn-auth-back-site");
+  if (btnAuthBackSite) {
+    btnAuthBackSite.addEventListener("click", () => {
+      closeAllSpecialViews();
+      history.pushState({ view: "main" }, "", "#inicio");
+    });
+  }
+
+  const btnAuthGotoAdmin = document.getElementById("btn-auth-goto-admin");
+  if (btnAuthGotoAdmin) {
+    btnAuthGotoAdmin.addEventListener("click", () => openAdminView("overview"));
+  }
+
+  const btnAdminToLogin = document.getElementById("btn-admin-to-login");
+  if (btnAdminToLogin) {
+    btnAdminToLogin.addEventListener("click", () => openAuthView(false));
+  }
+
+  const btnAdminBackSite = document.getElementById("btn-admin-back-site");
+  if (btnAdminBackSite) {
+    btnAdminBackSite.addEventListener("click", () => {
+      closeAllSpecialViews();
+      history.pushState({ view: "main" }, "", "#inicio");
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // INTERACCIÓN DE LA TARJETA DE LOGIN Y CREAR USUARIO (Referencia_login_y_crear_usuario.mp4)
+  // --------------------------------------------------------------------------
+  function setAuthCardMode(isRegister) {
+    if (!authGlassCard) return;
+    authGlassCard.classList.add("is-morphing");
+    authGlassCard.classList.toggle("is-register-mode", Boolean(isRegister));
+    setTimeout(() => {
+      authGlassCard.classList.remove("is-morphing");
+    }, 340);
+  }
+
+  document.getElementById("btn-overlay-to-register")?.addEventListener("click", () => setAuthCardMode(true));
+  document.getElementById("link-goto-signup")?.addEventListener("click", () => setAuthCardMode(true));
+  document.getElementById("btn-overlay-to-login")?.addEventListener("click", () => setAuthCardMode(false));
+  document.getElementById("link-goto-login")?.addEventListener("click", () => setAuthCardMode(false));
+
+  // Mostrar / ocultar contraseña con el icono de ojo
+  function wirePasswordEyeToggle(btnId, inputId) {
+    const btn = document.getElementById(btnId);
+    const input = document.getElementById(inputId);
+    if (!btn || !input) return;
+    btn.addEventListener("click", () => {
+      input.type = input.type === "password" ? "text" : "password";
+    });
+  }
+  wirePasswordEyeToggle("btn-toggle-login-pass", "auth-login-pass");
+  wirePasswordEyeToggle("btn-toggle-reg-pass", "auth-reg-pass");
+
+  // Parallax sutil del fondo poliédrico 3D en Login
+  const authBackdrop = document.getElementById("auth-faceted-backdrop");
+  if (authViewEl && authBackdrop && !reduceMotion) {
+    authViewEl.addEventListener("mousemove", (e) => {
+      const nx = (e.clientX / window.innerWidth - 0.5) * 16;
+      const ny = (e.clientY / window.innerHeight - 0.5) * 12;
+      const svgEl = authBackdrop.querySelector(".auth-faceted-svg");
+      if (svgEl) {
+        svgEl.style.transform = `translate3d(${nx.toFixed(1)}px, ${ny.toFixed(1)}px, 0)`;
+      }
+    });
+  }
+
+  // Envío de Login -> Autentica y abre el Panel Admin
+  const authLoginForm = document.getElementById("auth-login-form");
+  const authLoginFeedback = document.getElementById("auth-login-feedback");
+  if (authLoginForm) {
+    authLoginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const userVal = document.getElementById("auth-login-user")?.value.trim() || "elrescate_admin";
+      if (authLoginFeedback) {
+        authLoginFeedback.textContent =
+          currentLang === "en"
+            ? `✓ Welcome back, ${userVal}. Entering El Rescate Admin Panel...`
+            : `✓ Acceso verificado para ${userVal}. Abriendo Panel Administrativo...`;
+        authLoginFeedback.classList.add("is-visible");
+      }
+      setTimeout(() => {
+        if (authLoginFeedback) authLoginFeedback.classList.remove("is-visible");
+        openAdminView("overview");
+      }, 650);
+    });
+  }
+
+  // Envío de Crear Usuario -> Registra y abre el Panel Admin
+  const authRegForm = document.getElementById("auth-register-form");
+  const authRegFeedback = document.getElementById("auth-reg-feedback");
+  if (authRegForm) {
+    authRegForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nameVal = document.getElementById("auth-reg-name")?.value.trim() || "Coordinador El Rescate";
+      if (authRegFeedback) {
+        authRegFeedback.textContent =
+          currentLang === "en"
+            ? `✓ Account created for ${nameVal}. Redirecting to Admin Panel...`
+            : `✓ Usuario institucional creado para ${nameVal}. Ingresando al Panel Admin...`;
+        authRegFeedback.classList.add("is-visible");
+      }
+      setTimeout(() => {
+        if (authRegFeedback) authRegFeedback.classList.remove("is-visible");
+        openAdminView("overview");
+      }, 650);
+    });
+  }
+
+  document.getElementById("btn-forgot-pass")?.addEventListener("click", () => {
+    if (authLoginFeedback) {
+      authLoginFeedback.textContent =
+        currentLang === "en"
+          ? "🔒 Password reset link sent to your @elrescate.org institutional email."
+          : "🔒 Se ha enviado un enlace de recuperación a tu correo institucional @elrescate.org.";
+      authLoginFeedback.classList.add("is-visible");
+    }
+  });
+
+  // --------------------------------------------------------------------------
+  // LÓGICA INTEGRAL DEL PANEL ADMINISTRATIVO (#admin-view)
+  // --------------------------------------------------------------------------
+  let activeAdminTab = "overview";
+  let activeAdminChartMode = "campaigns";
+  let adminCalMonthIdx = 0;
+  let adminActiveSlotGroup = "Miércoles";
+
+  function switchAdminTab(tabName) {
+    activeAdminTab = tabName || "overview";
+    document.querySelectorAll(".admin-nav-tab").forEach((btn) => {
+      const match = btn.getAttribute("data-admin-tab") === activeAdminTab;
+      btn.classList.toggle("is-active", match);
+      btn.setAttribute("aria-selected", match ? "true" : "false");
+    });
+    document.querySelectorAll(".admin-tab-panel").forEach((panel) => {
+      panel.classList.toggle("is-active", panel.id === `admin-panel-${activeAdminTab}`);
+    });
+  }
+
+  document.querySelectorAll(".admin-nav-tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      switchAdminTab(btn.getAttribute("data-admin-tab") || "overview");
+    });
+  });
+
+  document.querySelectorAll("[data-goto-tab]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      switchAdminTab(btn.getAttribute("data-goto-tab") || "appointments");
+    });
+  });
+
+  document.getElementById("btn-admin-quick-new-appt")?.addEventListener("click", () => {
+    switchAdminTab("appointments");
+    openAdminApptForm(null);
+  });
+
+  // Sub-pestañas en Overview
+  document.querySelectorAll(".admin-sub-seg-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".admin-sub-seg-btn").forEach((b) => b.classList.toggle("is-active", b === btn));
+      const mode = btn.getAttribute("data-ov-mode");
+      if (mode === "donations") {
+        activeAdminChartMode = "campaigns";
+      } else {
+        activeAdminChartMode = "appointments";
+      }
+      renderAdminOverviewBars();
+    });
+  });
+
+  document.querySelectorAll(".admin-mini-tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".admin-mini-tab").forEach((b) => b.classList.toggle("is-active", b === btn));
+      activeAdminChartMode = btn.getAttribute("data-chart-mode") || "campaigns";
+      renderAdminOverviewBars();
+    });
+  });
+
+  function renderAdminOverviewBars() {
+    const stage = document.getElementById("adm-overview-bars-stage");
+    if (!stage) return;
+
+    const barsData =
+      activeAdminChartMode === "appointments"
+        ? [
+            { lbl: "Jun", val: "19", pct: 48, peak: false },
+            { lbl: "Jul", val: "22", pct: 56, peak: false },
+            { lbl: "Ago", val: "25", pct: 64, peak: false },
+            { lbl: "Sep", val: "28", pct: 72, peak: false },
+            { lbl: "Oct", val: "31", pct: 80, peak: false },
+            { lbl: "Nov", val: `${ADMIN_APPOINTMENTS.length} act.`, pct: 94, peak: true }
+          ]
+        : [
+            { lbl: "Jun", val: "$31K", pct: 46, peak: false },
+            { lbl: "Jul", val: "$36K", pct: 54, peak: false },
+            { lbl: "Ago", val: "$41K", pct: 62, peak: false },
+            { lbl: "Sep", val: "$48K", pct: 74, peak: false },
+            { lbl: "Oct", val: "$54K", pct: 82, peak: false },
+            { lbl: "Nov", val: "$84.5K", pct: 95, peak: true }
+          ];
+
+    stage.innerHTML = barsData
+      .map(
+        (b) => `
+        <div class="admin-pill-bar-col ${b.peak ? "is-peak" : ""}">
+          <div class="admin-pill-bar-track">
+            <div class="admin-pill-bar-fill" style="height:${b.pct}%;">
+              <span class="admin-pill-bar-tag">${b.val}</span>
+            </div>
+          </div>
+          <span class="admin-pill-bar-lbl">${b.lbl}</span>
+        </div>
+      `
+      )
+      .join("");
+  }
+
+  // 1. FLUJO DE MODIFICAR DÍAS CON CITAS Y HORAS DISPONIBLES
+  function countTotalEnabledClinicDays() {
+    const esMonths = CALENDAR_MONTHS_I18N.es;
+    return esMonths.reduce((acc, m) => acc + Object.keys(m.availableDays).length, 0);
+  }
+
+  function renderAdminScheduleCalendar() {
+    const grid = document.getElementById("admin-cal-grid");
+    if (!grid) return;
+    const esMonth = CALENDAR_MONTHS_I18N.es[adminCalMonthIdx];
+    const enMonth = CALENDAR_MONTHS_I18N.en[adminCalMonthIdx];
+    grid.innerHTML = "";
+
+    for (let e = 0; e < esMonth.startDayOfWeek; e++) {
+      const empty = document.createElement("span");
+      empty.className = "admin-cal-day admin-cal-day--empty";
+      grid.appendChild(empty);
+    }
+
+    const dowNamesEs = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+    const dowNamesEn = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    for (let day = 1; day <= esMonth.daysInMonth; day++) {
+      const isEnabled = Boolean(esMonth.availableDays[day]);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "admin-cal-day" + (isEnabled ? " is-enabled" : "");
+      btn.innerHTML = `<span>${day}</span>`;
+      btn.title = isEnabled
+        ? "Día habilitado para citas (Clic para deshabilitar)"
+        : "Día cerrado (Clic para habilitar citas)";
+
+      btn.addEventListener("click", () => {
+        const dow = (esMonth.startDayOfWeek + day - 1) % 7;
+        if (esMonth.availableDays[day]) {
+          delete esMonth.availableDays[day];
+          delete enMonth.availableDays[day];
+        } else {
+          const dayLabelEs = dow === 6 ? "Sábado" : dowNamesEs[dow] || "Miércoles";
+          const dayLabelEn = dow === 6 ? "Saturday" : dowNamesEn[dow] || "Wednesday";
+          esMonth.availableDays[day] = dayLabelEs;
+          enMonth.availableDays[day] = dayLabelEn;
+          if (!SLOTS_BY_DAY_TYPE[dayLabelEs]) {
+            SLOTS_BY_DAY_TYPE[dayLabelEs] = [...SLOTS_BY_DAY_TYPE["Miércoles"]];
+            SLOTS_BY_DAY_TYPE[dayLabelEn] = [...SLOTS_BY_DAY_TYPE["Miércoles"]];
+          }
+        }
+        // Si el día seleccionado en la vista pública fue deshabilitado, elegir el primer disponible
+        const availKeys = Object.keys(esMonth.availableDays).map(Number);
+        if (availKeys.length > 0 && !esMonth.availableDays[selectedDay]) {
+          selectedDay = availKeys[0];
+        }
+        renderClinicCalendar();
+        renderTimeSlots();
+        updateSelectionBanner();
+        refreshAdminUI();
+      });
+
+      grid.appendChild(btn);
+    }
+  }
+
+  document.querySelectorAll(".admin-month-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".admin-month-btn").forEach((b) => b.classList.toggle("is-active", b === btn));
+      adminCalMonthIdx = Number(btn.getAttribute("data-adm-month")) || 0;
+      renderAdminScheduleCalendar();
+    });
+  });
+
+  // Alternar todos los días de una columna de la semana (Lun, Mar, Mié, Jue, Vie, Sáb)
+  document.querySelectorAll(".admin-weekday-chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const targetDow = Number(chip.getAttribute("data-Toggle-dow"));
+      const esMonth = CALENDAR_MONTHS_I18N.es[adminCalMonthIdx];
+      const enMonth = CALENDAR_MONTHS_I18N.en[adminCalMonthIdx];
+      const dowNamesEs = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+      const dowNamesEn = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+      const matchingDays = [];
+      for (let d = 1; d <= esMonth.daysInMonth; d++) {
+        if ((esMonth.startDayOfWeek + d - 1) % 7 === targetDow) {
+          matchingDays.push(d);
+        }
+      }
+      const allActive = matchingDays.every((d) => Boolean(esMonth.availableDays[d]));
+      matchingDays.forEach((d) => {
+        if (allActive) {
+          delete esMonth.availableDays[d];
+          delete enMonth.availableDays[d];
+        } else {
+          const lblEs = dowNamesEs[targetDow];
+          const lblEn = dowNamesEn[targetDow];
+          esMonth.availableDays[d] = lblEs;
+          enMonth.availableDays[d] = lblEn;
+          if (!SLOTS_BY_DAY_TYPE[lblEs]) {
+            SLOTS_BY_DAY_TYPE[lblEs] = [...SLOTS_BY_DAY_TYPE["Miércoles"]];
+            SLOTS_BY_DAY_TYPE[lblEn] = [...SLOTS_BY_DAY_TYPE["Miércoles"]];
+          }
+        }
+      });
+      chip.classList.toggle("is-active", !allActive);
+      renderClinicCalendar();
+      renderTimeSlots();
+      updateSelectionBanner();
+      refreshAdminUI();
+    });
+  });
+
+  // 2. GESTOR DE HORAS DISPONIBLES POR JORNADA
+  document.querySelectorAll(".admin-slot-type-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".admin-slot-type-btn").forEach((b) => b.classList.toggle("is-active", b === btn));
+      adminActiveSlotGroup = btn.getAttribute("data-slot-group") || "Miércoles";
+      renderAdminSlotsEditor();
+    });
+  });
+
+  function renderAdminSlotsEditor() {
+    const listEl = document.getElementById("admin-slots-pills-list");
+    const selectTimeEl = document.getElementById("adm-appt-time");
+    const slots = SLOTS_BY_DAY_TYPE[adminActiveSlotGroup] || [];
+
+    if (listEl) {
+      listEl.innerHTML = slots
+        .map(
+          (slot, idx) => `
+          <span class="admin-slot-chip">
+            <span>🕒 ${slot}</span>
+            <button type="button" class="admin-slot-chip__remove" data-remove-slot="${idx}" title="Eliminar horario">×</button>
+          </span>
+        `
+        )
+        .join("");
+
+      listEl.querySelectorAll("[data-remove-slot]").forEach((rmBtn) => {
+        rmBtn.addEventListener("click", () => {
+          const idx = Number(rmBtn.getAttribute("data-remove-slot"));
+          if (slots.length <= 1) return;
+          slots.splice(idx, 1);
+          if (adminActiveSlotGroup === "Miércoles") {
+            SLOTS_BY_DAY_TYPE["Wednesday"] = [...slots];
+          } else {
+            SLOTS_BY_DAY_TYPE["Saturday"] = [...slots];
+          }
+          renderTimeSlots();
+          updateSelectionBanner();
+          refreshAdminUI();
+        });
+      });
+    }
+
+    if (selectTimeEl) {
+      const allSlots = Array.from(
+        new Set([...(SLOTS_BY_DAY_TYPE["Sábado"] || []), ...(SLOTS_BY_DAY_TYPE["Miércoles"] || [])])
+      );
+      selectTimeEl.innerHTML = allSlots.map((s) => `<option value="${s}">${s}</option>`).join("");
+    }
+  }
+
+  document.getElementById("btn-admin-add-slot")?.addEventListener("click", () => {
+    const inp = document.getElementById("admin-new-slot-input");
+    const val = (inp?.value || "").trim();
+    if (!val) return;
+    const slots = SLOTS_BY_DAY_TYPE[adminActiveSlotGroup];
+    if (slots && !slots.includes(val)) {
+      slots.push(val);
+      if (adminActiveSlotGroup === "Miércoles") {
+        SLOTS_BY_DAY_TYPE["Wednesday"] = [...slots];
+      } else {
+        SLOTS_BY_DAY_TYPE["Saturday"] = [...slots];
+      }
+    }
+    if (inp) inp.value = "";
+    renderTimeSlots();
+    updateSelectionBanner();
+    refreshAdminUI();
+  });
+
+  // 3. CRUD DE CITAS AGENDADAS (CREAR, MODIFICAR, CAMBIAR ESTADO Y ELIMINAR)
+  const apptFormEl = document.getElementById("admin-appt-editor-form");
+
+  function openAdminApptForm(apptObj = null) {
+    if (!apptFormEl) return;
+    renderAdminSlotsEditor();
+    apptFormEl.hidden = false;
+    const titleEl = document.getElementById("admin-appt-form-title");
+    document.getElementById("adm-appt-edit-id").value = apptObj ? apptObj.id : "";
+    document.getElementById("adm-appt-name").value = apptObj ? apptObj.name : "";
+    document.getElementById("adm-appt-phone").value = apptObj ? apptObj.phone : "";
+    document.getElementById("adm-appt-email").value = apptObj ? apptObj.email : "";
+    document.getElementById("adm-appt-case").value = apptObj ? apptObj.caseType : "Asilo y Refugio";
+    document.getElementById("adm-appt-date").value = apptObj ? apptObj.dateLabel : "Sábado, 21 De Noviembre";
+    document.getElementById("adm-appt-time").value = apptObj ? apptObj.timeSlot : "10:00 AM – 11:00 AM";
+    document.getElementById("adm-appt-status").value = apptObj ? apptObj.status : "Confirmada";
+    document.getElementById("adm-appt-notes").value = apptObj ? apptObj.notes : "";
+    if (titleEl) {
+      titleEl.textContent = apptObj
+        ? `Modificar Cita ${apptObj.id} — ${apptObj.name}`
+        : "Registrar Nueva Cita Legal";
+    }
+  }
+
+  document.getElementById("btn-open-new-appt-form")?.addEventListener("click", () => openAdminApptForm(null));
+  document.getElementById("btn-close-appt-form")?.addEventListener("click", () => {
+    if (apptFormEl) apptFormEl.hidden = true;
+  });
+  document.getElementById("btn-cancel-appt")?.addEventListener("click", () => {
+    if (apptFormEl) apptFormEl.hidden = true;
+  });
+
+  if (apptFormEl) {
+    apptFormEl.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const editId = document.getElementById("adm-appt-edit-id").value;
+      const payload = {
+        id: editId || `CITA-2026-${101 + ADMIN_APPOINTMENTS.length}`,
+        name: document.getElementById("adm-appt-name").value.trim() || "Solicitante Comunitario",
+        phone: document.getElementById("adm-appt-phone").value.trim() || "(213) 555-0100",
+        email: document.getElementById("adm-appt-email").value.trim() || "cita@elrescate.org",
+        caseType: document.getElementById("adm-appt-case").value,
+        dateLabel: document.getElementById("adm-appt-date").value.trim() || "Sábado, 21 De Noviembre",
+        timeSlot: document.getElementById("adm-appt-time").value || "10:00 AM – 11:00 AM",
+        status: document.getElementById("adm-appt-status").value || "Confirmada",
+        notes: document.getElementById("adm-appt-notes").value.trim() || "Registrado en Panel Admin"
+      };
+
+      if (editId) {
+        const idx = ADMIN_APPOINTMENTS.findIndex((a) => a.id === editId);
+        if (idx !== -1) ADMIN_APPOINTMENTS[idx] = payload;
+      } else {
+        ADMIN_APPOINTMENTS.unshift(payload);
+      }
+
+      apptFormEl.hidden = true;
+      refreshAdminUI();
+    });
+  }
+
+  function renderAdminAppointmentsList() {
+    const listEl = document.getElementById("admin-appointments-list");
+    if (!listEl) return;
+
+    const query = (document.getElementById("adm-appt-search")?.value || "").toLowerCase().trim();
+    const caseFilter = document.getElementById("adm-appt-filter-case")?.value || "all";
+    const statusFilter = document.getElementById("adm-appt-filter-status")?.value || "all";
+
+    const filtered = ADMIN_APPOINTMENTS.filter((a) => {
+      const matchSearch =
+        !query ||
+        a.name.toLowerCase().includes(query) ||
+        a.phone.toLowerCase().includes(query) ||
+        a.email.toLowerCase().includes(query) ||
+        a.id.toLowerCase().includes(query);
+      const matchCase = caseFilter === "all" || a.caseType === caseFilter;
+      const matchStatus = statusFilter === "all" || a.status === statusFilter;
+      return matchSearch && matchCase && matchStatus;
+    });
+
+    listEl.innerHTML = filtered
+      .map((a) => {
+        const badgeClass =
+          a.status === "Confirmada"
+            ? "admin-status-badge--confirmed"
+            : a.status === "Atendida"
+              ? "admin-status-badge--completed"
+              : "admin-status-badge--pending";
+
+        return `
+          <div class="admin-appt-item">
+            <div>
+              <div class="admin-appt-item__top">
+                <span class="admin-appt-folio">#${a.id}</span>
+                <span class="admin-status-badge ${badgeClass}">${a.status}</span>
+                <span class="admin-pill-tag">${a.caseType}</span>
+              </div>
+              <div class="admin-appt-name">${a.name}</div>
+              <div class="admin-appt-meta">
+                📅 <strong>${a.dateLabel}</strong> • 🕒 ${a.timeSlot} • 📞 ${a.phone} • ✉️ ${a.email}
+              </div>
+              <div class="admin-appt-meta" style="margin-top:2px;">
+                📋 ${a.notes}
+              </div>
+            </div>
+            <div class="admin-appt-item__actions">
+              <button type="button" class="admin-mini-action-btn" data-edit-appt="${a.id}">Modificar</button>
+              <button type="button" class="admin-mini-action-btn" data-toggle-appt="${a.id}">Estado</button>
+              <button type="button" class="admin-mini-action-btn admin-mini-action-btn--danger" data-del-appt="${a.id}">Eliminar</button>
+            </div>
+          </div>
+        `;
+      })
+      .join("");
+
+    listEl.querySelectorAll("[data-edit-appt]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = ADMIN_APPOINTMENTS.find((x) => x.id === btn.getAttribute("data-edit-appt"));
+        if (target) openAdminApptForm(target);
+      });
+    });
+
+    listEl.querySelectorAll("[data-toggle-appt]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = ADMIN_APPOINTMENTS.find((x) => x.id === btn.getAttribute("data-toggle-appt"));
+        if (!target) return;
+        const order = ["Confirmada", "Pendiente", "Atendida"];
+        target.status = order[(order.indexOf(target.status) + 1) % order.length];
+        refreshAdminUI();
+      });
+    });
+
+    listEl.querySelectorAll("[data-del-appt]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-del-appt");
+        const idx = ADMIN_APPOINTMENTS.findIndex((x) => x.id === id);
+        if (idx !== -1) {
+          ADMIN_APPOINTMENTS.splice(idx, 1);
+          refreshAdminUI();
+        }
+      });
+    });
+  }
+
+  document.getElementById("adm-appt-search")?.addEventListener("input", renderAdminAppointmentsList);
+  document.getElementById("adm-appt-filter-case")?.addEventListener("change", renderAdminAppointmentsList);
+  document.getElementById("adm-appt-filter-status")?.addEventListener("change", renderAdminAppointmentsList);
+
+  // 4. GESTIÓN Y TRAZABILIDAD DE DONACIONES (QUIÉN DONÓ Y HACIA QUÉ CAMPAÑA DONÓ)
+  const donFormEl = document.getElementById("admin-donation-editor-form");
+  document.getElementById("btn-admin-new-donation")?.addEventListener("click", () => {
+    if (donFormEl) donFormEl.hidden = !donFormEl.hidden;
+  });
+  document.getElementById("btn-close-don-form")?.addEventListener("click", () => {
+    if (donFormEl) donFormEl.hidden = true;
+  });
+
+  if (donFormEl) {
+    donFormEl.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const donorName = document.getElementById("adm-don-donor").value.trim() || "Donante Solidario";
+      const email = document.getElementById("adm-don-email").value.trim() || "donante@comunidad.org";
+      const campaignKey = document.getElementById("adm-don-campaign").value || "organizacion";
+      const amount = Number(document.getElementById("adm-don-amount").value) || 150;
+      const freq = document.getElementById("adm-don-freq").value || "Donación Única";
+      const method = document.getElementById("adm-don-method").value || "Tarjeta •••• 4829";
+
+      ADMIN_DONATIONS.unshift({
+        folio: `ER-501C3-${Math.floor(850000 + Math.random() * 99999)}`,
+        date: "09 Nov 2026",
+        donorName,
+        email,
+        city: "Los Ángeles, CA",
+        campaignKey,
+        amount,
+        freq,
+        method
+      });
+      donFormEl.hidden = true;
+      refreshAdminUI();
+    });
+  }
+
+  function renderAdminDonationsTab() {
+    const tbody = document.getElementById("admin-donations-tbody");
+    const breakdownGrid = document.getElementById("admin-campaigns-breakdown-grid");
+    const campDict = DONATION_CAMPAIGNS_I18N[currentLang] || DONATION_CAMPAIGNS_I18N.es;
+
+    const baseCampaignTotals = {
+      organizacion: { raised: 84500, goal: 100000 },
+      asilo: { raised: 62800, goal: 80000 },
+      daca: { raised: 53900, goal: 65000 },
+      clinicas: { raised: 41200, goal: 50000 }
+    };
+
+    // Sumar donaciones adicionales registradas en la sesión
+    const extraDonations = ADMIN_DONATIONS.slice(0, Math.max(0, ADMIN_DONATIONS.length - 10));
+    extraDonations.forEach((d) => {
+      if (baseCampaignTotals[d.campaignKey]) {
+        baseCampaignTotals[d.campaignKey].raised += Number(d.amount) || 0;
+      }
+    });
+
+    const grandTotal = Object.values(baseCampaignTotals).reduce((s, c) => s + c.raised, 0);
+    const setTxt = (id, v) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = v;
+    };
+
+    setTxt("adm-dkpi-total", `$${grandTotal.toLocaleString("en-US")}`);
+    setTxt("adm-ov-kpi-donations", `$${(grandTotal / 1000).toFixed(1)}K`);
+    setTxt("adm-gauge-total-val", `$${(grandTotal / 1000).toFixed(1)}K`);
+    setTxt("adm-dkpi-donors", `${ADMIN_DONATIONS.length} Registros`);
+
+    const avgGift = Math.round(
+      ADMIN_DONATIONS.reduce((s, d) => s + (Number(d.amount) || 0), 0) / Math.max(1, ADMIN_DONATIONS.length)
+    );
+    setTxt("adm-dkpi-avg", `$${avgGift.toLocaleString("en-US")} USD`);
+
+    if (breakdownGrid) {
+      breakdownGrid.innerHTML = Object.keys(baseCampaignTotals)
+        .map((key) => {
+          const cObj = campDict[key] || campDict.organizacion;
+          const stats = baseCampaignTotals[key];
+          const pct = Math.min(100, Math.round((stats.raised / stats.goal) * 100));
+          const donorCount = ADMIN_DONATIONS.filter((d) => d.campaignKey === key).length;
+          return `
+            <div class="admin-camp-card">
+              <div class="admin-camp-card__code">${cObj.code}</div>
+              <div class="admin-camp-card__title">${cObj.shortName}</div>
+              <div class="admin-camp-card__bar">
+                <div class="admin-camp-card__fill" style="width:${pct}%;"></div>
+              </div>
+              <div class="admin-camp-card__nums">
+                <span>$${stats.raised.toLocaleString("en-US")} / $${stats.goal.toLocaleString("en-US")}</span>
+                <span>${donorCount} donantes (${pct}%)</span>
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    if (!tbody) return;
+    const query = (document.getElementById("adm-don-search")?.value || "").toLowerCase().trim();
+    const campFilter = document.getElementById("adm-don-filter-campaign")?.value || "all";
+
+    const filtered = ADMIN_DONATIONS.filter((d) => {
+      const matchQuery =
+        !query ||
+        d.donorName.toLowerCase().includes(query) ||
+        d.email.toLowerCase().includes(query) ||
+        d.folio.toLowerCase().includes(query) ||
+        d.city.toLowerCase().includes(query);
+      const matchCamp = campFilter === "all" || d.campaignKey === campFilter;
+      return matchQuery && matchCamp;
+    });
+
+    tbody.innerHTML = filtered
+      .map((d) => {
+        const cObj = campDict[d.campaignKey] || campDict.organizacion;
+        const initials = d.donorName
+          .split(" ")
+          .slice(0, 2)
+          .map((w) => w[0] || "")
+          .join("")
+          .toUpperCase();
+
+        return `
+          <tr>
+            <td>
+              <div style="font-family:var(--font-mono); font-size:11.5px; font-weight:700; color:#0056B3;">#${d.folio}</div>
+              <div style="font-size:12px; color:var(--text-muted);">${d.date}</div>
+            </td>
+            <td>
+              <div class="admin-donor-cell">
+                <span class="admin-donor-avatar">${initials}</span>
+                <div>
+                  <div style="font-weight:800; color:var(--navy-900);">${d.donorName}</div>
+                  <div style="font-size:12px; color:var(--text-muted);">${d.email} • ${d.city}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="admin-campaign-pill-badge">● ${cObj.shortName}</span>
+              <div style="font-family:var(--font-mono); font-size:10.5px; color:var(--text-muted); margin-top:3px;">
+                ${cObj.code}
+              </div>
+            </td>
+            <td>
+              <div style="font-family:var(--font-display); font-size:15px; font-weight:800; color:var(--navy-900);">
+                $${Number(d.amount).toLocaleString("en-US")} USD
+              </div>
+              <div style="font-size:12px; color:var(--text-muted);">${d.freq}</div>
+            </td>
+            <td>
+              <div style="font-size:12.5px; font-weight:700;">${d.method}</div>
+              <span class="admin-status-badge admin-status-badge--completed">✓ 501(c)(3) Emitido</span>
+            </td>
+          </tr>
+        `;
+      })
+      .join("");
+  }
+
+  document.getElementById("adm-don-search")?.addEventListener("input", renderAdminDonationsTab);
+  document.getElementById("adm-don-filter-campaign")?.addEventListener("change", renderAdminDonationsTab);
+
+  // Exportar CSV de Donaciones
+  document.getElementById("btn-admin-export-don-csv")?.addEventListener("click", () => {
+    const campDict = DONATION_CAMPAIGNS_I18N[currentLang] || DONATION_CAMPAIGNS_I18N.es;
+    const rows = [
+      ["Folio", "Fecha", "Donante", "Correo", "Campana Destino", "Codigo Campana", "Monto USD", "Frecuencia", "Metodo"],
+      ...ADMIN_DONATIONS.map((d) => {
+        const cObj = campDict[d.campaignKey] || campDict.organizacion;
+        return [d.folio, d.date, d.donorName, d.email, cObj.shortName, cObj.code, d.amount, d.freq, d.method];
+      })
+    ];
+    const csvContent = "data:text/csv;charset=utf-8," + rows.map((r) => r.join(",")).join("\n");
+    const link = document.createElement("a");
+    link.setAttribute("href", encodeURI(csvContent));
+    link.setAttribute("download", "el_rescate_donaciones_campanas.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+
+  function refreshAdminUI() {
+    const totalAppts = ADMIN_APPOINTMENTS.length;
+    const confirmedCount = ADMIN_APPOINTMENTS.filter((a) => a.status === "Confirmada").length;
+    const pendingCount = ADMIN_APPOINTMENTS.filter((a) => a.status === "Pendiente").length;
+    const enabledDaysCount = countTotalEnabledClinicDays();
+    const wedSlotsCount = (SLOTS_BY_DAY_TYPE["Miércoles"] || []).length;
+    const satSlotsCount = (SLOTS_BY_DAY_TYPE["Sábado"] || []).length;
+
+    const setTxt = (id, v) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = v;
+    };
+
+    setTxt("adm-nav-appts-count", String(totalAppts));
+    setTxt("adm-nav-don-count", String(ADMIN_DONATIONS.length));
+    setTxt("adm-ov-kpi-appts", `${totalAppts} Citas`);
+    setTxt("adm-ov-kpi-days", `${enabledDaysCount} Días`);
+    setTxt("adm-akpi-total", String(totalAppts));
+    setTxt("adm-akpi-status", `${confirmedCount} / ${pendingCount}`);
+    setTxt("adm-akpi-days", `${enabledDaysCount} Días`);
+    setTxt("adm-akpi-slots", `${wedSlotsCount + satSlotsCount} Bloques`);
+    setTxt("adm-akpi-slots-sub", `Miércoles (${wedSlotsCount}) • Sábados (${satSlotsCount})`);
+    setTxt("adm-strip-wed-slots", `${wedSlotsCount} Bloques`);
+    setTxt("adm-strip-sat-slots", `${satSlotsCount} Bloques`);
+    setTxt("adm-strip-confirmed", `${confirmedCount} Confirmadas`);
+
+    // Desglose por tipo de caso en Overview
+    const breakdownEl = document.getElementById("adm-overview-case-breakdown");
+    if (breakdownEl) {
+      const counts = {};
+      ADMIN_APPOINTMENTS.forEach((a) => {
+        counts[a.caseType] = (counts[a.caseType] || 0) + 1;
+      });
+      breakdownEl.innerHTML = Object.entries(counts)
+        .map(
+          ([k, v]) => `
+          <div class="admin-stat-row">
+            <span>${k}</span>
+            <strong>${v} citas</strong>
+          </div>
+        `
+        )
+        .join("");
+    }
+
+    renderAdminOverviewBars();
+    renderAdminScheduleCalendar();
+    renderAdminSlotsEditor();
+    renderAdminAppointmentsList();
+    renderAdminDonationsTab();
+  }
+
+  refreshAdminUI();
 
   // ==========================================================================
   // 12. AJUSTE #1: SWITCH GLOBAL DE IDIOMA (ES / EN) EN TODA LA PÁGINA
@@ -3843,6 +5204,7 @@
     updateSelectionBanner();
     syncDonationUI();
     resetAssistantConversation();
+    refreshAdminUI();
 
     // 4. Re-alinear la píldora líquida de navegación tras el cambio de ancho de textos
     setTimeout(() => {
@@ -3868,7 +5230,21 @@
     });
   });
 
+  window.addEventListener("popstate", () => {
+    if (window.location.hash === "#vista-login") {
+      openAuthView(false);
+    } else if (window.location.hash === "#vista-admin") {
+      openAdminView("overview");
+    } else if (window.location.hash !== "#vista-donacion") {
+      closeAllSpecialViews();
+    }
+  });
+
   if (window.location.hash === "#vista-donacion") {
     openDonationCheckoutView();
+  } else if (window.location.hash === "#vista-login") {
+    openAuthView(false);
+  } else if (window.location.hash === "#vista-admin") {
+    openAdminView("overview");
   }
 })();
