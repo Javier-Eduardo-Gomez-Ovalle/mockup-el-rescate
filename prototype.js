@@ -217,8 +217,10 @@
   });
 
   // ==========================================================================
-  // 4. CONMUTADOR BILINGÜE FUNCIONAL (ES / EN)
+  // 4. CONMUTADOR BILINGÜE INTEGRAL (ES / EN) — TODA LA PÁGINA Y VISTAS
   // ==========================================================================
+  let currentLang = "es";
+
   const I18N_DICT = {
     es: {
       nav_home: "Inicio",
@@ -226,6 +228,7 @@
       nav_services: "Servicios",
       nav_archive: "Archivo 3D",
       nav_history: "Historia 3D",
+      nav_donate: "Donaciones",
       nav_clinic: "Clínica / Citas",
       cta_header: "Solicitar orientación",
       hero_kicker: "LOS ÁNGELES, CALIFORNIA • DESDE 1981",
@@ -236,13 +239,196 @@
         "Desde 1981 acompañamos a personas y familias inmigrantes en Los Ángeles con orientación jurídica cercana, defensa de su dignidad y caminos reales hacia el bienestar comunitario.",
       hero_cta_primary: "Reservar charla en clínica",
       hero_cta_secondary: "Conoce nuestros servicios",
+      hero_z3_tag: "PLANO DOCUMENTAL Z-3 • WESTLAKE",
       hero_z3_title: "Cuatro décadas de arraigo en L.A.",
       hero_z3_sub: "Orientación legal, clínicas de miércoles y sábados y defensa comunitaria sin barreras.",
       hero_badge_families: "+45,000 familias acompañadas",
+      hero_route_status: "● CLÍNICA COMUNITARIA ACTIVA",
+      hero_route_dest: "Comunidad",
+      hero_route_hours: "Mié 2–5 PM • Sáb 10–1 PM",
+      hero_route_conf: "100% Confidencial",
       hero_cap_title: "Memoria viva y presente comunitario en Los Ángeles",
       hero_cap_desc:
         "Nacida en el corazón de Westlake en 1981, El Rescate camina junto a la población inmigrante construyendo arraigo, dignidad y futuro compartido.",
-      why_tab: "¿Por qué confiar en El Rescate?"
+      manifesto_eyebrow: "NUESTRA MISIÓN DESDE 1981 • SCROLL REVEAL",
+      why_tab: "¿Por qué confiar en El Rescate?",
+      why_1_title: "Defensa Legal con Historia",
+      why_1_desc:
+        "Pioneros desde 1981 en casos de asilo, acuerdos históricos ABC, TPS, NACARA, DACA y reunificación familiar en California.",
+      why_2_title: "Trato Humano y Bilingüe",
+      why_2_desc:
+        "Cada consulta se realiza en tu idioma, con respeto absoluto por la historia de tu familia y sin tecnicismos intimidantes.",
+      why_3_title: "Confidencialidad Absoluta",
+      why_3_desc:
+        "Tus datos y consultas están protegidos bajo secreto profesional. Jamás compartimos información con autoridades migratorias.",
+      impact_kicker: "IMPACTO COMUNITARIO EN CIFRAS",
+      impact_title_1: "Soluciones integrales construidas",
+      impact_title_2: "para ir más lejos",
+      impact_sub:
+        "Combinamos rigor jurídico, clínicas comunitarias semanales y educación financiera para fortalecer a toda la comunidad inmigrante del sur de California.",
+      impact_replay_btn: "↻ Decodificar cifras en tiempo real",
+      bento_hero_kicker: "SEDE HISTÓRICA EN WESTLAKE, L.A.",
+      bento_hero_title: "De refugio humanitario en 1981 a institución comunitaria de referencia",
+      bento_hero_cta: "Explorar Autobús Histórico 3D →",
+      split_kicker: "MODELO DE ATENCIÓN INTEGRAL",
+      split_title_1: "Construido sobre confianza.",
+      split_title_2: "Impulsado por dignidad.",
+      split_sub:
+        "A medida que avanzas, conoce los tres pilares con los que acompañamos a cada persona desde su primera charla hasta la resolución de su caso.",
+      pillar_1_title: "Representación y Orientación Legal",
+      pillar_1_body:
+        "Evaluación honesta de elegibilidad para asilo, TPS, DACA, peticiones familiares, visas humanitarias (U/VAWA) y naturalización.",
+      pillar_2_title: "Clínicas Legales de Miércoles y Sábados",
+      pillar_2_body:
+        "Jornadas semanales de orientación comunitaria con reserva en línea para resolver dudas urgentes en un entorno seguro.",
+      pillar_3_title: "Empoderamiento Económico y Social",
+      pillar_3_body:
+        "Asesoría para pequeños negocios migrantes, talleres de ciudadanía y redes de apoyo familiar en Los Ángeles.",
+      wipe_1_tag: "PILAR 01 • DEFENSA JURÍDICA",
+      wipe_1_title: "Amparo y Representación Ética",
+      wipe_1_desc: "Más de cuatro décadas defendiendo el derecho a permanecer en familia.",
+      wipe_1_kpi1: "Casos con seguimiento",
+      wipe_1_kpi2: "Origen en L.A.",
+      wipe_2_tag: "PILAR 02 • CLÍNICAS SEMANALES",
+      wipe_2_title: "Charlas Legales Miércoles y Sábados",
+      wipe_2_desc: "Agenda tu horario en menos de un minuto sin compartir datos con terceros.",
+      wipe_2_kpi1: "Jornadas por semana",
+      wipe_2_kpi2: "Privacidad garantizada",
+      wipe_3_tag: "PILAR 03 • COMUNIDAD Y FUTURO",
+      wipe_3_title: "Raíz Cultural y Futuro Económico",
+      wipe_3_desc: "Formación cívica, ciudadanía y fortalecimiento del tejido vecinal en Westlake.",
+      wipe_3_kpi1: "Acompañamiento",
+      wipe_3_kpi2: "Atención bilingüe",
+      srv_eyebrow: "ÁREAS DE PRÁCTICA Y PROGRAMAS • INTERACTIVO",
+      srv_title: "Explora nuestros servicios en Mazo Shuffle o Arco 3D",
+      srv_mode_shuffle: "Mazo Interactivo (Card Shuffle)",
+      srv_mode_arc: "Galería en Arco 3D",
+      srv_cta_book: "Agendar consulta para este servicio →",
+      srv_cta_shuffle: "Barajar siguiente tarjeta ↻",
+      arc_1_tag: "01 • PROTECCIÓN",
+      arc_1_title: "Asilo, Refugio y Visas U/VAWA",
+      arc_2_tag: "02 • AMPARO LEGAL",
+      arc_2_title: "Renovaciones TPS, DACA y NACARA",
+      arc_3_tag: "03 • REUNIFICACIÓN",
+      arc_3_title: "Peticiones Familiares y Residencia",
+      arc_4_tag: "04 • CIUDADANÍA",
+      arc_4_title: "Naturalización y Talleres Cívicos",
+      arc_5_tag: "05 • COMUNIDAD",
+      arc_5_title: "Clínicas Semanales y Microfinanzas",
+      unveil_cell_1: "EL RESCATE® ARCHIVO VIVO",
+      unveil_cell_3: "CAPAS DE IMPACTO 3D",
+      unveil_cell_4_l: "INTERACCIÓN",
+      unveil_cell_4_r: "CLICK PARA EXPANDIR IMAGEN",
+      unveil_btn_overview: "OVERVIEW (CAPAS 3D)",
+      unveil_btn_index: "INDEX (CUADRÍCULA)",
+      unveil_f_all: "TODAS",
+      unveil_f_legal: "DEFENSA LEGAL",
+      unveil_f_comm: "COMUNIDAD & CULTURA",
+      unveil_f_clinic: "CLÍNICAS SEMANALES",
+      hist_eyebrow: "RECORRIDO HISTÓRICO INTERACTIVO EN THREE.JS / WEBGL",
+      hist_route_title: "Cada década de compromiso comunitario, seguida paso a paso (1981 — 2026)",
+      hist_route_hint: "Haz clic en cualquier año, polaroid o flecha para explorar e inspeccionar imágenes",
+      hist_stage_sub: "IMMIGRATION, COMMUNITY & LEGAL SERVICES • ARCHIVO 3D",
+      hist_polaroid_lbl: "ARCHIVO FOTOGRÁFICO",
+      hist_clip_top: "EL RESCATE • LEGAL DOCKET",
+      don_eyebrow: "SOLIDARIDAD EN ACCIÓN • ONG 501(c)(3) DESDE 1981",
+      don_h2_pre: "Tu aporte construye un",
+      don_h2_hi: "refugio seguro",
+      don_h2_post: "para miles de familias.",
+      don_lead:
+        "Cada contribución sostiene directamente nuestras brigadas de defensa jurídica, clínicas gratuitas de miércoles y sábados y el acompañamiento humano a familias inmigrantes en Los Ángeles.",
+      don_wid_top: "DESTINO DE TU APORTE SOLIDARIO",
+      don_wid_badge: "● CAMPAÑAS HABILITADAS",
+      camp_tab_org: "Organización General",
+      camp_tab_asilo: "Defensa Legal y Asilo",
+      camp_tab_clinicas: "Clínicas Comunitarias",
+      camp_tab_daca: "Futuro Joven & DACA",
+      don_amt_label: "Selecciona el monto de tu donación (USD)",
+      don_other_amt: "Otra cantidad",
+      don_ssl_note: "Pasarela Segura SSL • Organización 501(c)(3) Deducible de Impuestos",
+      clinic_kicker: "ORIENTACIÓN LEGAL PRESENCIAL Y CONFIDENCIAL",
+      clinic_title: "Agenda tu charla en la clínica",
+      clinic_sub:
+        "Selecciona uno de los días marcados en azul (miércoles o sábados), elige tu horario y confirmaremos tu cita.",
+      clinic_avail_title: "Disponibilidad de la clínica",
+      clinic_wed: "Miércoles",
+      clinic_sat: "Sábados",
+      wd_sun: "DOM",
+      wd_mon: "LUN",
+      wd_tue: "MAR",
+      wd_wed: "MIÉ",
+      wd_thu: "JUE",
+      wd_fri: "VIE",
+      wd_sat: "SÁB",
+      clinic_legend: "Días con charla",
+      clinic_form_title: "Tus datos",
+      clinic_your_choice: "Tu elección:",
+      lbl_fullname: "Nombre completo",
+      ph_fullname: "Ej. María Elena Morales",
+      lbl_phone: "Teléfono",
+      lbl_email: "Correo electrónico",
+      ph_email: "correo@ejemplo.com",
+      lbl_case_type: "Tipo de caso",
+      opt_select: "Selecciona una opción",
+      opt_asilo: "Asilo / Refugio Humanitario",
+      opt_tps: "TPS / Ley NACARA",
+      opt_daca: "Renovación o Consulta DACA",
+      opt_family: "Petición Familiar / Residencia",
+      opt_cit: "Ciudadanía y Naturalización",
+      opt_visau: "Visa U / Protección VAWA",
+      opt_gen: "Orientación General en Clínica",
+      btn_book_submit: "Reservar mi charla",
+      clinic_privacy_note:
+        "Usamos tus datos solo para confirmar tu charla. Nunca los compartimos con autoridades de inmigración.",
+      chk_back_btn: "Volver al sitio principal de El Rescate",
+      chk_portal_tag: "PORTAL OFICIAL DE DONACIONES • 501(c)(3)",
+      chk_selected_kicker: "CAMPAÑA SELECCIONADA PARA TU APORTE",
+      chk_switch_lbl: "¿Deseas cambiar la campaña destino?",
+      chk_alloc_title: "Transparencia y destino de fondos en esta campaña",
+      chk_deliv_title: "Lo que tu donación hace posible hoy:",
+      chk_ngo_title: "El Rescate • Organización sin Fines de Lucro 501(c)(3)",
+      chk_ngo_seal: "100% DEDUCIBLE",
+      chk_sum_eyebrow: "RESUMEN DE TU DONACIÓN",
+      chk_sec1_title: "1. Confirma el monto y frecuencia de tu aporte",
+      chk_freq_once: "✓ Aporte Único Solidario",
+      chk_freq_monthly: "↻ Aporte Mensual Continuo (Protector Comunitario)",
+      chk_sec2_title: "2. Datos del donante (para recibo fiscal 501c3)",
+      chk_lbl_fname: "Nombre(s) *",
+      chk_ph_fname: "Ej. Carlos Alberto",
+      chk_lbl_lname: "Apellidos *",
+      chk_ph_lname: "Ej. Mendoza Ríos",
+      chk_lbl_email: "Correo electrónico *",
+      chk_lbl_phone: "Teléfono de contacto",
+      chk_lbl_city: "Ciudad / Estado",
+      chk_lbl_zip: "Código Postal",
+      chk_lbl_msg: "Dedicatoria o nota para la campaña (Opcional)",
+      chk_ph_msg: "Ej. En honor a las familias trabajadoras de nuestra comunidad en L.A.",
+      chk_sec3_title: "3. Método de pago seguro",
+      chk_pay_card: "💳 Tarjeta de Crédito / Débito",
+      chk_pay_ach: "🏦 Transferencia ACH / Zelle",
+      chk_pay_paypal: "🛡️ PayPal Solidario",
+      chk_lbl_cholder: "Nombre en la tarjeta",
+      chk_lbl_cnum: "Número de tarjeta",
+      chk_lbl_cexp: "Vencimiento (MM/AA)",
+      chk_lbl_ccvv: "Código CVV",
+      chk_ach_title: "Transferencia Institucional Directa (Sin comisiones de red)",
+      chk_ach_desc:
+        "Puedes realizar tu aporte mediante transferencia bancaria ACH o Zelle oficial a nombre de El Rescate (501c3):",
+      chk_ach_ref: "Referencia automática:",
+      chk_pp_title: "PayPal Giving Fund & Billetera Digital",
+      chk_pp_desc:
+        "Al confirmar tu donación se vinculará directamente con la cuenta institucional verificada de El Rescate Los Ángeles con emisión inmediata de comprobante fiscal.",
+      chk_sec_footer:
+        "🔒 Transacción protegida con cifrado de 256 bits. El Rescate emite certificado fiscal deducible 501(c)(3) al instante.",
+      fab_tooltip: "Asistente Virtual",
+      bot_head_kicker: "● EN LÍNEA • PRE-EVALUACIÓN INTERACTIVA",
+      bot_head_title: "Asistente de El Rescate",
+      bot_opt_hint: "Selecciona un tema o respuesta para continuar la conversación:",
+      lightbox_cta: "Solicitar orientación relacionada →",
+      lightbox_close_btn: "Cerrar vista ampliada",
+      footer_title: "El Rescate — Los Ángeles, California",
+      footer_sub: "1501 W. 8th Street, Los Angeles, CA 90017 • Desde 1981 junto a la comunidad inmigrante",
+      footer_badge: "PROTOTIPO INTERACTIVO INTEGRAL • THREE.JS + GSAP + LENIS"
     },
     en: {
       nav_home: "Home",
@@ -250,6 +436,7 @@
       nav_services: "Services",
       nav_archive: "3D Archive",
       nav_history: "3D History",
+      nav_donate: "Donate",
       nav_clinic: "Legal Clinic",
       cta_header: "Request Guidance",
       hero_kicker: "LOS ANGELES, CALIFORNIA • SINCE 1981",
@@ -260,82 +447,280 @@
         "Since 1981 we have walked alongside immigrant individuals and families in Los Angeles with trusted legal guidance, dignity defense, and real pathways to community well-being.",
       hero_cta_primary: "Book a Legal Clinic Session",
       hero_cta_secondary: "Explore Our Services",
+      hero_z3_tag: "DOCUMENTARY PLANE Z-3 • WESTLAKE",
       hero_z3_title: "Four Decades of Roots in L.A.",
       hero_z3_sub: "Legal representation, Wednesday & Saturday clinics, and barrier-free community advocacy.",
       hero_badge_families: "+45,000 families supported",
+      hero_route_status: "● ACTIVE COMMUNITY CLINIC",
+      hero_route_dest: "Community",
+      hero_route_hours: "Wed 2–5 PM • Sat 10–1 PM",
+      hero_route_conf: "100% Confidential",
       hero_cap_title: "Living Memory & Community Present in Los Angeles",
       hero_cap_desc:
         "Founded in the heart of Westlake in 1981, El Rescate walks alongside the immigrant community building roots, dignity, and a shared future.",
-      why_tab: "Why Trust El Rescate?"
+      manifesto_eyebrow: "OUR MISSION SINCE 1981 • SCROLL REVEAL",
+      why_tab: "Why Trust El Rescate?",
+      why_1_title: "Historic Legal Defense",
+      why_1_desc:
+        "Pioneers since 1981 in asylum representation, historic ABC settlement cases, TPS, NACARA, DACA, and family reunification across California.",
+      why_2_title: "Human & Bilingual Care",
+      why_2_desc:
+        "Every consultation is conducted in your language, with deep respect for your family's story and zero intimidating jargon.",
+      why_3_title: "Absolute Confidentiality",
+      why_3_desc:
+        "Your information and consultations are protected by strict legal privilege. We never share data with immigration authorities.",
+      impact_kicker: "COMMUNITY IMPACT IN NUMBERS",
+      impact_title_1: "Comprehensive solutions built",
+      impact_title_2: "to go further",
+      impact_sub:
+        "We combine legal rigor, weekly community clinics, and financial empowerment to strengthen the entire immigrant community of Southern California.",
+      impact_replay_btn: "↻ Decode figures in real time",
+      bento_hero_kicker: "HISTORIC HEADQUARTERS IN WESTLAKE, L.A.",
+      bento_hero_title: "From a humanitarian refuge in 1981 to a landmark community institution",
+      bento_hero_cta: "Explore 3D Historic Bus →",
+      split_kicker: "HOLISTIC CARE MODEL",
+      split_title_1: "Built on trust.",
+      split_title_2: "Driven by dignity.",
+      split_sub:
+        "As you scroll, explore the three pillars through which we accompany every person from their first clinic consultation to the resolution of their case.",
+      pillar_1_title: "Legal Representation & Guidance",
+      pillar_1_body:
+        "Honest eligibility evaluations for asylum, TPS, DACA, family petitions, humanitarian visas (U/VAWA), and naturalization.",
+      pillar_2_title: "Wednesday & Saturday Legal Clinics",
+      pillar_2_body:
+        "Weekly community orientation sessions with online booking to answer urgent legal questions in a safe environment.",
+      pillar_3_title: "Economic & Social Empowerment",
+      pillar_3_body:
+        "Small-business advising for immigrant entrepreneurs, citizenship workshops, and family support networks in Los Angeles.",
+      wipe_1_tag: "PILLAR 01 • LEGAL DEFENSE",
+      wipe_1_title: "Ethical Protection & Advocacy",
+      wipe_1_desc: "Over four decades defending the fundamental right to remain together as a family.",
+      wipe_1_kpi1: "Active case follow-up",
+      wipe_1_kpi2: "Founded in L.A.",
+      wipe_2_tag: "PILLAR 02 • WEEKLY CLINICS",
+      wipe_2_title: "Wednesday & Saturday Legal Sessions",
+      wipe_2_desc: "Book your time slot in under a minute without ever sharing data with third parties.",
+      wipe_2_kpi1: "Sessions per week",
+      wipe_2_kpi2: "Guaranteed privacy",
+      wipe_3_tag: "PILLAR 03 • COMMUNITY & FUTURE",
+      wipe_3_title: "Cultural Roots & Economic Future",
+      wipe_3_desc: "Civic education, citizenship preparation, and neighborhood empowerment in Westlake.",
+      wipe_3_kpi1: "Holistic support",
+      wipe_3_kpi2: "Bilingual care",
+      srv_eyebrow: "PRACTICE AREAS & PROGRAMS • INTERACTIVE",
+      srv_title: "Explore our services in Shuffle Deck or 3D Arc",
+      srv_mode_shuffle: "Interactive Deck (Card Shuffle)",
+      srv_mode_arc: "3D Arc Gallery",
+      srv_cta_book: "Book consultation for this service →",
+      srv_cta_shuffle: "Shuffle next card ↻",
+      arc_1_tag: "01 • PROTECTION",
+      arc_1_title: "Asylum, Refuge & U/VAWA Visas",
+      arc_2_tag: "02 • LEGAL RELIEF",
+      arc_2_title: "TPS, DACA & NACARA Renewals",
+      arc_3_tag: "03 • REUNIFICATION",
+      arc_3_title: "Family Petitions & Residency",
+      arc_4_tag: "04 • CITIZENSHIP",
+      arc_4_title: "Naturalization & Civic Workshops",
+      arc_5_tag: "05 • COMMUNITY",
+      arc_5_title: "Weekly Clinics & Microfinance",
+      unveil_cell_1: "EL RESCATE® LIVING ARCHIVE",
+      unveil_cell_3: "3D IMPACT LAYERS",
+      unveil_cell_4_l: "INTERACTION",
+      unveil_cell_4_r: "CLICK TO EXPAND IMAGE",
+      unveil_btn_overview: "OVERVIEW (3D LAYERS)",
+      unveil_btn_index: "INDEX (GRID VIEW)",
+      unveil_f_all: "ALL",
+      unveil_f_legal: "LEGAL DEFENSE",
+      unveil_f_comm: "COMMUNITY & CULTURE",
+      unveil_f_clinic: "WEEKLY CLINICS",
+      hist_eyebrow: "INTERACTIVE 3D HISTORICAL JOURNEY IN THREE.JS / WEBGL",
+      hist_route_title: "Every decade of community commitment, followed step by step (1981 — 2026)",
+      hist_route_hint: "Click any year, polaroid, or arrow to move the 3D bus and inspect archival photos",
+      hist_stage_sub: "IMMIGRATION, COMMUNITY & LEGAL SERVICES • 3D ARCHIVE",
+      hist_polaroid_lbl: "PHOTO ARCHIVE",
+      hist_clip_top: "EL RESCATE • LEGAL DOCKET",
+      don_eyebrow: "SOLIDARITY IN ACTION • 501(c)(3) NONPROFIT SINCE 1981",
+      don_h2_pre: "Your contribution builds a",
+      don_h2_hi: "safe haven",
+      don_h2_post: "for thousands of families.",
+      don_lead:
+        "Every contribution directly sustains our legal defense brigades, free Wednesday and Saturday clinics, and human accompaniment for immigrant families in Los Angeles.",
+      don_wid_top: "DESTINATION OF YOUR SOLIDARITY GIFT",
+      don_wid_badge: "● ACTIVE CAMPAIGNS",
+      camp_tab_org: "General Organization",
+      camp_tab_asilo: "Legal Defense & Asylum",
+      camp_tab_clinicas: "Community Clinics",
+      camp_tab_daca: "Youth Future & DACA",
+      don_amt_label: "Select your donation amount (USD)",
+      don_other_amt: "Custom amount",
+      don_ssl_note: "Secure SSL Gateway • Tax-Deductible 501(c)(3) Nonprofit Organization",
+      clinic_kicker: "IN-PERSON & CONFIDENTIAL LEGAL GUIDANCE",
+      clinic_title: "Schedule your legal clinic session",
+      clinic_sub:
+        "Select one of the days highlighted in blue (Wednesdays or Saturdays), choose your time slot, and we will confirm your appointment.",
+      clinic_avail_title: "Clinic availability",
+      clinic_wed: "Wednesdays",
+      clinic_sat: "Saturdays",
+      wd_sun: "SUN",
+      wd_mon: "MON",
+      wd_tue: "TUE",
+      wd_wed: "WED",
+      wd_thu: "THU",
+      wd_fri: "FRI",
+      wd_sat: "SAT",
+      clinic_legend: "Available clinic days",
+      clinic_form_title: "Your details",
+      clinic_your_choice: "Your selection:",
+      lbl_fullname: "Full name",
+      ph_fullname: "E.g. Maria Elena Morales",
+      lbl_phone: "Phone number",
+      lbl_email: "Email address",
+      ph_email: "email@example.com",
+      lbl_case_type: "Case type",
+      opt_select: "Select an option",
+      opt_asilo: "Asylum / Humanitarian Refuge",
+      opt_tps: "TPS / NACARA Relief",
+      opt_daca: "DACA Renewal or Consultation",
+      opt_family: "Family Petition / Residency",
+      opt_cit: "Citizenship & Naturalization",
+      opt_visau: "U Visa / VAWA Protection",
+      opt_gen: "General Clinic Orientation",
+      btn_book_submit: "Book my clinic session",
+      clinic_privacy_note:
+        "We use your information solely to confirm your session. We never share it with immigration authorities.",
+      chk_back_btn: "Back to El Rescate main website",
+      chk_portal_tag: "OFFICIAL DONATION PORTAL • 501(c)(3)",
+      chk_selected_kicker: "SELECTED CAMPAIGN FOR YOUR GIFT",
+      chk_switch_lbl: "Would you like to switch the destination campaign?",
+      chk_alloc_title: "Fund transparency & allocation in this campaign",
+      chk_deliv_title: "What your donation makes possible today:",
+      chk_ngo_title: "El Rescate • 501(c)(3) Nonprofit Organization",
+      chk_ngo_seal: "100% TAX-DEDUCTIBLE",
+      chk_sum_eyebrow: "DONATION SUMMARY",
+      chk_sec1_title: "1. Confirm your gift amount and frequency",
+      chk_freq_once: "✓ One-Time Solidarity Gift",
+      chk_freq_monthly: "↻ Monthly Ongoing Gift (Community Sustainer)",
+      chk_sec2_title: "2. Donor information (for 501c3 tax receipt)",
+      chk_lbl_fname: "First name(s) *",
+      chk_ph_fname: "E.g. Carlos Alberto",
+      chk_lbl_lname: "Last name(s) *",
+      chk_ph_lname: "E.g. Mendoza Rios",
+      chk_lbl_email: "Email address *",
+      chk_lbl_phone: "Contact phone",
+      chk_lbl_city: "City / State",
+      chk_lbl_zip: "ZIP Code",
+      chk_lbl_msg: "Dedication or note for this campaign (Optional)",
+      chk_ph_msg: "E.g. In honor of working immigrant families in Los Angeles.",
+      chk_sec3_title: "3. Secure payment method",
+      chk_pay_card: "💳 Credit / Debit Card",
+      chk_pay_ach: "🏦 ACH / Official Zelle",
+      chk_pay_paypal: "🛡️ PayPal Giving",
+      chk_lbl_cholder: "Name on card",
+      chk_lbl_cnum: "Card number",
+      chk_lbl_cexp: "Expiration (MM/YY)",
+      chk_lbl_ccvv: "CVV Code",
+      chk_ach_title: "Direct Institutional Transfer (Zero network fees)",
+      chk_ach_desc:
+        "You can complete your contribution via ACH bank transfer or official Zelle to El Rescate (501c3):",
+      chk_ach_ref: "Automatic reference:",
+      chk_pp_title: "PayPal Giving Fund & Digital Wallet",
+      chk_pp_desc:
+        "Upon confirming your gift, it will link directly with the verified institutional account of El Rescate Los Angeles with instant tax receipt issuance.",
+      chk_sec_footer:
+        "🔒 256-bit encrypted transaction. El Rescate issues an instant 501(c)(3) tax-deductible receipt.",
+      fab_tooltip: "Virtual Assistant",
+      bot_head_kicker: "● ONLINE • INTERACTIVE PRE-EVALUATION",
+      bot_head_title: "El Rescate Assistant",
+      bot_opt_hint: "Select a topic or reply below to continue the conversation:",
+      lightbox_cta: "Request related legal guidance →",
+      lightbox_close_btn: "Close expanded view",
+      footer_title: "El Rescate — Los Angeles, California",
+      footer_sub: "1501 W. 8th Street, Los Angeles, CA 90017 • Standing with the immigrant community since 1981",
+      footer_badge: "COMPREHENSIVE INTERACTIVE PROTOTYPE • THREE.JS + GSAP + LENIS"
     }
   };
 
-  document.querySelectorAll(".lang-pill__btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const lang = btn.getAttribute("data-lang") || "es";
-      document.querySelectorAll(".lang-pill__btn").forEach((b) => {
-        b.classList.toggle("is-active", b === btn);
-      });
-      const dict = I18N_DICT[lang] || I18N_DICT.es;
-      document.querySelectorAll("[data-i18n]").forEach((el) => {
-        const key = el.getAttribute("data-i18n");
-        if (dict[key]) el.textContent = dict[key];
-      });
-      setTimeout(() => {
-        const activeNav = document.querySelector(".gooey-nav-btn.is-active");
-        if (activeNav) moveGooeyPillToButton(activeNav, true);
-      }, 30);
-    });
-  });
+  // ==========================================================================
+  // 5. MANIFIESTO SCROLL-SCRUBBED PALABRA POR PALABRA (BILINGÜE ES / EN)
+  // ==========================================================================
+  const MANIFESTO_I18N = {
+    es: {
+      text: "Fundada en 1981 por una necesidad humanitaria urgente, nacimos para brindar representación legal ética, refugio comunitario y oportunidades económicas a cada familia inmigrante que construye su vida en Los Ángeles.",
+      accents: new Set([
+        "1981",
+        "humanitaria",
+        "representación",
+        "legal",
+        "ética,",
+        "refugio",
+        "oportunidades",
+        "económicas",
+        "Los",
+        "Ángeles."
+      ])
+    },
+    en: {
+      text: "Founded in 1981 out of an urgent humanitarian need, we were born to provide ethical legal representation, community refuge, and economic opportunity to every immigrant family building a life in Los Angeles.",
+      accents: new Set([
+        "1981",
+        "humanitarian",
+        "ethical",
+        "legal",
+        "representation,",
+        "refuge,",
+        "economic",
+        "opportunity",
+        "Los",
+        "Angeles."
+      ])
+    }
+  };
 
-  // ==========================================================================
-  // 5. MANIFIESTO SCROLL-SCRUBBED PALABRA POR PALABRA (Video 1 NEXORA 0:05)
-  // ==========================================================================
   const manifestoEl = document.getElementById("scrub-manifesto");
-  if (manifestoEl) {
-    const rawWords = manifestoEl.textContent.trim().split(/\s+/);
-    const accentKeywords = new Set([
-      "1981",
-      "humanitaria",
-      "representación",
-      "legal",
-      "ética,",
-      "refugio",
-      "oportunidades",
-      "económicas",
-      "Los",
-      "Ángeles."
-    ]);
+  let manifestoScrollProgress = 1;
 
+  function renderManifestoWords() {
+    if (!manifestoEl) return;
+    const cfg = MANIFESTO_I18N[currentLang] || MANIFESTO_I18N.es;
+    const rawWords = cfg.text.trim().split(/\s+/);
     manifestoEl.innerHTML = rawWords
       .map((w) => {
-        const cls = accentKeywords.has(w) ? "scrub-word scrub-word--accent" : "scrub-word";
+        const cls = cfg.accents.has(w) ? "scrub-word scrub-word--accent" : "scrub-word";
         return `<span class="${cls}">${w}</span>`;
       })
       .join(" ");
 
     const wordSpans = manifestoEl.querySelectorAll(".scrub-word");
+    const litCount = Math.floor(manifestoScrollProgress * wordSpans.length);
+    wordSpans.forEach((sp, idx) => {
+      sp.classList.toggle("is-lit", idx <= litCount);
+      sp.style.opacity = idx <= litCount ? "1" : "";
+    });
+  }
+
+  if (manifestoEl) {
+    manifestoScrollProgress = reduceMotion ? 1 : 0.35;
+    renderManifestoWords();
 
     if (typeof window.ScrollTrigger !== "undefined" && !reduceMotion) {
-      gsap.to(wordSpans, {
-        opacity: 1,
-        stagger: 0.05,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".manifesto-section",
-          start: "top 72%",
-          end: "center 42%",
-          scrub: 0.4,
-          onUpdate: (self) => {
-            const litCount = Math.floor(self.progress * wordSpans.length);
-            wordSpans.forEach((sp, idx) => {
-              sp.classList.toggle("is-lit", idx <= litCount);
-            });
-          }
+      window.ScrollTrigger.create({
+        trigger: ".manifesto-section",
+        start: "top 72%",
+        end: "center 42%",
+        scrub: 0.4,
+        onUpdate: (self) => {
+          manifestoScrollProgress = self.progress;
+          const wordSpans = manifestoEl.querySelectorAll(".scrub-word");
+          const litCount = Math.floor(self.progress * wordSpans.length);
+          wordSpans.forEach((sp, idx) => {
+            sp.classList.toggle("is-lit", idx <= litCount);
+            sp.style.opacity = idx <= litCount ? "1" : "";
+          });
         }
       });
     } else {
-      wordSpans.forEach((sp) => sp.classList.add("is-lit"));
+      manifestoScrollProgress = 1;
+      renderManifestoWords();
     }
   }
 
@@ -365,65 +750,203 @@
   }
 
   // ==========================================================================
-  // 6. RIFF 28 "CARD SHUFFLE" (Video 4) + ARCO 3D (Video 2 C&A)
+  // 5.5. MODAL LIGHTBOX DE EXPANSIÓN DE IMAGEN (Ajuste #2: Galería 3D e Historia 3D)
   // ==========================================================================
-  const SERVICES_DECK = [
-    {
-      num: "01",
-      pill: "Protección",
-      theme: "violet",
-      title: "Asilo y Refugio",
-      sub: "Defensa humanitaria integral",
-      kicker: "PROGRAMA 01 DE 05 • DEFENSA DE ASILO",
-      fullTitle: "Asilo, Refugio y Protección Humanitaria",
-      fullDesc:
-        "Representación legal especializada para personas y familias que buscan protección en Estados Unidos, incluyendo asilo afirmativo y defensivo, visas U para víctimas de delitos y peticiones VAWA."
-    },
-    {
-      num: "02",
-      pill: "Amparo",
-      theme: "amber",
-      title: "TPS y DACA",
-      sub: "Permisos y protección temporal",
-      kicker: "PROGRAMA 02 DE 05 • ESTATUS PROTEGIDO",
-      fullTitle: "Renovaciones de TPS, DACA y Ley NACARA",
-      fullDesc:
-        "Desde las históricas clínicas ABC de 1991 hasta la defensa actual de Dreamers, gestionamos renovaciones de permisos de trabajo, amparos de deportación y beneficios bajo NACARA."
-    },
-    {
-      num: "03",
-      pill: "Familia",
-      theme: "mint",
-      title: "Residencia",
-      sub: "Reunificación de familias",
-      kicker: "PROGRAMA 03 DE 05 • UNIDAD FAMILIAR",
-      fullTitle: "Peticiones Familiares y Ajuste de Estatus",
-      fullDesc:
-        "Acompañamiento jurídico paso a paso para reunir a cónyuges, hijos y padres, incluyendo perdones migratorios (waivers) y procesos consulares seguros."
-    },
-    {
-      num: "04",
-      pill: "Cívico",
-      theme: "lavender",
-      title: "Ciudadanía",
-      sub: "Naturalización y voz plena",
-      kicker: "PROGRAMA 04 DE 05 • NATURALIZACIÓN",
-      fullTitle: "Talleres de Ciudadanía y Examen Cívico",
-      fullDesc:
-        "Preparamos tu solicitud N-400, evaluamos exenciones de pago o de idioma y realizamos simulacros de entrevista para que des el paso hacia la ciudadanía estadounidense."
-    },
-    {
-      num: "05",
-      pill: "Clínica",
-      theme: "sand",
-      title: "Clínicas L.A.",
-      sub: "Miércoles y sábados en vivo",
-      kicker: "PROGRAMA 05 DE 05 • ATENCIÓN SEMANAL",
-      fullTitle: "Clínicas Legales Comunitarias y Microfinanzas",
-      fullDesc:
-        "Orientación directa todos los miércoles (2–5 PM) y sábados (10 AM–1 PM) junto con programas de educación financiera y apoyo a emprendedores migrantes."
+  const lightboxModal = document.getElementById("media-lightbox-modal");
+  const lightboxCloseBtn = document.getElementById("media-lightbox-close");
+  const lightboxDismissBtn = document.getElementById("lightbox-btn-dismiss");
+  const lightboxCtaClinic = document.getElementById("lightbox-cta-clinic");
+
+  function openMediaLightbox(item) {
+    if (!lightboxModal) return;
+    const imgEl = document.getElementById("lightbox-img");
+    const badgeEl = document.getElementById("lightbox-badge");
+    const codeEl = document.getElementById("lightbox-code");
+    const sourceEl = document.getElementById("lightbox-source");
+    const titleEl = document.getElementById("lightbox-title");
+    const descEl = document.getElementById("lightbox-desc");
+    const statsEl = document.getElementById("lightbox-stats");
+
+    if (imgEl) {
+      imgEl.src = item.img || "assets/provisional-documentary-la-placita.jpg";
+      imgEl.alt = item.title || "";
     }
-  ];
+    if (badgeEl) badgeEl.textContent = item.badge || "";
+    if (codeEl) codeEl.textContent = item.code || "";
+    if (sourceEl) sourceEl.textContent = item.source || "EL RESCATE • LOS ANGELES";
+    if (titleEl) titleEl.textContent = item.title || "";
+    if (descEl) descEl.textContent = item.desc || "";
+
+    if (statsEl) {
+      if (item.stats && item.stats.length) {
+        statsEl.innerHTML = item.stats
+          .map(
+            (st) => `
+            <div class="media-lightbox__stat-box">
+              <div class="media-lightbox__stat-val">${st.val}</div>
+              <div class="media-lightbox__stat-lbl">${st.lbl}</div>
+            </div>
+          `
+          )
+          .join("");
+        statsEl.style.display = "grid";
+      } else {
+        statsEl.innerHTML = "";
+        statsEl.style.display = "none";
+      }
+    }
+
+    lightboxModal.classList.add("is-open");
+    lightboxModal.setAttribute("aria-hidden", "false");
+  }
+
+  function closeMediaLightbox() {
+    if (!lightboxModal) return;
+    lightboxModal.classList.remove("is-open");
+    lightboxModal.setAttribute("aria-hidden", "true");
+  }
+
+  if (lightboxCloseBtn) lightboxCloseBtn.addEventListener("click", closeMediaLightbox);
+  if (lightboxDismissBtn) lightboxDismissBtn.addEventListener("click", closeMediaLightbox);
+  if (lightboxCtaClinic) {
+    lightboxCtaClinic.addEventListener("click", () => {
+      closeMediaLightbox();
+    });
+  }
+  if (lightboxModal) {
+    lightboxModal.addEventListener("click", (e) => {
+      if (e.target === lightboxModal) closeMediaLightbox();
+    });
+  }
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightboxModal && lightboxModal.classList.contains("is-open")) {
+      closeMediaLightbox();
+    }
+  });
+
+  // ==========================================================================
+  // 6. RIFF 28 "CARD SHUFFLE" (Video 4) + ARCO 3D (Video 2 C&A) — BILINGÜE
+  // ==========================================================================
+  const SERVICES_DECK_I18N = {
+    es: [
+      {
+        num: "01",
+        pill: "Protección",
+        theme: "violet",
+        title: "Asilo y Refugio",
+        sub: "Defensa humanitaria integral",
+        kicker: "PROGRAMA 01 DE 05 • DEFENSA DE ASILO",
+        fullTitle: "Asilo, Refugio y Protección Humanitaria",
+        fullDesc:
+          "Representación legal especializada para personas y familias que buscan protección en Estados Unidos, incluyendo asilo afirmativo y defensivo, visas U para víctimas de delitos y peticiones VAWA."
+      },
+      {
+        num: "02",
+        pill: "Amparo",
+        theme: "amber",
+        title: "TPS y DACA",
+        sub: "Permisos y protección temporal",
+        kicker: "PROGRAMA 02 DE 05 • ESTATUS PROTEGIDO",
+        fullTitle: "Renovaciones de TPS, DACA y Ley NACARA",
+        fullDesc:
+          "Desde las históricas clínicas ABC de 1991 hasta la defensa actual de Dreamers, gestionamos renovaciones de permisos de trabajo, amparos de deportación y beneficios bajo NACARA."
+      },
+      {
+        num: "03",
+        pill: "Familia",
+        theme: "mint",
+        title: "Residencia",
+        sub: "Reunificación de familias",
+        kicker: "PROGRAMA 03 DE 05 • UNIDAD FAMILIAR",
+        fullTitle: "Peticiones Familiares y Ajuste de Estatus",
+        fullDesc:
+          "Acompañamiento jurídico paso a paso para reunir a cónyuges, hijos y padres, incluyendo perdones migratorios (waivers) y procesos consulares seguros."
+      },
+      {
+        num: "04",
+        pill: "Cívico",
+        theme: "lavender",
+        title: "Ciudadanía",
+        sub: "Naturalización y voz plena",
+        kicker: "PROGRAMA 04 DE 05 • NATURALIZACIÓN",
+        fullTitle: "Talleres de Ciudadanía y Examen Cívico",
+        fullDesc:
+          "Preparamos tu solicitud N-400, evaluamos exenciones de pago o de idioma y realizamos simulacros de entrevista para que des el paso hacia la ciudadanía estadounidense."
+      },
+      {
+        num: "05",
+        pill: "Clínica",
+        theme: "sand",
+        title: "Clínicas L.A.",
+        sub: "Miércoles y sábados en vivo",
+        kicker: "PROGRAMA 05 DE 05 • ATENCIÓN SEMANAL",
+        fullTitle: "Clínicas Legales Comunitarias y Microfinanzas",
+        fullDesc:
+          "Orientación directa todos los miércoles (2–5 PM) y sábados (10 AM–1 PM) junto con programas de educación financiera y apoyo a emprendedores migrantes."
+      }
+    ],
+    en: [
+      {
+        num: "01",
+        pill: "Protection",
+        theme: "violet",
+        title: "Asylum & Refuge",
+        sub: "Comprehensive humanitarian defense",
+        kicker: "PROGRAM 01 OF 05 • ASYLUM DEFENSE",
+        fullTitle: "Asylum, Refuge & Humanitarian Protection",
+        fullDesc:
+          "Specialized legal representation for individuals and families seeking protection in the United States, including affirmative and defensive asylum, U Visas for crime victims, and VAWA petitions."
+      },
+      {
+        num: "02",
+        pill: "Relief",
+        theme: "amber",
+        title: "TPS & DACA",
+        sub: "Work permits & temporary relief",
+        kicker: "PROGRAM 02 OF 05 • PROTECTED STATUS",
+        fullTitle: "TPS, DACA & NACARA Legal Renewals",
+        fullDesc:
+          "From our landmark 1991 ABC clinics to today's Dreamer defense, we handle work permit renewals, deportation relief, and NACARA adjustment benefits."
+      },
+      {
+        num: "03",
+        pill: "Family",
+        theme: "mint",
+        title: "Residency",
+        sub: "Family reunification pathways",
+        kicker: "PROGRAM 03 OF 05 • FAMILY UNITY",
+        fullTitle: "Family Petitions & Adjustment of Status",
+        fullDesc:
+          "Step-by-step legal accompaniment to reunite spouses, children, and parents, including provisional waivers and safe consular processing."
+      },
+      {
+        num: "04",
+        pill: "Civic",
+        theme: "lavender",
+        title: "Citizenship",
+        sub: "Naturalization & full civic voice",
+        kicker: "PROGRAM 04 OF 05 • NATURALIZATION",
+        fullTitle: "Citizenship Workshops & Civics Prep",
+        fullDesc:
+          "We prepare your N-400 application, evaluate fee or language exemptions, and run mock interviews so you can confidently take the step toward U.S. citizenship."
+      },
+      {
+        num: "05",
+        pill: "Clinics",
+        theme: "sand",
+        title: "L.A. Clinics",
+        sub: "Live Wednesdays & Saturdays",
+        kicker: "PROGRAM 05 OF 05 • WEEKLY CARE",
+        fullTitle: "Community Legal Clinics & Microfinance",
+        fullDesc:
+          "Direct legal orientation every Wednesday (2–5 PM) and Saturday (10 AM–1 PM) alongside financial literacy programs and support for immigrant entrepreneurs."
+      }
+    ]
+  };
+
+  function getServicesDeck() {
+    return SERVICES_DECK_I18N[currentLang] || SERVICES_DECK_I18N.es;
+  }
 
   const riffStackEl = document.getElementById("riff-card-stack");
   const riffDotsEl = document.getElementById("riff-dots");
@@ -440,8 +963,9 @@
     if (!riffStackEl || !riffDotsEl) return;
     riffStackEl.innerHTML = "";
     riffDotsEl.innerHTML = "";
+    const deck = getServicesDeck();
 
-    SERVICES_DECK.forEach((item, idx) => {
+    deck.forEach((item, idx) => {
       const card = document.createElement("article");
       card.className = "riff-card";
       card.setAttribute("data-theme", item.theme);
@@ -451,7 +975,7 @@
           <div class="riff-card__num">${item.num}</div>
           <span class="riff-card__pill">${item.pill}</span>
         </div>
-        <button type="button" class="riff-card__center-play" aria-label="Pausar o reanudar barajado automático">
+        <button type="button" class="riff-card__center-play" aria-label="Play / Pause">
           <span class="play-pause-icon">${isAutoPlaying ? "❚❚" : "▶"}</span>
         </button>
         <div class="riff-card__bottom">
@@ -459,7 +983,7 @@
             <div class="riff-card__title">${item.title}</div>
             <div class="riff-card__sub">${item.sub}</div>
           </div>
-          <button type="button" class="riff-card__next-btn" aria-label="Siguiente tarjeta">→</button>
+          <button type="button" class="riff-card__next-btn" aria-label="Next card">→</button>
         </div>
       `;
 
@@ -482,7 +1006,7 @@
       const dot = document.createElement("button");
       dot.type = "button";
       dot.className = "riff-dot";
-      dot.setAttribute("aria-label", `Ir a tarjeta ${item.num}`);
+      dot.setAttribute("aria-label", `Card ${item.num}`);
       dot.addEventListener("click", () => {
         if (deckOrder[0] !== idx && !isShuffling) {
           shuffleNextCard();
@@ -496,8 +1020,9 @@
 
   function layoutDeckCards(immediate = false) {
     if (!riffStackEl) return;
+    const deck = getServicesDeck();
     const frontId = deckOrder[0];
-    const activeService = SERVICES_DECK[frontId];
+    const activeService = deck[frontId];
 
     if (shuffleKicker) shuffleKicker.textContent = activeService.kicker;
     if (shuffleTitle) shuffleTitle.textContent = activeService.fullTitle;
@@ -513,11 +1038,10 @@
       const cardEl = riffStackEl.querySelector(`[data-deck-id="${cardId}"]`);
       if (!cardEl) return;
 
-      // Posicionamiento apilado con bordes superiores asomando como en RIFF 28
       const targetY = -stackPos * 13;
       const targetScale = 1 - stackPos * 0.048;
       const targetRot = stackPos === 0 ? 0 : (stackPos % 2 === 0 ? 1.2 : -1.2);
-      const zIndex = SERVICES_DECK.length - stackPos;
+      const zIndex = deck.length - stackPos;
 
       cardEl.style.zIndex = String(zIndex);
 
@@ -557,8 +1081,6 @@
       return;
     }
 
-    // Coreografía exacta de RIFF 28: la tarjeta frontal se inclina y desliza hacia la derecha
-    // y luego se inserta detrás del mazo
     gsap.to(frontCardEl, {
       x: 245,
       y: 20,
@@ -600,7 +1122,6 @@
     btnTriggerShuffle.addEventListener("click", shuffleNextCard);
   }
 
-  // Conmutador entre Mazo Shuffle (Video 4) y Arco 3D (Video 2)
   const btnModeShuffle = document.getElementById("btn-mode-shuffle");
   const btnModeArc3d = document.getElementById("btn-mode-arc3d");
   const shuffleViewEl = document.getElementById("shuffle-view");
@@ -623,81 +1144,229 @@
   }
 
   // ==========================================================================
-  // 7. GALERÍA ESPACIAL 3D ESTILO "UNVEIL® PROJECTS" (Imagen 2)
+  // 7. GALERÍA ESPACIAL 3D ESTILO "UNVEIL® PROJECTS" + CLICK LIGHTBOX (Ajuste #2)
   // ==========================================================================
-  const UNVEIL_PLANES = [
-    {
-      id: "01",
-      category: "legal",
-      tag: "DEFENSA LEGAL • 1981",
-      title: "Brigadas de Asilo en Pico-Union",
-      img: "assets/provisional-documentary-la-placita.jpg",
-      tint: "rgba(15, 38, 66, 0.36)"
-    },
-    {
-      id: "02",
-      category: "comunidad",
-      tag: "MEMORIA VIVA • LA PLACITA",
-      title: "Encuentros Comunitarios en Olvera St.",
-      img: "assets/provisional-documentary-macarthur-park.jpg",
-      tint: "rgba(232, 160, 74, 0.32)"
-    },
-    {
-      id: "03",
-      category: "legal",
-      tag: "JURISPRUDENCIA • 1991",
-      title: "Acuerdo ABC & Registro Masivo TPS",
-      img: "assets/provisional-documentary-la-placita.jpg",
-      tint: "rgba(11, 101, 198, 0.38)"
-    },
-    {
-      id: "04",
-      category: "clinica",
-      tag: "CLÍNICA SEMANAL • MIÉRCOLES",
-      title: "Orientación Jurídica Confidencial",
-      img: "assets/provisional-documentary-macarthur-park.jpg",
-      tint: "rgba(18, 64, 89, 0.42)"
-    },
-    {
-      id: "05",
-      category: "comunidad",
-      tag: "ECONOMÍA SOCIAL • 2004",
-      title: "Red de Microempresas Migrantes",
-      img: "assets/provisional-documentary-la-placita.jpg",
-      tint: "rgba(212, 148, 58, 0.34)"
-    },
-    {
-      id: "06",
-      category: "legal",
-      tag: "JUVENTUD • 2015",
-      title: "Defensa de Dreamers y DACA en L.A.",
-      img: "assets/provisional-documentary-macarthur-park.jpg",
-      tint: "rgba(23, 59, 99, 0.40)"
-    },
-    {
-      id: "07",
-      category: "clinica",
-      tag: "PRESENTE • 2026",
-      title: "Plataforma Digital de Acceso Humanitario",
-      img: "assets/provisional-documentary-la-placita.jpg",
-      tint: "rgba(11, 101, 198, 0.32)"
-    }
-  ];
+  const UNVEIL_PLANES_I18N = {
+    es: [
+      {
+        id: "01",
+        category: "legal",
+        tag: "DEFENSA LEGAL • 1981",
+        title: "Brigadas de Asilo en Pico-Union",
+        desc: "Registro documental de las primeras jornadas de representación jurídica de emergencia en Pico-Union y Westlake para familias refugiadas recién llegadas a Los Ángeles.",
+        code: "ARCHIVO #ER-UNV-01",
+        stats: [
+          { val: "1981", lbl: "Año fundacional" },
+          { val: "Pico-Union", lbl: "Distrito histórico" }
+        ],
+        img: "assets/provisional-documentary-la-placita.jpg",
+        tint: "rgba(15, 38, 66, 0.36)"
+      },
+      {
+        id: "02",
+        category: "comunidad",
+        tag: "MEMORIA VIVA • LA PLACITA",
+        title: "Encuentros Comunitarios en Olvera St.",
+        desc: "Espacios de articulación vecinal, cultura e identidad migrante alrededor de La Placita Olvera, fortaleciendo las redes de solidaridad familiar en el centro de Los Ángeles.",
+        code: "ARCHIVO #ER-UNV-02",
+        stats: [
+          { val: "+45,000", lbl: "Familias en red" },
+          { val: "La Placita", lbl: "Corazón cultural" }
+        ],
+        img: "assets/provisional-documentary-macarthur-park.jpg",
+        tint: "rgba(232, 160, 74, 0.32)"
+      },
+      {
+        id: "03",
+        category: "legal",
+        tag: "JURISPRUDENCIA • 1991",
+        title: "Acuerdo ABC & Registro Masivo TPS",
+        desc: "Operativo jurídico comunitario histórico tras el acuerdo American Baptist Churches (ABC), permitiendo a decenas de miles de inmigrantes acceder a entrevistas justas de asilo y TPS.",
+        code: "ARCHIVO #ER-UNV-03",
+        stats: [
+          { val: "ABC & TPS", lbl: "Precedente federal" },
+          { val: "1991", lbl: "Hito de litigio" }
+        ],
+        img: "assets/provisional-documentary-la-placita.jpg",
+        tint: "rgba(11, 101, 198, 0.38)"
+      },
+      {
+        id: "04",
+        category: "clinica",
+        tag: "CLÍNICA SEMANAL • MIÉRCOLES",
+        title: "Orientación Jurídica Confidencial",
+        desc: "Sesiones presenciales todos los miércoles y sábados donde especialistas legales evalúan casos de asilo, peticiones familiares y permisos laborales bajo absoluta confidencialidad.",
+        code: "ARCHIVO #ER-UNV-04",
+        stats: [
+          { val: "100%", lbl: "Secreto profesional" },
+          { val: "Mié & Sáb", lbl: "Atención directa" }
+        ],
+        img: "assets/provisional-documentary-macarthur-park.jpg",
+        tint: "rgba(18, 64, 89, 0.42)"
+      },
+      {
+        id: "05",
+        category: "comunidad",
+        tag: "ECONOMÍA SOCIAL • 2004",
+        title: "Red de Microempresas Migrantes",
+        desc: "Iniciativa de desarrollo económico comunitario y educación financiera para impulsar pequeños negocios familiares y cooperativas de trabajadores migrantes en el sur de California.",
+        code: "ARCHIVO #ER-UNV-05",
+        stats: [
+          { val: "360°", lbl: "Empoderamiento local" },
+          { val: "Westlake", lbl: "Corredor comercial" }
+        ],
+        img: "assets/provisional-documentary-la-placita.jpg",
+        tint: "rgba(212, 148, 58, 0.34)"
+      },
+      {
+        id: "06",
+        category: "legal",
+        tag: "JUVENTUD • 2015",
+        title: "Defensa de Dreamers y DACA en L.A.",
+        desc: "Acompañamiento legal y becas de renovación para estudiantes y jóvenes beneficiarios de DACA, protegiendo su acceso a la educación superior y permisos de trabajo.",
+        code: "ARCHIVO #ER-UNV-06",
+        stats: [
+          { val: "98%", lbl: "Éxito en renovaciones" },
+          { val: "+3,400", lbl: "Jóvenes asesorados" }
+        ],
+        img: "assets/provisional-documentary-macarthur-park.jpg",
+        tint: "rgba(23, 59, 99, 0.40)"
+      },
+      {
+        id: "07",
+        category: "clinica",
+        tag: "PRESENTE • 2026",
+        title: "Plataforma Digital de Acceso Humanitario",
+        desc: "Integración de reservas de clínica en línea, pre-evaluación interactiva y archivo tridimensional para acercar la defensa legal de El Rescate a las nuevas generaciones.",
+        code: "ARCHIVO #ER-UNV-07",
+        stats: [
+          { val: "2026", lbl: "Innovación social" },
+          { val: "ES / EN", lbl: "Acceso bilingüe" }
+        ],
+        img: "assets/provisional-documentary-la-placita.jpg",
+        tint: "rgba(11, 101, 198, 0.32)"
+      }
+    ],
+    en: [
+      {
+        id: "01",
+        category: "legal",
+        tag: "LEGAL DEFENSE • 1981",
+        title: "Asylum Brigades in Pico-Union",
+        desc: "Documentary record of the first emergency legal representation brigades in Pico-Union and Westlake for newly arrived refugee families in Los Angeles.",
+        code: "ARCHIVE #ER-UNV-01",
+        stats: [
+          { val: "1981", lbl: "Founding year" },
+          { val: "Pico-Union", lbl: "Historic district" }
+        ],
+        img: "assets/provisional-documentary-la-placita.jpg",
+        tint: "rgba(15, 38, 66, 0.36)"
+      },
+      {
+        id: "02",
+        category: "comunidad",
+        tag: "LIVING MEMORY • LA PLACITA",
+        title: "Community Gatherings at Olvera St.",
+        desc: "Spaces of neighborhood organizing, culture, and immigrant identity around La Placita Olvera, strengthening family solidarity networks in downtown Los Angeles.",
+        code: "ARCHIVE #ER-UNV-02",
+        stats: [
+          { val: "+45,000", lbl: "Families connected" },
+          { val: "La Placita", lbl: "Cultural heart" }
+        ],
+        img: "assets/provisional-documentary-macarthur-park.jpg",
+        tint: "rgba(232, 160, 74, 0.32)"
+      },
+      {
+        id: "03",
+        category: "legal",
+        tag: "CASE LAW • 1991",
+        title: "ABC Settlement & Mass TPS Registration",
+        desc: "Historic community legal mobilization following the American Baptist Churches (ABC) settlement, enabling tens of thousands of immigrants to access fair asylum interviews and TPS.",
+        code: "ARCHIVE #ER-UNV-03",
+        stats: [
+          { val: "ABC & TPS", lbl: "Federal precedent" },
+          { val: "1991", lbl: "Litigation milestone" }
+        ],
+        img: "assets/provisional-documentary-la-placita.jpg",
+        tint: "rgba(11, 101, 198, 0.38)"
+      },
+      {
+        id: "04",
+        category: "clinica",
+        tag: "WEEKLY CLINIC • WEDNESDAYS",
+        title: "Confidential Legal Orientation",
+        desc: "In-person sessions every Wednesday and Saturday where legal specialists evaluate asylum cases, family petitions, and work permits under strict confidentiality.",
+        code: "ARCHIVE #ER-UNV-04",
+        stats: [
+          { val: "100%", lbl: "Legal privilege" },
+          { val: "Wed & Sat", lbl: "Direct care" }
+        ],
+        img: "assets/provisional-documentary-macarthur-park.jpg",
+        tint: "rgba(18, 64, 89, 0.42)"
+      },
+      {
+        id: "05",
+        category: "comunidad",
+        tag: "SOCIAL ECONOMY • 2004",
+        title: "Immigrant Microenterprise Network",
+        desc: "Community economic development and financial literacy initiative supporting family-owned small businesses and immigrant worker cooperatives across Southern California.",
+        code: "ARCHIVE #ER-UNV-05",
+        stats: [
+          { val: "360°", lbl: "Local empowerment" },
+          { val: "Westlake", lbl: "Commercial corridor" }
+        ],
+        img: "assets/provisional-documentary-la-placita.jpg",
+        tint: "rgba(212, 148, 58, 0.34)"
+      },
+      {
+        id: "06",
+        category: "legal",
+        tag: "YOUTH • 2015",
+        title: "Dreamers & DACA Defense in L.A.",
+        desc: "Legal accompaniment and renewal scholarships for DACA students and young workers, safeguarding their access to higher education and work authorization.",
+        code: "ARCHIVE #ER-UNV-06",
+        stats: [
+          { val: "98%", lbl: "Renewal success" },
+          { val: "+3,400", lbl: "Youth advised" }
+        ],
+        img: "assets/provisional-documentary-macarthur-park.jpg",
+        tint: "rgba(23, 59, 99, 0.40)"
+      },
+      {
+        id: "07",
+        category: "clinica",
+        tag: "PRESENT • 2026",
+        title: "Digital Humanitarian Access Platform",
+        desc: "Integration of online clinic booking, interactive pre-evaluation, and a 3D living archive to bring El Rescate's legal defense closer to new generations.",
+        code: "ARCHIVE #ER-UNV-07",
+        stats: [
+          { val: "2026", lbl: "Social innovation" },
+          { val: "ES / EN", lbl: "Bilingual access" }
+        ],
+        img: "assets/provisional-documentary-la-placita.jpg",
+        tint: "rgba(11, 101, 198, 0.32)"
+      }
+    ]
+  };
 
   const unveilCorridor = document.getElementById("unveil-3d-corridor");
   const unveilViewport = document.getElementById("unveil-viewport");
   const unveilCounter = document.getElementById("unveil-active-counter");
+  let activeUnveilFilter = "all";
 
-  function renderUnveilPlanes(filter = "all") {
+  function renderUnveilPlanes(filter = activeUnveilFilter) {
+    activeUnveilFilter = filter;
     if (!unveilCorridor) return;
+    const planesList = UNVEIL_PLANES_I18N[currentLang] || UNVEIL_PLANES_I18N.es;
     const filtered =
       filter === "all"
-        ? UNVEIL_PLANES
-        : UNVEIL_PLANES.filter((p) => p.category === filter);
+        ? planesList
+        : planesList.filter((p) => p.category === filter);
 
     unveilCorridor.innerHTML = "";
     const count = filtered.length;
     const mid = (count - 1) / 2;
+    const layerPrefix = currentLang === "en" ? "LAYER" : "CAPA";
 
     filtered.forEach((plane, idx) => {
       const offset = idx - mid;
@@ -710,12 +1379,14 @@
       el.style.transform = `translate3d(${tx}px, ${ty}px, ${tz}px)`;
       el.style.zIndex = String(count - idx);
       el.dataset.baseTransform = `translate3d(${tx}px, ${ty}px, ${tz}px)`;
+      el.setAttribute("role", "button");
+      el.setAttribute("tabindex", "0");
 
       el.innerHTML = `
         <img src="${plane.img}" alt="${plane.title}" />
         <div class="unveil-plane__glass" style="background: linear-gradient(135deg, ${plane.tint} 0%, rgba(9,25,44,0.68) 100%);">
           <div class="unveil-plane__meta">
-            <span>CAPA ${plane.id}</span>
+            <span>${layerPrefix} ${plane.id}</span>
             <span>${plane.tag}</span>
           </div>
           <div class="unveil-plane__title">${plane.title}</div>
@@ -735,6 +1406,27 @@
         if (unveilViewport && unveilViewport.classList.contains("is-index-mode")) return;
         el.style.transform = el.dataset.baseTransform;
         el.style.borderColor = "rgba(255, 255, 255, 0.65)";
+      });
+
+      // Ajuste #2: Al dar click en la imagen se expande centrada con su respectiva información
+      const handleExpandPlane = () => {
+        openMediaLightbox({
+          img: plane.img,
+          badge: `${layerPrefix} ${plane.id} • ${plane.tag}`,
+          code: plane.code,
+          source: currentLang === "en" ? "3D GALLERY • WESTLAKE, L.A." : "GALERÍA 3D • WESTLAKE, L.A.",
+          title: plane.title,
+          desc: plane.desc,
+          stats: plane.stats
+        });
+      };
+
+      el.addEventListener("click", handleExpandPlane);
+      el.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          handleExpandPlane();
+        }
       });
 
       unveilCorridor.appendChild(el);
@@ -769,164 +1461,390 @@
 
   // ==========================================================================
   // 8. ESCENA 3D THREE.JS: AUTOBÚS COMUNITARIO SOBRE PLANETA (1981–2026)
+  //    + CLICK EN POLAROIDS PARA EXPANDIR LIGHTBOX (Ajuste #2) + BILINGÜE ES/EN
   // ==========================================================================
-  const TIMELINE_DATA = [
-    {
-      year: "1981",
-      shortLabel: "Fundación en L.A.",
-      docket: "EXP. #ER-1981-001",
-      seal: "ACTA FUNDACIONAL",
-      kicker: "ORIGEN HUMANITARIO • LOS ÁNGELES",
-      title: "Fundación de El Rescate",
-      description:
-        "Establecida en Los Ángeles para ofrecer representación jurídica de asilo, orientación social y refugio de emergencia a miles de refugiados centroamericanos recién llegados al sur de California.",
-      stat1Val: "1.ª Agencia",
-      stat1Lbl: "De asilo centroamericano en EE. UU.",
-      stat2Val: "Pico-Union",
-      stat2Lbl: "Sede histórica comunitaria",
-      polaroids: [
-        {
-          img: "assets/provisional-documentary-la-placita.jpg",
-          caption: "Encuentro comunitario en La Placita",
-          sub: "ARCHIVO 1981 • LOS ÁNGELES"
-        },
-        {
-          img: "assets/provisional-documentary-macarthur-park.jpg",
-          caption: "Entorno vecinal de Westlake",
-          sub: "ARCHIVO 1981 • CORREDOR CENTRAL"
-        },
-        {
-          img: "assets/provisional-documentary-la-placita.jpg",
-          caption: "Primeras brigadas de orientación legal",
-          sub: "EXPEDIENTE #01 • PRO BONO"
-        }
-      ]
-    },
-    {
-      year: "1991",
-      shortLabel: "Acuerdo ABC & TPS",
-      docket: "EXP. #ER-1991-104",
-      seal: "DEFENSA ABC & TPS",
-      kicker: "LITIGIO HISTÓRICO • DERECHOS MIGRATORIOS",
-      title: "Victoria del Acuerdo ABC y Estatus TPS",
-      description:
-        "Tras una década de incidencia legal, El Rescate lidera las clínicas masivas para inscribir a decenas de miles de inmigrantes bajo el acuerdo American Baptist Churches (ABC) y el Estatus de Protección Temporal.",
-      stat1Val: "+45,000",
-      stat1Lbl: "Solicitudes procesadas en clínicas",
-      stat2Val: "Ley NACARA",
-      stat2Lbl: "Precedente de residencia legal",
-      polaroids: [
-        {
-          img: "assets/provisional-documentary-macarthur-park.jpg",
-          caption: "Jornadas de registro TPS en MacArthur Park",
-          sub: "ARCHIVO 1991 • DEFENSA CIVIL"
-        },
-        {
-          img: "assets/provisional-documentary-la-placita.jpg",
-          caption: "Asesoría familiar para permisos de trabajo",
-          sub: "ARCHIVO 1991 • CLÍNICA JURÍDICA"
-        },
-        {
-          img: "assets/provisional-documentary-macarthur-park.jpg",
-          caption: "Organización vecinal en el corazón de L.A.",
-          sub: "EXPEDIENTE #104 • DERECHOS"
-        }
-      ]
-    },
-    {
-      year: "2004",
-      shortLabel: "Clínicas & Economía",
-      docket: "EXP. #ER-2004-218",
-      seal: "DESARROLLO INTEGRAL",
-      kicker: "ECONOMÍA SOCIAL • SALUD Y EDUCACIÓN",
-      title: "Clínicas Integrales y Microfinanzas",
-      description:
-        "El Rescate amplía su misión más allá de los tribunales: inaugura programas de alfabetización financiera, apoyo a pequeños comercios de familias migrantes y orientación juvenil en el distrito de Westlake.",
-      stat1Val: "360° Apoyo",
-      stat1Lbl: "Legal, educativo y comunitario",
-      stat2Val: "+12,000",
-      stat2Lbl: "Familias atendidas anualmente",
-      polaroids: [
-        {
-          img: "assets/provisional-documentary-la-placita.jpg",
-          caption: "Red de comercios y familias emprendedoras",
-          sub: "ARCHIVO 2004 • DESARROLLO LOCAL"
-        },
-        {
-          img: "assets/provisional-documentary-macarthur-park.jpg",
-          caption: "Talleres comunitarios de ciudadanía",
-          sub: "ARCHIVO 2004 • EDUCACIÓN CÍVICA"
-        },
-        {
-          img: "assets/provisional-documentary-la-placita.jpg",
-          caption: "Feria de servicios familiares en Olvera St.",
-          sub: "EXPEDIENTE #218 • COMUNIDAD"
-        }
-      ]
-    },
-    {
-      year: "2015",
-      shortLabel: "Defensa DACA",
-      docket: "EXP. #ER-2015-389",
-      seal: "PROTECCIÓN DACA",
-      kicker: "JUVENTUD Y REUNIFICACIÓN • CALIFORNIA",
-      title: "Defensa de Dreamers y Menores",
-      description:
-        "Creación del equipo especializado en representación de jóvenes bajo el programa DACA y defensa humanitaria para menores y madres refugiadas en tribunales de inmigración de Los Ángeles.",
-      stat1Val: "98% Éxito",
-      stat1Lbl: "En renovaciones y amparos DACA",
-      stat2Val: "Bilingüe",
-      stat2Lbl: "Acompañamiento humano continuo",
-      polaroids: [
-        {
-          img: "assets/provisional-documentary-macarthur-park.jpg",
-          caption: "Juventud universitaria beneficiaria de DACA",
-          sub: "ARCHIVO 2015 • FUTURO JOVEN"
-        },
-        {
-          img: "assets/provisional-documentary-la-placita.jpg",
-          caption: "Reunificación de familias en Los Ángeles",
-          sub: "ARCHIVO 2015 • AMPARO LEGAL"
-        },
-        {
-          img: "assets/provisional-documentary-macarthur-park.jpg",
-          caption: "Foro de derechos constitucionales",
-          sub: "EXPEDIENTE #389 • JUSTICIA"
-        }
-      ]
-    },
-    {
-      year: "2026",
-      shortLabel: "Era Digital 24/7",
-      docket: "EXP. #ER-2026-500",
-      seal: "ERA DIGITAL",
-      kicker: "ACCESO UNIVERSAL • NUEVA PLATAFORMA",
-      title: "Transformación Digital y Alcance Comunitario",
-      description:
-        "Hoy El Rescate conecta cuatro décadas de prestigio jurídico con una plataforma digital accesible y bilingüe para que cada familia inmigrante encuentre orientación confiable sin barreras.",
-      stat1Val: "45 Años",
-      stat1Lbl: "De servicio ininterrumpido en L.A.",
-      stat2Val: "Mié & Sáb",
-      stat2Lbl: "Clínicas con cita en línea",
-      polaroids: [
-        {
-          img: "assets/provisional-documentary-la-placita.jpg",
-          caption: "Una comunidad más fuerte con oportunidades",
-          sub: "ARCHIVO 2026 • PRESENTE Y FUTURO"
-        },
-        {
-          img: "assets/provisional-documentary-macarthur-park.jpg",
-          caption: "Atención híbrida presencial y digital",
-          sub: "ARCHIVO 2026 • INNOVACIÓN SOCIAL"
-        },
-        {
-          img: "assets/provisional-documentary-la-placita.jpg",
-          caption: "Cuatro décadas caminando junto al migrante",
-          sub: "EXPEDIENTE #500 • EL RESCATE"
-        }
-      ]
-    }
-  ];
+  const TIMELINE_DATA_I18N = {
+    es: [
+      {
+        year: "1981",
+        shortLabel: "Fundación en L.A.",
+        docket: "EXP. #ER-1981-001",
+        seal: "ACTA FUNDACIONAL",
+        kicker: "ORIGEN HUMANITARIO • LOS ÁNGELES",
+        title: "Fundación de El Rescate",
+        description:
+          "Establecida en Los Ángeles para ofrecer representación jurídica de asilo, orientación social y refugio de emergencia a miles de refugiados centroamericanos recién llegados al sur de California.",
+        stat1Val: "1.ª Agencia",
+        stat1Lbl: "De asilo centroamericano en EE. UU.",
+        stat2Val: "Pico-Union",
+        stat2Lbl: "Sede histórica comunitaria",
+        polaroids: [
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Encuentro comunitario en La Placita",
+            sub: "ARCHIVO 1981 • LOS ÁNGELES",
+            detail:
+              "Primeras jornadas de acogida y orientación humanitaria en La Placita Olvera y Pico-Union para familias desplazadas en 1981."
+          },
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Entorno vecinal de Westlake",
+            sub: "ARCHIVO 1981 • CORREDOR CENTRAL",
+            detail:
+              "El corredor de Westlake y MacArthur Park se convirtió en el epicentro de organización vecinal y defensa de derechos humanos de El Rescate."
+          },
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Primeras brigadas de orientación legal",
+            sub: "EXPEDIENTE #01 • PRO BONO",
+            detail:
+              "Abogados y voluntarios comunitarios conformaron el primer equipo de defensa pro bono para frenar deportaciones y documentar casos de asilo."
+          }
+        ]
+      },
+      {
+        year: "1991",
+        shortLabel: "Acuerdo ABC & TPS",
+        docket: "EXP. #ER-1991-104",
+        seal: "DEFENSA ABC & TPS",
+        kicker: "LITIGIO HISTÓRICO • DERECHOS MIGRATORIOS",
+        title: "Victoria del Acuerdo ABC y Estatus TPS",
+        description:
+          "Tras una década de incidencia legal, El Rescate lidera las clínicas masivas para inscribir a decenas de miles de inmigrantes bajo el acuerdo American Baptist Churches (ABC) y el Estatus de Protección Temporal.",
+        stat1Val: "+45,000",
+        stat1Lbl: "Solicitudes procesadas en clínicas",
+        stat2Val: "Ley NACARA",
+        stat2Lbl: "Precedente de residencia legal",
+        polaroids: [
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Jornadas de registro TPS en MacArthur Park",
+            sub: "ARCHIVO 1991 • DEFENSA CIVIL",
+            detail:
+              "Miles de familias acudieron a las jornadas comunitarias de El Rescate para tramitar su Estatus de Protección Temporal (TPS) y amparo ABC."
+          },
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Asesoría familiar para permisos de trabajo",
+            sub: "ARCHIVO 1991 • CLÍNICA JURÍDICA",
+            detail:
+              "Revisión individualizada de expedientes y emisión de autorizaciones de empleo que transformaron la estabilidad laboral de la comunidad."
+          },
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Organización vecinal en el corazón de L.A.",
+            sub: "EXPEDIENTE #104 • DERECHOS",
+            detail:
+              "Articulación con iglesias, sindicatos y organizaciones civiles de California que sentó las bases de la posterior Ley NACARA."
+          }
+        ]
+      },
+      {
+        year: "2004",
+        shortLabel: "Clínicas & Economía",
+        docket: "EXP. #ER-2004-218",
+        seal: "DESARROLLO INTEGRAL",
+        kicker: "ECONOMÍA SOCIAL • SALUD Y EDUCACIÓN",
+        title: "Clínicas Integrales y Microfinanzas",
+        description:
+          "El Rescate amplía su misión más allá de los tribunales: inaugura programas de alfabetización financiera, apoyo a pequeños comercios de familias migrantes y orientación juvenil en el distrito de Westlake.",
+        stat1Val: "360° Apoyo",
+        stat1Lbl: "Legal, educativo y comunitario",
+        stat2Val: "+12,000",
+        stat2Lbl: "Familias atendidas anualmente",
+        polaroids: [
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Red de comercios y familias emprendedoras",
+            sub: "ARCHIVO 2004 • DESARROLLO LOCAL",
+            detail:
+              "Capacitación y microcréditos comunitarios para que familias inmigrantes abrieran negocios propios en el centro de Los Ángeles."
+          },
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Talleres comunitarios de ciudadanía",
+            sub: "ARCHIVO 2004 • EDUCACIÓN CÍVICA",
+            detail:
+              "Preparación bilingüe para el examen de naturalización N-400 y formación en derechos constitucionales."
+          },
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Feria de servicios familiares en Olvera St.",
+            sub: "EXPEDIENTE #218 • COMUNIDAD",
+            detail:
+              "Jornadas integrales de salud, asesoría legal y reunificación familiar abiertas a todos los vecindarios del sur de California."
+          }
+        ]
+      },
+      {
+        year: "2015",
+        shortLabel: "Defensa DACA",
+        docket: "EXP. #ER-2015-389",
+        seal: "PROTECCIÓN DACA",
+        kicker: "JUVENTUD Y REUNIFICACIÓN • CALIFORNIA",
+        title: "Defensa de Dreamers y Menores",
+        description:
+          "Creación del equipo especializado en representación de jóvenes bajo el programa DACA y defensa humanitaria para menores y madres refugiadas en tribunales de inmigración de Los Ángeles.",
+        stat1Val: "98% Éxito",
+        stat1Lbl: "En renovaciones y amparos DACA",
+        stat2Val: "Bilingüe",
+        stat2Lbl: "Acompañamiento humano continuo",
+        polaroids: [
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Juventud universitaria beneficiaria de DACA",
+            sub: "ARCHIVO 2015 • FUTURO JOVEN",
+            detail:
+              "Acompañamiento legal a miles de estudiantes Dreamers para proteger su estatus y su acceso a universidades en California."
+          },
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Reunificación de familias en Los Ángeles",
+            sub: "ARCHIVO 2015 • AMPARO LEGAL",
+            detail:
+              "Representación ética en peticiones familiares, perdones migratorios y protección especial para menores inmigrantes (SIJS)."
+          },
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Foro de derechos constitucionales",
+            sub: "EXPEDIENTE #389 • JUSTICIA",
+            detail:
+              "Campañas permanentes de 'Conoce tus Derechos' y clínicas preventivas contra el fraude notarial en Los Ángeles."
+          }
+        ]
+      },
+      {
+        year: "2026",
+        shortLabel: "Era Digital 24/7",
+        docket: "EXP. #ER-2026-500",
+        seal: "ERA DIGITAL",
+        kicker: "ACCESO UNIVERSAL • NUEVA PLATAFORMA",
+        title: "Transformación Digital y Alcance Comunitario",
+        description:
+          "Hoy El Rescate conecta cuatro décadas de prestigio jurídico con una plataforma digital accesible y bilingüe para que cada familia inmigrante encuentre orientación confiable sin barreras.",
+        stat1Val: "45 Años",
+        stat1Lbl: "De servicio ininterrumpido en L.A.",
+        stat2Val: "Mié & Sáb",
+        stat2Lbl: "Clínicas con cita en línea",
+        polaroids: [
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Una comunidad más fuerte con oportunidades",
+            sub: "ARCHIVO 2026 • PRESENTE Y FUTURO",
+            detail:
+              "Cuatro décadas y media caminando junto a la comunidad inmigrante de Los Ángeles con dignidad, rigor jurídico y calidez humana."
+          },
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Atención híbrida presencial y digital",
+            sub: "ARCHIVO 2026 • INNOVACIÓN SOCIAL",
+            detail:
+              "Reserva en línea para las clínicas de miércoles y sábados, pre-evaluación interactiva y protección absoluta de datos."
+          },
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Cuatro décadas caminando junto al migrante",
+            sub: "EXPEDIENTE #500 • EL RESCATE",
+            detail:
+              "Desde 1981 hasta 2026, nuestra sede en Westlake permanece abierta como refugio seguro y puente hacia nuevas oportunidades."
+          }
+        ]
+      }
+    ],
+    en: [
+      {
+        year: "1981",
+        shortLabel: "Founded in L.A.",
+        docket: "CASE #ER-1981-001",
+        seal: "FOUNDING CHARTER",
+        kicker: "HUMANITARIAN ORIGIN • LOS ANGELES",
+        title: "Founding of El Rescate",
+        description:
+          "Established in Los Angeles to provide asylum legal representation, social guidance, and emergency refuge to thousands of Central American refugees newly arrived in Southern California.",
+        stat1Val: "1st Agency",
+        stat1Lbl: "For Central American asylum in the U.S.",
+        stat2Val: "Pico-Union",
+        stat2Lbl: "Historic community headquarters",
+        polaroids: [
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Community gathering at La Placita",
+            sub: "ARCHIVE 1981 • LOS ANGELES",
+            detail:
+              "First humanitarian reception and legal orientation sessions at La Placita Olvera and Pico-Union for displaced families in 1981."
+          },
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Westlake neighborhood corridor",
+            sub: "ARCHIVE 1981 • CENTRAL CORRIDOR",
+            detail:
+              "The Westlake and MacArthur Park corridor became the epicenter of El Rescate's neighborhood organizing and human rights defense."
+          },
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "First pro bono legal defense brigades",
+            sub: "DOCKET #01 • PRO BONO",
+            detail:
+              "Attorneys and community volunteers formed the first pro bono defense team to halt deportations and document asylum claims."
+          }
+        ]
+      },
+      {
+        year: "1991",
+        shortLabel: "ABC Settlement & TPS",
+        docket: "CASE #ER-1991-104",
+        seal: "ABC & TPS DEFENSE",
+        kicker: "LANDMARK LITIGATION • IMMIGRANT RIGHTS",
+        title: "ABC Settlement Victory & TPS Status",
+        description:
+          "After a decade of legal advocacy, El Rescate led massive community clinics to register tens of thousands of immigrants under the American Baptist Churches (ABC) settlement and Temporary Protected Status.",
+        stat1Val: "+45,000",
+        stat1Lbl: "Applications processed in clinics",
+        stat2Val: "NACARA Act",
+        stat2Lbl: "Permanent residency precedent",
+        polaroids: [
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "TPS registration drives at MacArthur Park",
+            sub: "ARCHIVE 1991 • CIVIL DEFENSE",
+            detail:
+              "Thousands of families attended El Rescate's community drives to file for Temporary Protected Status (TPS) and ABC relief."
+          },
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Family counseling for work authorization",
+            sub: "ARCHIVE 1991 • LEGAL CLINIC",
+            detail:
+              "Individualized case review and employment authorization filings that transformed economic stability for the community."
+          },
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Grassroots organizing in the heart of L.A.",
+            sub: "DOCKET #104 • CIVIL RIGHTS",
+            detail:
+              "Coalition building with churches, labor unions, and California civic groups that laid the groundwork for the NACARA Act."
+          }
+        ]
+      },
+      {
+        year: "2004",
+        shortLabel: "Clinics & Economy",
+        docket: "CASE #ER-2004-218",
+        seal: "HOLISTIC GROWTH",
+        kicker: "SOCIAL ECONOMY • HEALTH & EDUCATION",
+        title: "Comprehensive Clinics & Microfinance",
+        description:
+          "El Rescate expanded its mission beyond the courtroom: launching financial literacy programs, support for immigrant-owned small businesses, and youth guidance across the Westlake district.",
+        stat1Val: "360° Care",
+        stat1Lbl: "Legal, educational & community support",
+        stat2Val: "+12,000",
+        stat2Lbl: "Families served annually",
+        polaroids: [
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Immigrant entrepreneur business network",
+            sub: "ARCHIVE 2004 • LOCAL ECONOMY",
+            detail:
+              "Training and community microloans empowering immigrant families to launch small businesses in central Los Angeles."
+          },
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Community citizenship workshops",
+            sub: "ARCHIVE 2004 • CIVIC EDUCATION",
+            detail:
+              "Bilingual preparation for the N-400 naturalization exam and constitutional rights education."
+          },
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Family services fair at Olvera St.",
+            sub: "DOCKET #218 • COMMUNITY",
+            detail:
+              "Comprehensive health, legal guidance, and family reunification fairs open to neighborhoods across Southern California."
+          }
+        ]
+      },
+      {
+        year: "2015",
+        shortLabel: "DACA Defense",
+        docket: "CASE #ER-2015-389",
+        seal: "DACA PROTECTION",
+        kicker: "YOUTH & REUNIFICATION • CALIFORNIA",
+        title: "Defense of Dreamers & Unaccompanied Youth",
+        description:
+          "Creation of the specialized legal team representing young immigrants under DACA and providing humanitarian defense for children and refugee mothers in Los Angeles immigration courts.",
+        stat1Val: "98% Success",
+        stat1Lbl: "In DACA renewals & legal relief",
+        stat2Val: "Bilingual",
+        stat2Lbl: "Continuous human accompaniment",
+        polaroids: [
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "College youth supported through DACA",
+            sub: "ARCHIVE 2015 • YOUTH FUTURE",
+            detail:
+              "Legal accompaniment for thousands of Dreamer students to protect their status and access to California universities."
+          },
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Family reunification in Los Angeles",
+            sub: "ARCHIVE 2015 • LEGAL RELIEF",
+            detail:
+              "Ethical representation in family petitions, provisional waivers, and Special Immigrant Juvenile Status (SIJS)."
+          },
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Constitutional rights community forum",
+            sub: "DOCKET #389 • JUSTICE",
+            detail:
+              "Permanent 'Know Your Rights' campaigns and preventive clinics against notary fraud in Los Angeles."
+          }
+        ]
+      },
+      {
+        year: "2026",
+        shortLabel: "24/7 Digital Era",
+        docket: "CASE #ER-2026-500",
+        seal: "DIGITAL ERA",
+        kicker: "UNIVERSAL ACCESS • NEW PLATFORM",
+        title: "Digital Transformation & Community Reach",
+        description:
+          "Today El Rescate connects four decades of legal prestige with an accessible, bilingual digital platform so every immigrant family can find trusted guidance without barriers.",
+        stat1Val: "45 Years",
+        stat1Lbl: "Of uninterrupted service in L.A.",
+        stat2Val: "Wed & Sat",
+        stat2Lbl: "Online-booked legal clinics",
+        polaroids: [
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "A stronger community with opportunity",
+            sub: "ARCHIVE 2026 • PRESENT & FUTURE",
+            detail:
+              "Four and a half decades walking alongside the immigrant community of Los Angeles with dignity, legal rigor, and human warmth."
+          },
+          {
+            img: "assets/provisional-documentary-macarthur-park.jpg",
+            caption: "Hybrid in-person & digital care",
+            sub: "ARCHIVE 2026 • SOCIAL INNOVATION",
+            detail:
+              "Online booking for Wednesday and Saturday clinics, interactive pre-evaluation, and strict data privacy."
+          },
+          {
+            img: "assets/provisional-documentary-la-placita.jpg",
+            caption: "Four decades walking with immigrants",
+            sub: "DOCKET #500 • EL RESCATE",
+            detail:
+              "From 1981 to 2026, our Westlake headquarters remains open as a safe haven and bridge toward new opportunities."
+          }
+        ]
+      }
+    ]
+  };
+
+  function getTimelineData() {
+    return TIMELINE_DATA_I18N[currentLang] || TIMELINE_DATA_I18N.es;
+  }
+
+  let refreshTimelineLanguage = () => {};
 
   function init3DBusTimeline() {
     const canvas = document.getElementById("timeline-canvas");
@@ -1186,7 +2104,7 @@
     floatingYearPivot.position.set(0, 1.66, 0);
     scene.add(floatingYearPivot);
 
-    let currentYearMeshGroup = build3DYearMeshGroup(TIMELINE_DATA[0].year, matYearMatteGold, matBusNavy);
+    let currentYearMeshGroup = build3DYearMeshGroup(getTimelineData()[0].year, matYearMatteGold, matBusNavy);
     floatingYearPivot.add(currentYearMeshGroup);
 
     let currentIndex = 0;
@@ -1199,11 +2117,14 @@
     const panelPolaroids = document.getElementById("panel-polaroids");
     const panelClipboard = document.getElementById("panel-clipboard");
 
-    if (routeNodesEl) {
-      TIMELINE_DATA.forEach((item, idx) => {
+    function renderRouteNodeButtons() {
+      if (!routeNodesEl) return;
+      routeNodesEl.innerHTML = "";
+      const list = getTimelineData();
+      list.forEach((item, idx) => {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "nexora-node-btn" + (idx === 0 ? " is-active" : "");
+        btn.className = "nexora-node-btn" + (idx === currentIndex ? " is-active" : "");
         btn.innerHTML = `
           <div class="nexora-node-btn__year">
             <span class="nexora-node-btn__dot"></span>
@@ -1220,24 +2141,53 @@
       });
     }
 
+    renderRouteNodeButtons();
+
     function renderStepDOM(index) {
-      const data = TIMELINE_DATA[index];
+      const list = getTimelineData();
+      const data = list[index] || list[0];
       if (polaroidYearBadge) polaroidYearBadge.textContent = data.year;
       if (polaroidStackEl) {
-        polaroidStackEl.innerHTML = data.polaroids
-          .map(
-            (p) => `
-            <figure class="polaroid-card">
-              <div class="polaroid-card__photo-wrap">
-                <img class="polaroid-card__photo" src="${p.img}" alt="${p.caption}" />
-                <span class="polaroid-card__stamp">${data.year}</span>
-              </div>
-              <figcaption class="polaroid-card__caption">${p.caption}</figcaption>
-              <div class="polaroid-card__sub">${p.sub}</div>
-            </figure>
-          `
-          )
-          .join("");
+        polaroidStackEl.innerHTML = "";
+        data.polaroids.forEach((p) => {
+          const fig = document.createElement("figure");
+          fig.className = "polaroid-card";
+          fig.setAttribute("role", "button");
+          fig.setAttribute("tabindex", "0");
+          fig.innerHTML = `
+            <div class="polaroid-card__photo-wrap">
+              <img class="polaroid-card__photo" src="${p.img}" alt="${p.caption}" />
+              <span class="polaroid-card__stamp">${data.year}</span>
+            </div>
+            <figcaption class="polaroid-card__caption">${p.caption}</figcaption>
+            <div class="polaroid-card__sub">${p.sub}</div>
+          `;
+
+          // Ajuste #2: Al dar click en cualquier polaroid de Historia 3D se expande centrada con su información
+          const handleExpandPolaroid = () => {
+            openMediaLightbox({
+              img: p.img,
+              badge: `${data.year} • ${data.seal}`,
+              code: `${data.docket} • ${p.sub}`,
+              source: currentLang === "en" ? "3D HISTORICAL ARCHIVE • EL RESCATE" : "ARCHIVO HISTÓRICO 3D • EL RESCATE",
+              title: p.caption,
+              desc: `${p.detail || ""} ${data.description}`,
+              stats: [
+                { val: data.stat1Val, lbl: data.stat1Lbl },
+                { val: data.stat2Val, lbl: data.stat2Lbl }
+              ]
+            });
+          };
+
+          fig.addEventListener("click", handleExpandPolaroid);
+          fig.addEventListener("keydown", (ev) => {
+            if (ev.key === "Enter" || ev.key === " ") {
+              ev.preventDefault();
+              handleExpandPolaroid();
+            }
+          });
+          polaroidStackEl.appendChild(fig);
+        });
       }
 
       const setTxt = (id, val) => {
@@ -1261,6 +2211,11 @@
       }
     }
 
+    refreshTimelineLanguage = () => {
+      renderRouteNodeButtons();
+      renderStepDOM(currentIndex);
+    };
+
     function swap3DYearGeometry(newYearStr) {
       if (currentYearMeshGroup) {
         floatingYearPivot.remove(currentYearMeshGroup);
@@ -1274,7 +2229,8 @@
       isTransitioning = true;
       currentIndex = targetIndex;
 
-      const stepAngle = (Math.PI * 2) / TIMELINE_DATA.length;
+      const list = getTimelineData();
+      const stepAngle = (Math.PI * 2) / list.length;
       const targetAngle = motionState.planetAngle + direction * stepAngle;
 
       const tl = gsap.timeline({
@@ -1301,7 +2257,7 @@
         }, 0)
         .add(() => {
           renderStepDOM(currentIndex);
-          swap3DYearGeometry(TIMELINE_DATA[currentIndex].year);
+          swap3DYearGeometry(getTimelineData()[currentIndex].year);
         }, 0.82)
         .to(busChassis.rotation, {
           x: 0,
@@ -1320,12 +2276,14 @@
     const btnNext = document.getElementById("btn-next");
     if (btnPrev) {
       btnPrev.addEventListener("click", () => {
-        navigateToIndex((currentIndex - 1 + TIMELINE_DATA.length) % TIMELINE_DATA.length, -1);
+        const len = getTimelineData().length;
+        navigateToIndex((currentIndex - 1 + len) % len, -1);
       });
     }
     if (btnNext) {
       btnNext.addEventListener("click", () => {
-        navigateToIndex((currentIndex + 1) % TIMELINE_DATA.length, 1);
+        const len = getTimelineData().length;
+        navigateToIndex((currentIndex + 1) % len, 1);
       });
     }
 
@@ -1369,46 +2327,88 @@
   window.addEventListener("DOMContentLoaded", init3DBusTimeline);
 
   // ==========================================================================
-  // 9. CALENDARIO DE CLÍNICA LEGAL (Imagen 1 Exacta) + EVALUADOR DE CASO
+  // 9. CALENDARIO DE CLÍNICA LEGAL (BILINGÜE ES / EN)
   // ==========================================================================
-  const CALENDAR_MONTHS = [
-    {
-      label: "Noviembre de 2026",
-      monthName: "Noviembre",
-      daysInMonth: 30,
-      startDayOfWeek: 0, // 1 de Noviembre de 2026 es Domingo (0)
-      availableDays: {
-        4: "Miércoles",
-        7: "Sábado",
-        11: "Miércoles",
-        14: "Sábado",
-        18: "Miércoles",
-        21: "Sábado",
-        25: "Miércoles",
-        28: "Sábado"
+  const CALENDAR_MONTHS_I18N = {
+    es: [
+      {
+        label: "Noviembre de 2026",
+        monthName: "Noviembre",
+        daysInMonth: 30,
+        startDayOfWeek: 0,
+        availableDays: {
+          4: "Miércoles",
+          7: "Sábado",
+          11: "Miércoles",
+          14: "Sábado",
+          18: "Miércoles",
+          21: "Sábado",
+          25: "Miércoles",
+          28: "Sábado"
+        },
+        defaultSelectedDay: 21
       },
-      defaultSelectedDay: 21
-    },
-    {
-      label: "Diciembre de 2026",
-      monthName: "Diciembre",
-      daysInMonth: 31,
-      startDayOfWeek: 2, // 1 de Diciembre de 2026 es Martes (2)
-      availableDays: {
-        2: "Miércoles",
-        5: "Sábado",
-        9: "Miércoles",
-        12: "Sábado",
-        16: "Miércoles",
-        19: "Sábado"
+      {
+        label: "Diciembre de 2026",
+        monthName: "Diciembre",
+        daysInMonth: 31,
+        startDayOfWeek: 2,
+        availableDays: {
+          2: "Miércoles",
+          5: "Sábado",
+          9: "Miércoles",
+          12: "Sábado",
+          16: "Miércoles",
+          19: "Sábado"
+        },
+        defaultSelectedDay: 5
+      }
+    ],
+    en: [
+      {
+        label: "November 2026",
+        monthName: "November",
+        daysInMonth: 30,
+        startDayOfWeek: 0,
+        availableDays: {
+          4: "Wednesday",
+          7: "Saturday",
+          11: "Wednesday",
+          14: "Saturday",
+          18: "Wednesday",
+          21: "Saturday",
+          25: "Wednesday",
+          28: "Saturday"
+        },
+        defaultSelectedDay: 21
       },
-      defaultSelectedDay: 5
-    }
-  ];
+      {
+        label: "December 2026",
+        monthName: "December",
+        daysInMonth: 31,
+        startDayOfWeek: 2,
+        availableDays: {
+          2: "Wednesday",
+          5: "Saturday",
+          9: "Wednesday",
+          12: "Saturday",
+          16: "Wednesday",
+          19: "Saturday"
+        },
+        defaultSelectedDay: 5
+      }
+    ]
+  };
+
+  function getCalendarMonths() {
+    return CALENDAR_MONTHS_I18N[currentLang] || CALENDAR_MONTHS_I18N.es;
+  }
 
   const SLOTS_BY_DAY_TYPE = {
     Sábado: ["10:00 AM – 11:00 AM", "11:00 AM – 12:00 PM", "12:00 PM – 1:00 PM"],
-    Miércoles: ["2:00 PM – 3:00 PM", "3:00 PM – 4:00 PM", "4:00 PM – 5:00 PM"]
+    Saturday: ["10:00 AM – 11:00 AM", "11:00 AM – 12:00 PM", "12:00 PM – 1:00 PM"],
+    Miércoles: ["2:00 PM – 3:00 PM", "3:00 PM – 4:00 PM", "4:00 PM – 5:00 PM"],
+    Wednesday: ["2:00 PM – 3:00 PM", "3:00 PM – 4:00 PM", "4:00 PM – 5:00 PM"]
   };
 
   let currentMonthIdx = 0;
@@ -1423,12 +2423,12 @@
 
   function renderClinicCalendar() {
     if (!calGridEl) return;
-    const monthObj = CALENDAR_MONTHS[currentMonthIdx];
+    const months = getCalendarMonths();
+    const monthObj = months[currentMonthIdx];
     if (calMonthLabel) calMonthLabel.textContent = monthObj.label;
 
     calGridEl.innerHTML = "";
 
-    // Celdas vacías previas al día 1
     for (let e = 0; e < monthObj.startDayOfWeek; e++) {
       const empty = document.createElement("span");
       empty.className = "cal-day";
@@ -1465,12 +2465,16 @@
 
   function renderTimeSlots() {
     if (!timeslotPillsEl) return;
-    const monthObj = CALENDAR_MONTHS[currentMonthIdx];
-    const dayType = monthObj.availableDays[selectedDay] || "Sábado";
-    const slots = SLOTS_BY_DAY_TYPE[dayType];
+    const months = getCalendarMonths();
+    const monthObj = months[currentMonthIdx];
+    const dayType = monthObj.availableDays[selectedDay] || (currentLang === "en" ? "Saturday" : "Sábado");
+    const slots = SLOTS_BY_DAY_TYPE[dayType] || SLOTS_BY_DAY_TYPE["Sábado"];
 
     if (timeslotHeading) {
-      timeslotHeading.textContent = `${dayType}, ${selectedDay} De ${monthObj.monthName} – Elige Un Horario`;
+      timeslotHeading.textContent =
+        currentLang === "en"
+          ? `${dayType}, ${monthObj.monthName} ${selectedDay} – Choose a Time Slot`
+          : `${dayType}, ${selectedDay} De ${monthObj.monthName} – Elige Un Horario`;
     }
 
     timeslotPillsEl.innerHTML = "";
@@ -1490,24 +2494,30 @@
 
   function updateSelectionBanner() {
     if (!selectionSummaryText) return;
-    const monthObj = CALENDAR_MONTHS[currentMonthIdx];
-    const dayType = monthObj.availableDays[selectedDay] || "Sábado";
-    selectionSummaryText.textContent = `${dayType}, ${selectedDay} De ${monthObj.monthName}, ${selectedSlot}`;
+    const months = getCalendarMonths();
+    const monthObj = months[currentMonthIdx];
+    const dayType = monthObj.availableDays[selectedDay] || (currentLang === "en" ? "Saturday" : "Sábado");
+    selectionSummaryText.textContent =
+      currentLang === "en"
+        ? `${dayType}, ${monthObj.monthName} ${selectedDay}, ${selectedSlot}`
+        : `${dayType}, ${selectedDay} De ${monthObj.monthName}, ${selectedSlot}`;
   }
 
   const prevMonthBtn = document.getElementById("cal-prev-month");
   const nextMonthBtn = document.getElementById("cal-next-month");
   if (prevMonthBtn && nextMonthBtn) {
     prevMonthBtn.addEventListener("click", () => {
-      currentMonthIdx = (currentMonthIdx - 1 + CALENDAR_MONTHS.length) % CALENDAR_MONTHS.length;
-      selectedDay = CALENDAR_MONTHS[currentMonthIdx].defaultSelectedDay;
+      const months = getCalendarMonths();
+      currentMonthIdx = (currentMonthIdx - 1 + months.length) % months.length;
+      selectedDay = months[currentMonthIdx].defaultSelectedDay;
       renderClinicCalendar();
       renderTimeSlots();
       updateSelectionBanner();
     });
     nextMonthBtn.addEventListener("click", () => {
-      currentMonthIdx = (currentMonthIdx + 1) % CALENDAR_MONTHS.length;
-      selectedDay = CALENDAR_MONTHS[currentMonthIdx].defaultSelectedDay;
+      const months = getCalendarMonths();
+      currentMonthIdx = (currentMonthIdx + 1) % months.length;
+      selectedDay = months[currentMonthIdx].defaultSelectedDay;
       renderClinicCalendar();
       renderTimeSlots();
       updateSelectionBanner();
@@ -1523,20 +2533,612 @@
   if (bookingForm && successToast) {
     bookingForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const nameVal = document.getElementById("input-name").value.trim() || "Integrante de la comunidad";
-      const caseVal = document.getElementById("input-case-type").value || "Orientación General";
+      const defaultName = currentLang === "en" ? "Community Member" : "Integrante de la comunidad";
+      const defaultCase = currentLang === "en" ? "General Orientation" : "Orientación General";
+      const nameVal = document.getElementById("input-name").value.trim() || defaultName;
+      const caseVal = document.getElementById("input-case-type").value || defaultCase;
       const summary = selectionSummaryText ? selectionSummaryText.textContent : "";
 
-      successToast.textContent = `✓ ¡Charla pre-confirmada para ${nameVal}! Te esperamos el ${summary} (${caseVal}). Recibirás confirmación confidencial.`;
+      successToast.textContent =
+        currentLang === "en"
+          ? `✓ Session pre-confirmed for ${nameVal}! We look forward to seeing you on ${summary} (${caseVal}). You will receive a confidential confirmation.`
+          : `✓ ¡Charla pre-confirmada para ${nameVal}! Te esperamos el ${summary} (${caseVal}). Recibirás confirmación confidencial.`;
       successToast.classList.add("is-visible");
     });
   }
 
-  // Botón flotante "💬 Evaluador" (Imagen 1)
+  // ==========================================================================
+  // 9.5. AJUSTE #2: EFECTO CIFRADO / DECODIFICADOR / MATRIX + ODÓMETRO
+  //      EN TARJETAS DE "IMPACTO COMUNITARIO EN CIFRAS" (#impacto)
+  // ==========================================================================
+  const CIPHER_GLYPHS = "0123456789@#$%&*!?/|>_~[]{}ΔΣΩ▒░";
+  const MATRIX_DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "#", "%", "+", "K", "Δ", "8", "4"];
+
+  function buildOdometerColumns(odometerEl) {
+    const finalStr = odometerEl.getAttribute("data-cipher-value") || odometerEl.textContent.trim();
+    odometerEl.innerHTML = "";
+
+    Array.from(finalStr).forEach((targetChar, charIdx) => {
+      const col = document.createElement("span");
+      col.className = "cipher-digit-col";
+
+      const reel = document.createElement("span");
+      reel.className = "cipher-digit-reel";
+
+      // Creamos una tira vertical con caracteres de cifrado/matrix + dígitos y el carácter final al fondo
+      const stepsCount = 9 + charIdx * 2;
+      for (let s = 0; s < stepsCount; s++) {
+        const cell = document.createElement("span");
+        cell.className = "cipher-digit-cell" + (s < stepsCount - 1 ? " is-matrix-glyph" : "");
+        if (s === 0) {
+          cell.textContent = targetChar;
+        } else {
+          const rndGlyph = MATRIX_DIGITS[(s * 3 + charIdx * 7) % MATRIX_DIGITS.length];
+          cell.textContent = rndGlyph;
+        }
+        reel.appendChild(cell);
+      }
+
+      // Última celda: valor real decodificado
+      const finalCell = document.createElement("span");
+      finalCell.className = "cipher-digit-cell";
+      finalCell.textContent = targetChar;
+      reel.appendChild(finalCell);
+
+      col.appendChild(reel);
+      odometerEl.appendChild(col);
+    });
+  }
+
+  function decodeLabelText(labelEl, durationMs = 1150) {
+    if (!labelEl) return;
+    const langAttr = currentLang === "en" ? "data-cipher-text-en" : "data-cipher-text-es";
+    const targetText =
+      labelEl.getAttribute(langAttr) ||
+      labelEl.getAttribute("data-cipher-text") ||
+      labelEl.textContent.trim();
+    if (labelEl._cipherRaf) {
+      cancelAnimationFrame(labelEl._cipherRaf);
+    }
+
+    if (reduceMotion) {
+      labelEl.textContent = targetText;
+      return;
+    }
+
+    const startTime = performance.now();
+    const len = targetText.length;
+
+    function tick(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / durationMs);
+      const lockedCount = Math.floor(progress * len);
+
+      let htmlOut = "";
+      for (let i = 0; i < len; i++) {
+        const origChar = targetText[i];
+        if (origChar === " ") {
+          htmlOut += " ";
+        } else if (i < lockedCount) {
+          htmlOut += origChar;
+        } else if (i < lockedCount + 4) {
+          // Frontera activa de decodificación resaltada (exacto a Referencia_Efecto_Cifrado)
+          const g = CIPHER_GLYPHS[Math.floor(Math.random() * CIPHER_GLYPHS.length)];
+          htmlOut += `<span class="cipher-char--scrambling">${g}</span>`;
+        } else {
+          const g = CIPHER_GLYPHS[(i * 5 + Math.floor(elapsed / 40)) % CIPHER_GLYPHS.length];
+          htmlOut += `<span style="opacity:0.55;">${g}</span>`;
+        }
+      }
+
+      labelEl.innerHTML = htmlOut;
+
+      if (progress < 1) {
+        labelEl._cipherRaf = requestAnimationFrame(tick);
+      } else {
+        labelEl.textContent = targetText;
+      }
+    }
+
+    labelEl._cipherRaf = requestAnimationFrame(tick);
+  }
+
+  function triggerCipherCardAnimation(cardEl, delaySec = 0) {
+    if (!cardEl) return;
+    const odometerEl = cardEl.querySelector(".cipher-odometer");
+    const labelEl = cardEl.querySelector(".cipher-label");
+
+    if (odometerEl && !odometerEl.querySelector(".cipher-digit-col")) {
+      buildOdometerColumns(odometerEl);
+    }
+
+    setTimeout(() => {
+      cardEl.classList.add("is-decoding");
+
+      if (odometerEl) {
+        const reels = odometerEl.querySelectorAll(".cipher-digit-reel");
+        reels.forEach((reel, idx) => {
+          const totalCells = reel.children.length;
+          const maxShiftPercent = -((totalCells - 1) / totalCells) * 100;
+
+          if (reduceMotion) {
+            gsap.set(reel, { yPercent: maxShiftPercent });
+          } else {
+            gsap.fromTo(
+              reel,
+              { yPercent: 0 },
+              {
+                yPercent: maxShiftPercent,
+                duration: 0.95 + idx * 0.14,
+                ease: "power3.inOut",
+                overwrite: true
+              }
+            );
+          }
+        });
+      }
+
+      if (labelEl) {
+        decodeLabelText(labelEl, 1180);
+      }
+
+      setTimeout(() => {
+        cardEl.classList.remove("is-decoding");
+      }, 1350);
+    }, delaySec * 1000);
+  }
+
+  const cipherCards = Array.from(document.querySelectorAll(".cipher-stat-card"));
+  cipherCards.forEach((card) => {
+    const odometerEl = card.querySelector(".cipher-odometer");
+    if (odometerEl) buildOdometerColumns(odometerEl);
+
+    card.addEventListener("mouseenter", () => {
+      triggerCipherCardAnimation(card, 0);
+    });
+  });
+
+  function runAllCipherCards() {
+    cipherCards.forEach((card, idx) => {
+      triggerCipherCardAnimation(card, idx * 0.12);
+    });
+  }
+
+  const btnReplayCipher = document.getElementById("btn-replay-cipher");
+  if (btnReplayCipher) {
+    btnReplayCipher.addEventListener("click", runAllCipherCards);
+  }
+
+  if (typeof window.ScrollTrigger !== "undefined" && cipherCards.length > 0) {
+    window.ScrollTrigger.create({
+      trigger: "#impacto",
+      start: "top 78%",
+      onEnter: () => runAllCipherCards(),
+      onEnterBack: () => runAllCipherCards()
+    });
+  } else {
+    setTimeout(runAllCipherCards, 900);
+  }
+
+  // ==========================================================================
+  // 10. AJUSTE #5: ASISTENTE VIRTUAL CON SIMULACIÓN DE CONVERSACIÓN INTERACTIVA
+  //     (Inspirado en Referencia_asistente_virtual.mp4 + Opciones ampliadas ES/EN)
+  // ==========================================================================
+  const ASSISTANT_FLOWS_I18N = {
+    es: {
+      greeting: "¡Hola! Cuéntame sobre tu caso. ¿Qué tipo de ayuda buscas hoy?",
+      choosePrompt: "Elige una opción:",
+      scheduleBtn: "📅 Agendar charla",
+      donateBtn: "💛 Ir a Donaciones",
+      backBtn: "← Volver al menú",
+      topics: [
+        {
+          id: "daca",
+          label: "DACA",
+          question: "¿Tienes DACA activo o venció hace menos de un año?",
+          options: [
+            {
+              label: "Sí, sigue activo o venció hace menos de 1 año",
+              reply:
+                "¡Excelente noticia! Podemos ayudarte a preparar tu renovación de DACA (Formularios I-821D e I-765) y evaluar si calificas para nuestro fondo de becas de tasas federales."
+            },
+            {
+              label: "Venció hace más de 1 año / Es primera vez",
+              reply:
+                "Cuando DACA venció hace más de un año o es solicitud inicial, existen restricciones judiciales vigentes. Te recomendamos agendar una charla legal para evaluar otras vías migratorias como petición familiar o Visa U."
+            }
+          ]
+        },
+        {
+          id: "tps",
+          label: "TPS",
+          question: "¿De qué país eres nacional o necesitas reinscribir tu TPS?",
+          options: [
+            {
+              label: "El Salvador, Honduras, Nicaragua o Venezuela",
+              reply:
+                "En El Rescate somos especialistas históricos en TPS desde 1990. Te asistimos con la reinscripción dentro del periodo oficial del Registro Federal y la extensión automática de tu permiso laboral."
+            },
+            {
+              label: "Otro país designado / Consulta de viaje (Advance Parole)",
+              reply:
+                "Revisamos la designación vigente de tu país y también tramitamos permisos de viaje humanitario (Advance Parole) para titulares de TPS que buscan ajustar su estatus."
+            }
+          ]
+        },
+        {
+          id: "asilo",
+          label: "Asilo",
+          question: "¿Cuánto tiempo llevas en EE. UU.?",
+          options: [
+            {
+              label: "Menos de 1 año",
+              reply:
+                "Estás a tiempo para solicitar asilo. Agenda tu charla para preparar tu caso (Formulario I-589) con nuestro equipo jurídico de derechos humanos."
+            },
+            {
+              label: "Más de 1 año / Tengo cita en Corte",
+              reply:
+                "Aunque la regla general exige aplicar dentro del primer año, existen excepciones legales por cambio de circunstancias y defensas ante la corte (EOIR). Agenda una charla urgente para revisar tu expediente."
+            }
+          ]
+        },
+        {
+          id: "familia",
+          label: "Residencia Familiar",
+          question: "¿Quién es el familiar que podría pedirte?",
+          options: [
+            {
+              label: "Cónyuge, hijo(a) ciudadano mayor de 21 años o padres",
+              reply:
+                "Los familiares inmediatos de ciudadanos estadounidenses tienen prioridad sin lista de espera de visa. En tu charla evaluaremos si puedes hacer Ajuste de Estatus dentro de EE. UU. o Proceso Consular con perdón I-601A."
+            },
+            {
+              label: "Esposo(a) Residente Permanente o hermano(a) ciudadano",
+              reply:
+                "Estas categorías se rigen por el Boletín de Visas mensual. Te ayudamos a presentar la petición I-130 correctamente para asegurar tu fecha de prioridad."
+            }
+          ]
+        },
+        {
+          id: "visau",
+          label: "Visa U / VAWA",
+          question: "¿Fuiste víctima de un delito en EE. UU. o de maltrato familiar?",
+          options: [
+            {
+              label: "Víctima de delito y colaboré con la policía (Visa U)",
+              reply:
+                "La Visa U protege a víctimas de delitos calificados que cooperaron con las autoridades, otorgando permiso de trabajo y camino a la residencia. Revisaremos tu reporte policial de forma 100% confidencial."
+            },
+            {
+              label: "Maltrato por cónyuge, padre o hijo ciudadano/residente (VAWA)",
+              reply:
+                "Bajo la ley VAWA puedes solicitar tu estatus legal por cuenta propia, en total confidencialidad y sin que la persona agresora se entere. Nuestro equipo te acompaña con calidez y seguridad."
+            }
+          ]
+        },
+        {
+          id: "ciudadania",
+          label: "Ciudadanía",
+          question: "¿Cuánto tiempo llevas con tu Residencia Permanente (Green Card)?",
+          options: [
+            {
+              label: "5 años o más (o 3 años casado/a con ciudadano/a)",
+              reply:
+                "¡Ya cumples el requisito de tiempo para la Naturalización (N-400)! Evaluamos también si calificas para exención de pago de tarifa (I-912) o para hacer el examen en español por edad y años de residencia."
+            },
+            {
+              label: "Aún me falta tiempo o debo renovar mi Green Card (I-90)",
+              reply:
+                "Podemos ayudarte desde ahora a renovar tu tarjeta de residencia (I-90), revisar tu récord antes de aplicar y prepararte en nuestros talleres comunitarios de educación cívica."
+            }
+          ]
+        },
+        {
+          id: "horarios",
+          label: "Horarios / Clínica",
+          question: "¿Qué información necesitas sobre nuestra atención presencial?",
+          options: [
+            {
+              label: "Días y horarios de las charlas legales gratuitas",
+              reply:
+                "Nuestras clínicas comunitarias se realizan todos los Miércoles de 2:00 PM a 5:00 PM y los Sábados de 10:00 AM a 1:00 PM en 1501 W. 8th St., Los Ángeles, CA 90017."
+            },
+            {
+              label: "¿Qué documentos debo llevar a mi primera cita?",
+              reply:
+                "Trae tu identificación oficial o pasaporte, cualquier documento previo de inmigración (avisos de USCIS, corte o permisos) y reportes policiales si aplicas a Visa U."
+            }
+          ]
+        },
+        {
+          id: "donar",
+          label: "Donaciones ONG",
+          question: "¿Cómo te gustaría apoyar la misión humanitaria de El Rescate?",
+          options: [
+            {
+              label: "Apoyar una campaña activa (Asilo, Clínicas, DACA o General)",
+              reply:
+                "El 100% de tu aporte es deducible de impuestos bajo el estatus 501(c)(3) (EIN: 95-3759142). Puedes elegir entre Organización General, Defensa de Asilo, Clínicas Comunitarias o Futuro Joven DACA.",
+              isDonation: true
+            }
+          ]
+        }
+      ]
+    },
+    en: {
+      greeting: "Hello! Tell me about your case. What kind of legal help are you looking for today?",
+      choosePrompt: "Choose an option:",
+      scheduleBtn: "📅 Book a consultation",
+      donateBtn: "💛 Go to Donations",
+      backBtn: "← Back to main topics",
+      topics: [
+        {
+          id: "daca",
+          label: "DACA",
+          question: "Is your DACA currently active or did it expire less than a year ago?",
+          options: [
+            {
+              label: "Yes, still active or expired less than 1 year ago",
+              reply:
+                "Great news! We can help you prepare your DACA renewal (Forms I-821D & I-765) and check if you qualify for our federal fee scholarship fund."
+            },
+            {
+              label: "Expired over 1 year ago / First-time applicant",
+              reply:
+                "When DACA has been expired for more than a year or is an initial request, federal court restrictions apply. Book a consultation so our attorneys can screen you for alternative relief such as family petitions or U Visas."
+            }
+          ]
+        },
+        {
+          id: "tps",
+          label: "TPS",
+          question: "Which country are you a national of, or do you need TPS re-registration?",
+          options: [
+            {
+              label: "El Salvador, Honduras, Nicaragua, or Venezuela",
+              reply:
+                "El Rescate has pioneered TPS legal defense since 1990. We assist you with timely re-registration under the Federal Register window and automatic work permit extensions."
+            },
+            {
+              label: "Another designated country / Travel permit (Advance Parole)",
+              reply:
+                "We review your country's current TPS designation and also prepare humanitarian Advance Parole travel requests for TPS holders seeking pathways to permanent residence."
+            }
+          ]
+        },
+        {
+          id: "asilo",
+          label: "Asylum",
+          question: "How long have you been in the United States?",
+          options: [
+            {
+              label: "Less than 1 year",
+              reply:
+                "You are within the one-year filing window to apply for asylum. Book your legal consultation so our human rights legal team can help prepare your Form I-589."
+            },
+            {
+              label: "More than 1 year / I have an Immigration Court date",
+              reply:
+                "While asylum generally requires filing within one year, legal exceptions exist for changed circumstances as well as defensive relief before EOIR court. Schedule an urgent consultation so we can review your file."
+            }
+          ]
+        },
+        {
+          id: "familia",
+          label: "Family Petition",
+          question: "Which family member could petition for you?",
+          options: [
+            {
+              label: "U.S. Citizen spouse, child over 21, or parent",
+              reply:
+                "Immediate relatives of U.S. citizens have priority without visa backlog wait times. During your session we will evaluate whether you qualify for Adjustment of Status inside the U.S. or Consular Processing with an I-601A waiver."
+            },
+            {
+              label: "Permanent Resident spouse or U.S. Citizen sibling",
+              reply:
+                "These preference categories follow the monthly Visa Bulletin. We help you file Form I-130 accurately to lock in your priority date."
+            }
+          ]
+        },
+        {
+          id: "visau",
+          label: "U Visa / VAWA",
+          question: "Were you a victim of a qualifying crime in the U.S. or domestic abuse?",
+          options: [
+            {
+              label: "Victim of a crime & cooperated with police (U Visa)",
+              reply:
+                "The U Visa protects victims of qualifying crimes who assisted law enforcement, providing work authorization and a path to residency. We will review your police report with 100% confidentiality."
+            },
+            {
+              label: "Abuse by a U.S. Citizen or Resident spouse/parent/child (VAWA)",
+              reply:
+                "Under VAWA you can self-petition for legal status in complete confidentiality without the abuser ever knowing. Our legal team supports you safely and compassionately."
+            }
+          ]
+        },
+        {
+          id: "ciudadania",
+          label: "Citizenship",
+          question: "How long have you held your Permanent Residence (Green Card)?",
+          options: [
+            {
+              label: "5+ years (or 3+ years married to a U.S. Citizen)",
+              reply:
+                "You meet the residence timeline for Naturalization (Form N-400)! We also check if you qualify for a federal fee waiver (I-912) or a Spanish-language civics exam exemption based on age and residency."
+            },
+            {
+              label: "Not yet eligible or need to renew my Green Card (I-90)",
+              reply:
+                "We can assist you right away with renewing your Green Card (Form I-90), reviewing your record ahead of time, and joining our community civics workshops."
+            }
+          ]
+        },
+        {
+          id: "horarios",
+          label: "Clinic Hours",
+          question: "What would you like to know about our in-person clinic?",
+          options: [
+            {
+              label: "Days and hours for free legal orientation sessions",
+              reply:
+                "Our community legal clinics take place every Wednesday from 2:00 PM to 5:00 PM and Saturday from 10:00 AM to 1:00 PM at 1501 W. 8th St., Los Angeles, CA 90017."
+            },
+            {
+              label: "What documents should I bring to my first appointment?",
+              reply:
+                "Please bring a valid photo ID or passport, any prior immigration notices (USCIS receipts, court notices, or work permits), and police reports if inquiring about a U Visa."
+            }
+          ]
+        },
+        {
+          id: "donar",
+          label: "NGO Donations",
+          question: "How would you like to support El Rescate's humanitarian mission?",
+          options: [
+            {
+              label: "Support an active campaign (Asylum, Clinics, DACA, or General)",
+              reply:
+                "100% of your contribution is tax-deductible under 501(c)(3) status (EIN: 95-3759142). You can direct your gift to General Organization, Asylum Defense, Community Clinics, or DACA Youth Future.",
+              isDonation: true
+            }
+          ]
+        }
+      ]
+    }
+  };
+
   const evalFab = document.getElementById("evaluador-fab");
   const evalModal = document.getElementById("evaluador-modal");
   const evalClose = document.getElementById("evaluador-close");
-  const caseSelect = document.getElementById("input-case-type");
+  const evalReset = document.getElementById("evaluador-reset");
+  const chatLogEl = document.getElementById("asistente-chat-log");
+  const chatOptionsPillsEl = document.getElementById("asistente-options-pills");
+  const chatOptionsLabelEl = document.getElementById("asistente-options-label");
+
+  function appendChatMessage(role, htmlText) {
+    if (!chatLogEl) return;
+    const msg = document.createElement("div");
+    msg.className = `chat-msg chat-msg--${role}`;
+    msg.innerHTML = htmlText;
+    chatLogEl.appendChild(msg);
+    requestAnimationFrame(() => {
+      chatLogEl.scrollTop = chatLogEl.scrollHeight;
+    });
+  }
+
+  function renderMainTopicPills() {
+    if (!chatOptionsPillsEl) return;
+    const dict = ASSISTANT_FLOWS_I18N[currentLang] || ASSISTANT_FLOWS_I18N.es;
+    if (chatOptionsLabelEl) chatOptionsLabelEl.textContent = dict.choosePrompt;
+    chatOptionsPillsEl.innerHTML = "";
+
+    dict.topics.forEach((topic) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "asistente-opt-btn";
+      btn.textContent = topic.label;
+      btn.addEventListener("click", () => handleTopicSelection(topic));
+      chatOptionsPillsEl.appendChild(btn);
+    });
+  }
+
+  function handleTopicSelection(topic) {
+    const dict = ASSISTANT_FLOWS_I18N[currentLang] || ASSISTANT_FLOWS_I18N.es;
+    appendChatMessage("user", topic.label);
+
+    setTimeout(() => {
+      appendChatMessage("bot", topic.question);
+      if (!chatOptionsPillsEl) return;
+      if (chatOptionsLabelEl) chatOptionsLabelEl.textContent = dict.choosePrompt;
+      chatOptionsPillsEl.innerHTML = "";
+
+      topic.options.forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "asistente-opt-btn";
+        btn.textContent = opt.label;
+        btn.addEventListener("click", () => handleSubOptionSelection(opt));
+        chatOptionsPillsEl.appendChild(btn);
+      });
+
+      const backBtn = document.createElement("button");
+      backBtn.type = "button";
+      backBtn.className = "asistente-opt-btn asistente-opt-btn--secondary";
+      backBtn.textContent = dict.backBtn;
+      backBtn.addEventListener("click", () => {
+        appendChatMessage("user", dict.backBtn);
+        setTimeout(() => {
+          appendChatMessage("bot", dict.greeting);
+          renderMainTopicPills();
+        }, 160);
+      });
+      chatOptionsPillsEl.appendChild(backBtn);
+    }, 180);
+  }
+
+  function handleSubOptionSelection(opt) {
+    const dict = ASSISTANT_FLOWS_I18N[currentLang] || ASSISTANT_FLOWS_I18N.es;
+    appendChatMessage("user", opt.label);
+
+    setTimeout(() => {
+      appendChatMessage("bot", opt.reply);
+      if (!chatOptionsPillsEl) return;
+      chatOptionsPillsEl.innerHTML = "";
+
+      if (opt.isDonation) {
+        const donBtn = document.createElement("button");
+        donBtn.type = "button";
+        donBtn.className = "asistente-opt-btn asistente-opt-btn--cta";
+        donBtn.textContent = dict.donateBtn;
+        donBtn.addEventListener("click", () => {
+          if (evalModal) evalModal.classList.remove("is-open");
+          const donSec = document.getElementById("donaciones");
+          if (donSec) donSec.scrollIntoView({ behavior: "smooth" });
+        });
+        chatOptionsPillsEl.appendChild(donBtn);
+      } else {
+        const schedBtn = document.createElement("button");
+        schedBtn.type = "button";
+        schedBtn.className = "asistente-opt-btn asistente-opt-btn--cta";
+        schedBtn.textContent = dict.scheduleBtn;
+        schedBtn.addEventListener("click", () => {
+          if (evalModal) evalModal.classList.remove("is-open");
+          const clinicaSec = document.getElementById("clinica-citas");
+          if (clinicaSec) clinicaSec.scrollIntoView({ behavior: "smooth" });
+        });
+        chatOptionsPillsEl.appendChild(schedBtn);
+      }
+
+      const backBtn = document.createElement("button");
+      backBtn.type = "button";
+      backBtn.className = "asistente-opt-btn asistente-opt-btn--secondary";
+      backBtn.textContent = dict.backBtn;
+      backBtn.addEventListener("click", () => {
+        appendChatMessage("user", dict.backBtn);
+        setTimeout(() => {
+          appendChatMessage("bot", dict.greeting);
+          renderMainTopicPills();
+        }, 160);
+      });
+      chatOptionsPillsEl.appendChild(backBtn);
+    }, 180);
+  }
+
+  function resetAssistantConversation() {
+    if (!chatLogEl) return;
+    const dict = ASSISTANT_FLOWS_I18N[currentLang] || ASSISTANT_FLOWS_I18N.es;
+    chatLogEl.innerHTML = "";
+    appendChatMessage("bot", dict.greeting);
+    renderMainTopicPills();
+  }
+
+  resetAssistantConversation();
+
+  if (evalReset) {
+    evalReset.addEventListener("click", resetAssistantConversation);
+  }
 
   if (evalFab && evalModal && evalClose) {
     evalFab.addEventListener("click", () => {
@@ -1548,20 +3150,725 @@
     evalModal.addEventListener("click", (e) => {
       if (e.target === evalModal) evalModal.classList.remove("is-open");
     });
+  }
 
-    document.querySelectorAll(".eval-option-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const chosenCase = btn.getAttribute("data-case");
-        if (caseSelect && chosenCase) {
-          caseSelect.value = chosenCase;
+  // ==========================================================================
+  // 11. AJUSTES #1, #3 Y #4: MÓDULO DE DONACIONES ONG BILINGÜE (ES/EN)
+  //     + CORRECCIÓN DE SCROLL CON RUEDITA DEL MOUSE EN #vista-donacion
+  // ==========================================================================
+  const DONATION_CAMPAIGNS_I18N = {
+    es: {
+      organizacion: {
+        id: "organizacion",
+        shortName: "Organización General",
+        badge: "FONDO INSTITUCIONAL GENERAL",
+        code: "CAMPAÑA #ER-ORG-2026",
+        title: "Organización General — El Rescate Los Ángeles",
+        lead:
+          "Tu aporte fortalece de manera integral todas las áreas de impacto de El Rescate desde 1981: defensa jurídica de emergencia, clínicas gratuitas de miércoles y sábados y acompañamiento comunitario en Los Ángeles.",
+        desc:
+          "Este fondo general permite que El Rescate responda de inmediato donde la necesidad humanitaria es más urgente en el sur de California, sosteniendo nuestra sede histórica en Westlake y garantizando atención sin barreras.",
+        callout: "Apoya a toda la organización en general o elige una campaña activa arriba",
+        raised: "Recaudado: $84,500 USD",
+        goal: "Meta: $100,000 USD (85%)",
+        percent: 85,
+        stat1Val: "100%",
+        stat1Lbl: "Deducible de impuestos (501c3)",
+        stat2Val: "+1,200",
+        stat2Lbl: "Consultas gratuitas al año",
+        img: "assets/provisional-documentary-la-placita.jpg",
+        allocations: [
+          { label: "Representación y defensa jurídica directa", pct: 76 },
+          { label: "Clínicas comunitarias semanales (Mié y Sáb)", pct: 16 },
+          { label: "Sostenimiento operativo y archivo histórico", pct: 8 }
+        ],
+        deliverables: [
+          "Sostiene la operación continua de la sede comunitaria de El Rescate en 1501 W. 8th St., Los Ángeles.",
+          "Garantiza intérpretes y orientación bilingüe gratuita para familias recién llegadas.",
+          "Financia recursos de emergencia para casos humanitarios prioritarios."
+        ],
+        impactByAmount: {
+          35: "Con $35 USD cubres el kit de orientación legal bilingüe y archivo inicial para una persona.",
+          75: "Con $75 USD cubres la apertura de expediente y orientación jurídica inicial de una familia.",
+          150: "Con $150 USD financias una sesión completa de preparación documental y traducción certificada.",
+          250: "Con $250 USD respaldas media jornada de clínica legal gratuita para decenas de vecinos en Westlake.",
+          500: "Con $500 USD patrocinas la defensa jurídica inicial de un caso humanitario ante tribunales.",
+          1000: "Con $1,000 USD sostienes una brigada completa de protección legal y acompañamiento familiar."
         }
-        evalModal.classList.remove("is-open");
-        const clinicSec = document.getElementById("clinica-citas");
-        if (clinicSec) {
-          if (lenis) lenis.scrollTo(clinicSec, { offset: -60 });
-          else clinicSec.scrollIntoView({ behavior: "smooth" });
+      },
+      asilo: {
+        id: "asilo",
+        shortName: "Defensa Legal y Asilo",
+        badge: "REPRESENTACIÓN URGENTE EN CORTE",
+        code: "CAMPAÑA #ER-ASILO-2026",
+        title: "Campaña de Defensa Legal, Asilo y Refugio Humanitario",
+        lead:
+          "Ninguna familia que busca refugio debería presentarse sola ante un tribunal de inmigración. Esta campaña financia abogados defensores, peritajes de derechos humanos y amparos urgentes.",
+        desc:
+          "Nacida de la misión fundacional de El Rescate en 1981, esta campaña provee representación legal ética en solicitudes de asilo afirmativo y defensivo, Visas U para víctimas de delitos y peticiones VAWA.",
+        callout: "Estás respaldando la defensa legal directa de solicitantes de asilo y refugio",
+        raised: "Recaudado: $62,800 USD",
+        goal: "Meta: $80,000 USD (79%)",
+        percent: 79,
+        stat1Val: "98%",
+        stat1Lbl: "Casos con seguimiento activo",
+        stat2Val: "Pro Bono",
+        stat2Lbl: "Defensa ética en tribunales de L.A.",
+        img: "assets/provisional-documentary-macarthur-park.jpg",
+        allocations: [
+          { label: "Abogados litigantes de asilo y protección humanitaria", pct: 82 },
+          { label: "Traducción de evidencias, peritajes y declaraciones juradas", pct: 12 },
+          { label: "Acompañamiento psicosocial y preparación de audiencia", pct: 6 }
+        ],
+        deliverables: [
+          "Preparación integral de expedientes de asilo afirmativo y defensivo en Los Ángeles.",
+          "Representación legal especializada para mujeres y familias bajo protección VAWA y Visa U.",
+          "Traducción oficial de documentos y pruebas de derechos humanos para tribunales."
+        ],
+        impactByAmount: {
+          35: "Con $35 USD cubres la traducción certificada de actas y documentos probatorios de asilo.",
+          75: "Con $75 USD financias una evaluación jurídica profunda de elegibilidad para asilo o Visa U.",
+          150: "Con $150 USD cubres la redacción de declaraciones juradas con asistencia de intérprete.",
+          250: "Con $250 USD respaldas la preparación de audiencia preliminar ante la corte de inmigración.",
+          500: "Con $500 USD patrocinas el patrocinio legal de emergencia para una madre y sus hijos.",
+          1000: "Con $1,000 USD financias la defensa técnica integral de un expediente de refugio humanitario."
         }
+      },
+      clinicas: {
+        id: "clinicas",
+        shortName: "Clínicas Comunitarias",
+        badge: "JORNADAS GRATUITAS MIÉ & SÁB",
+        code: "CAMPAÑA #ER-CLINICA-2026",
+        title: "Campaña de Clínicas Legales Comunitarias de Miércoles y Sábados",
+        lead:
+          "Mantén abiertas las puertas de nuestras charlas legales presenciales todos los miércoles (2–5 PM) y sábados (10 AM–1 PM) para que cualquier persona reciba orientación confiable sin miedo a fraudes.",
+        desc:
+          "Nuestras clínicas semanales son el primer punto de contacto seguro para miles de trabajadores y familias en Los Ángeles. Tu donación permite ampliar cupos, horarios y asesores legales.",
+        callout: "Estás financiando las clínicas gratuitas de miércoles y sábados en Westlake",
+        raised: "Recaudado: $41,200 USD",
+        goal: "Meta: $50,000 USD (82%)",
+        percent: 82,
+        stat1Val: "2 Jornadas",
+        stat1Lbl: "Semanales abiertas a la comunidad",
+        stat2Val: "0 Costo",
+        stat2Lbl: "En orientación inicial comunitaria",
+        img: "assets/provisional-documentary-la-placita.jpg",
+        allocations: [
+          { label: "Coordinadores legales y paralegales en jornadas de Mié y Sáb", pct: 74 },
+          { label: "Plataforma digital de citas confidenciales y recordatorios", pct: 16 },
+          { label: "Guías impresas de derechos constitucionales (Conoce tus Derechos)", pct: 10 }
+        ],
+        deliverables: [
+          "Operación garantizada de las clínicas presenciales de miércoles (2–5 PM) y sábados (10 AM–1 PM).",
+          "Distribución gratuita de tarjetas 'Conoce tus Derechos' en español e inglés.",
+          "Prevención contra el fraude notarial mediante diagnóstico legal honesto."
+        ],
+        impactByAmount: {
+          35: "Con $35 USD entregas 50 guías bilingües de 'Conoce tus Derechos' en vecindarios de L.A.",
+          75: "Con $75 USD patrocinas el cupo de orientación gratuita para 3 familias en la clínica del sábado.",
+          150: "Con $150 USD cubres las horas de un especialista legal durante una tarde completa de miércoles.",
+          250: "Con $250 USD financias toda una jornada sabatina de recepción y diagnóstico comunitario.",
+          500: "Con $500 USD sostienes dos semanas completas de clínicas jurídicas abiertas al público.",
+          1000: "Con $1,000 USD impulsas un mes entero de clínicas comunitarias gratuitas en Westlake."
+        }
+      },
+      daca: {
+        id: "daca",
+        shortName: "Futuro Joven & DACA",
+        badge: "PROTECCIÓN DE DREAMERS Y MENORES",
+        code: "CAMPAÑA #ER-DACA-2026",
+        title: "Campaña Futuro Joven, Renovación DACA y Reunificación Familiar",
+        lead:
+          "Impulsa los sueños universitarios y laborales de jóvenes Dreamers y protege a menores inmigrantes mediante becas para tasas de renovación DACA, TPS y peticiones de unidad familiar.",
+        desc:
+          "Muchos estudiantes y jóvenes trabajadores enfrentan barreras económicas para cubrir las tarifas federales de renovación de sus permisos de trabajo. Este fondo otorga apoyo directo y asesoría legal.",
+        callout: "Estás impulsando becas de renovación DACA, TPS y protección de jóvenes",
+        raised: "Recaudado: $53,900 USD",
+        goal: "Meta: $65,000 USD (83%)",
+        percent: 83,
+        stat1Val: "+3,400",
+        stat1Lbl: "Jóvenes y estudiantes asesorados",
+        stat2Val: "100%",
+        stat2Lbl: "Acompañamiento en renovaciones",
+        img: "assets/provisional-documentary-macarthur-park.jpg",
+        allocations: [
+          { label: "Fondo de becas para tasas de renovación DACA y permisos laborales", pct: 79 },
+          { label: "Asesoría jurídica en peticiones familiares y estatus juvenil SIJS", pct: 15 },
+          { label: "Talleres universitarios y educación financiera para jóvenes", pct: 6 }
+        ],
+        deliverables: [
+          "Subvención parcial o total de tarifas de renovación para jóvenes beneficiarios de DACA.",
+          "Representación legal en casos de Estatus Especial de Inmigrante Juvenil (SIJS).",
+          "Talleres de ciudadanía y liderazgo juvenil en el corredor central de Los Ángeles."
+        ],
+        impactByAmount: {
+          35: "Con $35 USD cubres la revisión legal completa de formularios de renovación para un estudiante.",
+          75: "Con $75 USD aportas al fondo de beca para el permiso de trabajo de un joven Dreamer.",
+          150: "Con $150 USD financias el acompañamiento jurídico en una solicitud de reunificación familiar.",
+          250: "Con $250 USD cubres la mitad de la tasa de renovación DACA para un estudiante universitario.",
+          500: "Con $500 USD becas la renovación completa de protección y permiso laboral de un joven.",
+          1000: "Con $1,000 USD respaldas el proceso integral de protección para dos jóvenes inmigrantes."
+        }
+      }
+    },
+    en: {
+      organizacion: {
+        id: "organizacion",
+        shortName: "General Organization",
+        badge: "GENERAL INSTITUTIONAL FUND",
+        code: "CAMPAIGN #ER-ORG-2026",
+        title: "General Organization — El Rescate Los Angeles",
+        lead:
+          "Your contribution holistically strengthens all impact areas of El Rescate since 1981: emergency legal defense, free Wednesday & Saturday clinics, and community accompaniment across Los Angeles.",
+        desc:
+          "This general fund enables El Rescate to respond immediately wherever humanitarian need is most urgent in Southern California, sustaining our historic Westlake headquarters and barrier-free legal care.",
+        callout: "Support the entire organization in general or choose an active campaign above",
+        raised: "Raised: $84,500 USD",
+        goal: "Goal: $100,000 USD (85%)",
+        percent: 85,
+        stat1Val: "100%",
+        stat1Lbl: "Tax-deductible (501c3)",
+        stat2Val: "+1,200",
+        stat2Lbl: "Free consultations per year",
+        img: "assets/provisional-documentary-la-placita.jpg",
+        allocations: [
+          { label: "Direct legal representation & courtroom defense", pct: 76 },
+          { label: "Weekly community legal clinics (Wed & Sat)", pct: 16 },
+          { label: "Operational sustainability & historical archive", pct: 8 }
+        ],
+        deliverables: [
+          "Sustains daily operations at El Rescate's community headquarters at 1501 W. 8th St., Los Angeles.",
+          "Guarantees free interpreters and bilingual legal orientation for newly arrived families.",
+          "Funds emergency resources for high-priority humanitarian cases."
+        ],
+        impactByAmount: {
+          35: "With $35 USD you cover the bilingual legal orientation kit and initial intake file for one person.",
+          75: "With $75 USD you cover case opening and initial legal screening for an immigrant family.",
+          150: "With $150 USD you fund a full document preparation session and certified translation.",
+          250: "With $250 USD you sponsor half a day of free legal clinic service for dozens of neighbors in Westlake.",
+          500: "With $500 USD you sponsor initial courtroom legal defense for an urgent humanitarian case.",
+          1000: "With $1,000 USD you sustain a full legal protection and family accompaniment brigade."
+        }
+      },
+      asilo: {
+        id: "asilo",
+        shortName: "Legal Defense & Asylum",
+        badge: "URGENT COURT REPRESENTATION",
+        code: "CAMPAIGN #ER-ASILO-2026",
+        title: "Legal Defense, Asylum & Humanitarian Refuge Campaign",
+        lead:
+          "No family seeking refuge should ever stand alone before an immigration judge. This campaign funds defense attorneys, human rights country-condition experts, and urgent stays of removal.",
+        desc:
+          "Born from El Rescate's founding mission in 1981, this campaign provides ethical legal representation in affirmative and defensive asylum claims, U Visas for crime victims, and VAWA petitions.",
+        callout: "You are backing direct legal defense for asylum seekers and refugees",
+        raised: "Raised: $62,800 USD",
+        goal: "Goal: $80,000 USD (79%)",
+        percent: 79,
+        stat1Val: "98%",
+        stat1Lbl: "Cases with active follow-up",
+        stat2Val: "Pro Bono",
+        stat2Lbl: "Ethical defense in L.A. courts",
+        img: "assets/provisional-documentary-macarthur-park.jpg",
+        allocations: [
+          { label: "Asylum & humanitarian protection trial attorneys", pct: 82 },
+          { label: "Certified evidence translation, expert reports & affidavits", pct: 12 },
+          { label: "Psychosocial support & court hearing preparation", pct: 6 }
+        ],
+        deliverables: [
+          "Comprehensive preparation of affirmative and defensive asylum filings in Los Angeles.",
+          "Specialized legal representation for women and families protected under VAWA and U Visas.",
+          "Official translation of human rights evidence and vital records for immigration court."
+        ],
+        impactByAmount: {
+          35: "With $35 USD you cover certified translation of vital records and asylum evidence.",
+          75: "With $75 USD you fund an in-depth legal eligibility evaluation for asylum or a U Visa.",
+          150: "With $150 USD you cover the drafting of sworn declarations with interpreter assistance.",
+          250: "With $250 USD you back preliminary master calendar hearing preparation before immigration court.",
+          500: "With $500 USD you sponsor emergency legal representation for a mother and her children.",
+          1000: "With $1,000 USD you fund comprehensive technical defense for a humanitarian refuge case."
+        }
+      },
+      clinicas: {
+        id: "clinicas",
+        shortName: "Community Clinics",
+        badge: "FREE WED & SAT SESSIONS",
+        code: "CAMPAIGN #ER-CLINICA-2026",
+        title: "Wednesday & Saturday Community Legal Clinics Campaign",
+        lead:
+          "Keep the doors of our in-person legal consultations open every Wednesday (2–5 PM) and Saturday (10 AM–1 PM) so anyone can receive trustworthy legal orientation free from fraud.",
+        desc:
+          "Our weekly clinics are the safest first point of contact for thousands of workers and families in Los Angeles. Your gift expands appointment slots, hours, and legal counselors.",
+        callout: "You are funding free Wednesday & Saturday community clinics in Westlake",
+        raised: "Raised: $41,200 USD",
+        goal: "Goal: $50,000 USD (82%)",
+        percent: 82,
+        stat1Val: "2 Sessions",
+        stat1Lbl: "Weekly open to the community",
+        stat2Val: "$0 Cost",
+        stat2Lbl: "For initial community screening",
+        img: "assets/provisional-documentary-la-placita.jpg",
+        allocations: [
+          { label: "Legal coordinators & paralegals on Wed & Sat sessions", pct: 74 },
+          { label: "Confidential digital appointment & reminder platform", pct: 16 },
+          { label: "Printed constitutional rights cards (Know Your Rights)", pct: 10 }
+        ],
+        deliverables: [
+          "Guaranteed operation of in-person clinics every Wednesday (2–5 PM) and Saturday (10 AM–1 PM).",
+          "Free distribution of bilingual 'Know Your Rights' cards in Spanish and English.",
+          "Protection against notary fraud through honest legal diagnostics."
+        ],
+        impactByAmount: {
+          35: "With $35 USD you distribute 50 bilingual 'Know Your Rights' guides across L.A. neighborhoods.",
+          75: "With $75 USD you sponsor free legal orientation slots for 3 families at the Saturday clinic.",
+          150: "With $150 USD you cover a legal specialist's hours for an entire Wednesday afternoon.",
+          250: "With $250 USD you fund a full Saturday morning of community intake and legal screening.",
+          500: "With $500 USD you sustain two full weeks of public community legal clinics.",
+          1000: "With $1,000 USD you power an entire month of free community legal clinics in Westlake."
+        }
+      },
+      daca: {
+        id: "daca",
+        shortName: "Youth Future & DACA",
+        badge: "DREAMERS & YOUTH PROTECTION",
+        code: "CAMPAIGN #ER-DACA-2026",
+        title: "Youth Future, DACA Renewal & Family Reunification Campaign",
+        lead:
+          "Power the college and career dreams of young Dreamers and protect immigrant youth through scholarships for DACA renewal fees, TPS, and family unity petitions.",
+        desc:
+          "Many students and young workers face financial barriers covering federal work-permit renewal fees. This fund provides direct fee assistance and legal representation.",
+        callout: "You are powering DACA renewal scholarships, TPS & youth protection",
+        raised: "Raised: $53,900 USD",
+        goal: "Goal: $65,000 USD (83%)",
+        percent: 83,
+        stat1Val: "+3,400",
+        stat1Lbl: "Youth & students advised",
+        stat2Val: "100%",
+        stat2Lbl: "Accompaniment on renewals",
+        img: "assets/provisional-documentary-macarthur-park.jpg",
+        allocations: [
+          { label: "Scholarship fund for DACA renewal & work permit fees", pct: 79 },
+          { label: "Legal counsel on family petitions & SIJS youth status", pct: 15 },
+          { label: "College readiness & financial literacy workshops for youth", pct: 6 }
+        ],
+        deliverables: [
+          "Partial or full federal fee grants for young DACA renewal applicants.",
+          "Legal representation in Special Immigrant Juvenile Status (SIJS) cases.",
+          "Citizenship and youth leadership workshops across Central Los Angeles."
+        ],
+        impactByAmount: {
+          35: "With $35 USD you cover complete legal review of renewal forms for a student.",
+          75: "With $75 USD you contribute to the work-permit scholarship fund for a young Dreamer.",
+          150: "With $150 USD you fund legal accompaniment on a family reunification petition.",
+          250: "With $250 USD you cover half the DACA renewal fee for a university student.",
+          500: "With $500 USD you sponsor the full DACA protection and work permit renewal of a young person.",
+          1000: "With $1,000 USD you back comprehensive legal protection for two immigrant youths."
+        }
+      }
+    }
+  };
+
+  let activeCampaignKey = "organizacion";
+  let activeDonationAmount = 75;
+  let activeDonationFreqKey = "once";
+
+  const campaignTabs = Array.from(document.querySelectorAll(".donation-campaign-tab"));
+  const checkoutPills = Array.from(document.querySelectorAll(".checkout-campaign-pill"));
+  const amountBtns = Array.from(document.querySelectorAll(".donation-amount-btn"));
+  const checkoutAmtChips = Array.from(document.querySelectorAll(".checkout-amt-chip"));
+  const customAmountInput = document.getElementById("donation-custom-amount");
+  const checkoutAmountInput = document.getElementById("checkout-amount-input");
+
+  function getActiveCampaignObj() {
+    const langSet = DONATION_CAMPAIGNS_I18N[currentLang] || DONATION_CAMPAIGNS_I18N.es;
+    return langSet[activeCampaignKey] || langSet.organizacion;
+  }
+
+  function getActiveFreqLabel() {
+    if (currentLang === "en") {
+      return activeDonationFreqKey === "monthly" ? "Monthly Gift" : "One-Time Gift";
+    }
+    return activeDonationFreqKey === "monthly" ? "Donación Mensual" : "Donación Única";
+  }
+
+  function getImpactEquivalenceText(campaignObj, amount) {
+    if (campaignObj.impactByAmount[amount]) {
+      return `✨ ${campaignObj.impactByAmount[amount]}`;
+    }
+    if (currentLang === "en") {
+      return `✨ With <strong>$${amount} USD</strong> you directly support <strong>${campaignObj.shortName}</strong> initiatives in Los Angeles.`;
+    }
+    return `✨ Con <strong>$${amount} USD</strong> respaldas directamente las acciones de <strong>${campaignObj.shortName}</strong> en Los Ángeles.`;
+  }
+
+  function syncDonationUI() {
+    const camp = getActiveCampaignObj();
+    const formattedAmt = `$${Number(activeDonationAmount || 75).toLocaleString("en-US")} USD`;
+    const freqLabel = getActiveFreqLabel();
+
+    // 1. Pestañas en la sección #donaciones
+    campaignTabs.forEach((tab) => {
+      const isMatch = tab.getAttribute("data-campaign") === activeCampaignKey;
+      tab.classList.toggle("is-active", isMatch);
+      tab.setAttribute("aria-selected", isMatch ? "true" : "false");
+    });
+
+    // 2. Píldoras en la vista #donation-checkout-view
+    checkoutPills.forEach((pill) => {
+      pill.classList.toggle("is-active", pill.getAttribute("data-campaign") === activeCampaignKey);
+    });
+
+    // 3. Tarjeta izquierda de Spotlight en #donaciones
+    const setElText = (id, txt) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = txt;
+    };
+
+    setElText("donation-live-lead", camp.lead);
+    setElText("spotlight-badge", camp.badge);
+    setElText("spotlight-code", camp.code);
+    setElText("spotlight-title", camp.title);
+    setElText("spotlight-desc", camp.desc);
+    setElText("spotlight-raised", camp.raised);
+    setElText("spotlight-goal", camp.goal);
+    setElText("spotlight-stat1-val", camp.stat1Val);
+    setElText("spotlight-stat1-lbl", camp.stat1Lbl);
+    setElText("spotlight-stat2-val", camp.stat2Val);
+    setElText("spotlight-stat2-lbl", camp.stat2Lbl);
+    setElText("donation-callout-text", camp.callout);
+
+    const barFill = document.getElementById("spotlight-bar-fill");
+    if (barFill) barFill.style.width = `${camp.percent}%`;
+
+    const bgImg = document.getElementById("donation-bg-preview-img");
+    if (bgImg && bgImg.getAttribute("src") !== camp.img) {
+      bgImg.src = camp.img;
+    }
+
+    // 4. Botones de monto y equivalencia en #donaciones
+    amountBtns.forEach((btn) => {
+      const btnVal = Number(btn.getAttribute("data-amount"));
+      btn.classList.toggle("is-selected", btnVal === Number(activeDonationAmount));
+    });
+
+    checkoutAmtChips.forEach((chip) => {
+      const chipVal = Number(chip.getAttribute("data-amount"));
+      chip.classList.toggle("is-selected", chipVal === Number(activeDonationAmount));
+    });
+
+    const eqEl = document.getElementById("donation-impact-equivalence");
+    if (eqEl) {
+      eqEl.innerHTML = getImpactEquivalenceText(camp, activeDonationAmount);
+    }
+
+    setElText(
+      "btn-donate-now-label",
+      currentLang === "en"
+        ? `DONATE NOW TO ${camp.shortName.toUpperCase()} • ${formattedAmt}`
+        : `DONAR AHORA A ${camp.shortName.toUpperCase()} • ${formattedAmt}`
+    );
+
+    // 5. Actualizar toda la información en la Nueva Vista #donation-checkout-view
+    const checkoutImg = document.getElementById("checkout-campaign-img");
+    if (checkoutImg) checkoutImg.src = camp.img;
+
+    setElText("checkout-campaign-badge", camp.badge);
+    setElText("checkout-campaign-code", camp.code);
+    setElText("checkout-campaign-title", camp.title);
+    setElText("checkout-campaign-desc", camp.desc);
+    setElText(
+      "checkout-summary-campaign-name",
+      currentLang === "en" ? `Designation: ${camp.title}` : `Destino: ${camp.title}`
+    );
+    setElText("checkout-summary-amount", formattedAmt);
+    setElText(
+      "ach-reference-code",
+      `${camp.code.replace("CAMPAÑA #", "").replace("CAMPAIGN #", "")}-${activeDonationAmount}`
+    );
+    setElText(
+      "btn-complete-donation-text",
+      currentLang === "en"
+        ? `Complete ${freqLabel} of ${formattedAmt} to ${camp.shortName}`
+        : `Completar ${freqLabel} de ${formattedAmt} a ${camp.shortName}`
+    );
+
+    const allocListEl = document.getElementById("checkout-allocation-list");
+    if (allocListEl) {
+      allocListEl.innerHTML = camp.allocations
+        .map(
+          (a) => `
+          <div class="checkout-allocation-item">
+            <div class="checkout-allocation-item__row">
+              <span>${a.label}</span>
+              <span>${a.pct}%</span>
+            </div>
+            <div class="checkout-allocation-item__bar">
+              <div class="checkout-allocation-item__fill" style="width:${a.pct}%;"></div>
+            </div>
+          </div>
+        `
+        )
+        .join("");
+    }
+
+    const delivListEl = document.getElementById("checkout-deliverables-list");
+    if (delivListEl) {
+      delivListEl.innerHTML = camp.deliverables
+        .map((d) => `<li><span>✓</span><span>${d}</span></li>`)
+        .join("");
+    }
+  }
+
+  campaignTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      activeCampaignKey = tab.getAttribute("data-campaign") || "organizacion";
+      syncDonationUI();
+    });
+  });
+
+  checkoutPills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      activeCampaignKey = pill.getAttribute("data-campaign") || "organizacion";
+      syncDonationUI();
+    });
+  });
+
+  amountBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activeDonationAmount = Number(btn.getAttribute("data-amount")) || 75;
+      if (customAmountInput) customAmountInput.value = String(activeDonationAmount);
+      if (checkoutAmountInput) checkoutAmountInput.value = String(activeDonationAmount);
+      syncDonationUI();
+    });
+  });
+
+  checkoutAmtChips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      activeDonationAmount = Number(chip.getAttribute("data-amount")) || 75;
+      if (customAmountInput) customAmountInput.value = String(activeDonationAmount);
+      if (checkoutAmountInput) checkoutAmountInput.value = String(activeDonationAmount);
+      syncDonationUI();
+    });
+  });
+
+  if (customAmountInput) {
+    customAmountInput.addEventListener("input", () => {
+      const val = Math.max(1, Number(customAmountInput.value) || 0);
+      activeDonationAmount = val;
+      if (checkoutAmountInput) checkoutAmountInput.value = String(val);
+      syncDonationUI();
+    });
+  }
+
+  if (checkoutAmountInput) {
+    checkoutAmountInput.addEventListener("input", () => {
+      const val = Math.max(1, Number(checkoutAmountInput.value) || 0);
+      activeDonationAmount = val;
+      if (customAmountInput) customAmountInput.value = String(val);
+      syncDonationUI();
+    });
+  }
+
+  // Frecuencia en la vista de Checkout
+  document.querySelectorAll(".checkout-freq-btn").forEach((btn, idx) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".checkout-freq-btn").forEach((b) => {
+        b.classList.toggle("is-active", b === btn);
+      });
+      activeDonationFreqKey = idx === 1 ? "monthly" : "once";
+      syncDonationUI();
+    });
+  });
+
+  // Pestañas de Método de Pago en la vista de Checkout
+  document.querySelectorAll(".checkout-pay-tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const payMethod = tab.getAttribute("data-pay") || "card";
+      document.querySelectorAll(".checkout-pay-tab").forEach((t) => {
+        t.classList.toggle("is-active", t === tab);
+      });
+      document.querySelectorAll(".checkout-pay-panel").forEach((panel) => {
+        panel.classList.toggle("is-visible", panel.id === `pay-panel-${payMethod}`);
       });
     });
+  });
+
+  // AJUSTE #3: Navegación hacia #vista-donacion permitiendo scroll fluido con la ruedita del mouse
+  const checkoutViewEl = document.getElementById("donation-checkout-view");
+  const btnDonateNow = document.getElementById("btn-donate-now");
+  const btnBackToSite = document.getElementById("btn-back-to-site");
+
+  function openDonationCheckoutView() {
+    syncDonationUI();
+    document.body.classList.add("is-donation-checkout-open");
+    if (checkoutViewEl) checkoutViewEl.setAttribute("aria-hidden", "false");
+    window.scrollTo({ top: 0, behavior: "auto" });
+    if (lenis) {
+      lenis.start();
+      lenis.scrollTo(0, { immediate: true });
+      requestAnimationFrame(() => {
+        lenis.resize();
+      });
+    }
+    if (window.location.hash !== "#vista-donacion") {
+      history.pushState({ view: "donation-checkout" }, "", "#vista-donacion");
+    }
+  }
+
+  function closeDonationCheckoutView() {
+    document.body.classList.remove("is-donation-checkout-open");
+    if (checkoutViewEl) checkoutViewEl.setAttribute("aria-hidden", "true");
+    if (lenis) {
+      lenis.start();
+      requestAnimationFrame(() => {
+        lenis.resize();
+      });
+    }
+    const donSection = document.getElementById("donaciones");
+    if (donSection) {
+      donSection.scrollIntoView({ behavior: "smooth" });
+    }
+    if (window.location.hash === "#vista-donacion") {
+      history.pushState({ view: "main" }, "", "#donaciones");
+    }
+  }
+
+  if (btnDonateNow) {
+    btnDonateNow.addEventListener("click", openDonationCheckoutView);
+  }
+
+  if (btnBackToSite) {
+    btnBackToSite.addEventListener("click", closeDonationCheckoutView);
+  }
+
+  window.addEventListener("popstate", () => {
+    if (window.location.hash === "#vista-donacion") {
+      openDonationCheckoutView();
+    } else if (document.body.classList.contains("is-donation-checkout-open")) {
+      document.body.classList.remove("is-donation-checkout-open");
+      if (checkoutViewEl) checkoutViewEl.setAttribute("aria-hidden", "true");
+      if (lenis) {
+        lenis.start();
+        requestAnimationFrame(() => lenis.resize());
+      }
+    }
+  });
+
+  // Envío del formulario de donación en la nueva vista
+  const donationCheckoutForm = document.getElementById("donation-checkout-form");
+  const donationReceiptBox = document.getElementById("donation-receipt-box");
+  if (donationCheckoutForm && donationReceiptBox) {
+    donationCheckoutForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const defaultDonor = currentLang === "en" ? "Supporter" : "Donante Solidario";
+      const firstName = (document.getElementById("donor-first-name")?.value || "").trim() || defaultDonor;
+      const lastName = (document.getElementById("donor-last-name")?.value || "").trim();
+      const email = (document.getElementById("donor-email")?.value || "").trim() || "correo@comunidad.org";
+      const fullName = `${firstName} ${lastName}`.trim();
+      const camp = getActiveCampaignObj();
+      const freqLabel = getActiveFreqLabel();
+      const receiptId = `ER-501C3-${Math.floor(100000 + Math.random() * 900000)}`;
+
+      if (currentLang === "en") {
+        donationReceiptBox.innerHTML = `
+          <div style="font-family:var(--font-mono); font-size:11px; font-weight:700; color:#047857; margin-bottom:4px;">
+            ✓ PRELIMINARY 501(c)(3) DONATION CERTIFICATE • RECEIPT #${receiptId}
+          </div>
+          <div style="font-family:var(--font-display); font-size:16px; font-weight:800; color:#064E3B; margin-bottom:6px;">
+            Thank you for your solidarity, ${fullName}!
+          </div>
+          <p style="margin-bottom:8px;">
+            We have recorded your <strong>${freqLabel}</strong> of <strong>$${Number(activeDonationAmount).toLocaleString("en-US")} USD</strong> designated to:
+            <strong>${camp.title}</strong>.
+          </p>
+          <div style="font-size:12.5px; color:#047857;">
+            A copy of your tax-deductible receipt (EIN: 95-3759142) has been sent to <strong>${email}</strong>.
+          </div>
+        `;
+      } else {
+        donationReceiptBox.innerHTML = `
+          <div style="font-family:var(--font-mono); font-size:11px; font-weight:700; color:#047857; margin-bottom:4px;">
+            ✓ CERTIFICADO PRELIMINAR DE DONACIÓN 501(c)(3) • FOLIO #${receiptId}
+          </div>
+          <div style="font-family:var(--font-display); font-size:16px; font-weight:800; color:#064E3B; margin-bottom:6px;">
+            ¡Gracias por tu solidaridad, ${fullName}!
+          </div>
+          <p style="margin-bottom:8px;">
+            Hemos registrado tu <strong>${freqLabel}</strong> por <strong>$${Number(activeDonationAmount).toLocaleString("en-US")} USD</strong> destinada a:
+            <strong>${camp.title}</strong>.
+          </p>
+          <div style="font-size:12.5px; color:#047857;">
+            Se ha enviado copia del recibo fiscal deducible (EIN: 95-3759142) a <strong>${email}</strong>.
+          </div>
+        `;
+      }
+      donationReceiptBox.classList.add("is-visible");
+    });
+  }
+
+  syncDonationUI();
+
+  // ==========================================================================
+  // 12. AJUSTE #1: SWITCH GLOBAL DE IDIOMA (ES / EN) EN TODA LA PÁGINA
+  // ==========================================================================
+  function applySiteLanguage(lang) {
+    currentLang = lang === "en" ? "en" : "es";
+    document.documentElement.lang = currentLang;
+
+    const dict = I18N_DICT[currentLang] || I18N_DICT.es;
+
+    // 1. Traducir todos los elementos con data-i18n
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (key && dict[key] !== undefined) {
+        el.innerHTML = dict[key];
+      }
+    });
+
+    // 2. Traducir todos los placeholders con data-i18n-placeholder
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-placeholder");
+      if (key && dict[key] !== undefined) {
+        el.setAttribute("placeholder", dict[key]);
+      }
+    });
+
+    // 3. Re-renderizar módulos dinámicos en el idioma seleccionado
+    renderManifestoWords();
+    runAllCipherCards();
+    renderRiffDeck();
+    renderUnveilPlanes(activeUnveilFilter);
+    refreshTimelineLanguage();
+    renderClinicCalendar();
+    renderTimeSlots();
+    updateSelectionBanner();
+    syncDonationUI();
+    resetAssistantConversation();
+
+    // 4. Re-alinear la píldora líquida de navegación tras el cambio de ancho de textos
+    setTimeout(() => {
+      const activeBtn =
+        document.querySelector(".gooey-nav__btn.is-active") ||
+        document.querySelector(".gooey-nav__btn");
+      if (activeBtn && typeof moveGooeyPillToButton === "function") {
+        moveGooeyPillToButton(activeBtn, true);
+      }
+    }, 50);
+  }
+
+  document.querySelectorAll(".lang-pill__btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".lang-pill__btn").forEach((b) => {
+        b.classList.remove("is-active");
+        b.setAttribute("aria-pressed", "false");
+      });
+      btn.classList.add("is-active");
+      btn.setAttribute("aria-pressed", "true");
+      const selectedLang = btn.getAttribute("data-lang") || "es";
+      applySiteLanguage(selectedLang);
+    });
+  });
+
+  if (window.location.hash === "#vista-donacion") {
+    openDonationCheckoutView();
   }
 })();

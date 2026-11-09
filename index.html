@@ -97,6 +97,12 @@
             </button>
           </li>
           <li>
+            <button type="button" class="gooey-nav-btn" data-target="#donaciones">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span data-i18n="nav_donate">Donaciones</span>
+            </button>
+          </li>
+          <li>
             <button type="button" class="gooey-nav-btn" data-target="#clinica-citas">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/></svg>
               <span data-i18n="nav_clinic">Clínica / Citas</span>
@@ -119,7 +125,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-site-view">
     <!-- ======================================================================
          2. HERO EDITORIAL V3 + ESCENARIO CON MUESCAS 45° (Video 1 + Video 2 + V3)
          ====================================================================== -->
@@ -174,7 +180,7 @@
               />
             </div>
             <div>
-              <div class="hero-secondary-plane__tag">PLANO DOCUMENTAL Z-3 • WESTLAKE</div>
+              <div class="hero-secondary-plane__tag" data-i18n="hero_z3_tag">PLANO DOCUMENTAL Z-3 • WESTLAKE</div>
               <div class="hero-secondary-plane__title" data-i18n="hero_z3_title">Cuatro décadas de arraigo en L.A.</div>
               <p class="hero-secondary-plane__sub" data-i18n="hero_z3_sub">
                 Orientación legal, clínicas de miércoles y sábados y defensa comunitaria sin barreras.
@@ -208,17 +214,17 @@
             <!-- Tarjeta Flotante de Pulso / Ruta en Vivo (Inspirada en NEXORA Video 1) -->
             <div class="nexora-route-card">
               <div class="nexora-route-card__top">
-                <span>● CLÍNICA COMUNITARIA ACTIVA</span>
+                <span data-i18n="hero_route_status">● CLÍNICA COMUNITARIA ACTIVA</span>
                 <span>EST. 1981</span>
               </div>
               <div class="nexora-route-card__route">
                 <span>Westlake, L.A.</span>
                 <span class="nexora-route-card__line"></span>
-                <span>Comunidad</span>
+                <span data-i18n="hero_route_dest">Comunidad</span>
               </div>
               <div class="nexora-route-card__meta">
-                <span>Mié 2–5 PM • Sáb 10–1 PM</span>
-                <span style="color: var(--amber-400); font-weight: 700;">100% Confidencial</span>
+                <span data-i18n="hero_route_hours">Mié 2–5 PM • Sáb 10–1 PM</span>
+                <span style="color: var(--amber-400); font-weight: 700;" data-i18n="hero_route_conf">100% Confidencial</span>
               </div>
             </div>
           </div>
@@ -239,13 +245,22 @@
       </div>
     </section>
 
+    <!-- SHAPE DIVIDER 01: Olas suaves desde Hero (#F7F6F2) hacia Manifiesto (#09192C) -->
+    <div class="wave-divider wave-divider--to-navy" aria-hidden="true">
+      <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
+        <path class="wave-layer-back" d="M0,38 C280,104 590,-10 920,46 C1160,86 1320,24 1440,42 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-mid" d="M0,62 C340,12 680,108 1040,48 C1240,16 1360,54 1440,68 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-front" d="M0,74 C310,114 660,24 1020,76 C1220,104 1350,62 1440,78 L1440,110 L0,110 Z"></path>
+      </svg>
+    </div>
+
     <!-- ======================================================================
          3. MANIFIESTO OSCURO CON SCROLL-SCRUBBING PALABRA POR PALABRA (Video 1)
             + CONTENEDOR CON MUESCA "WHY CHOOSE EL RESCATE?" (Video 2 C&A)
          ====================================================================== -->
     <section class="manifesto-section" id="nosotros">
       <div class="manifesto-inner">
-        <div class="section-eyebrow">NUESTRA MISIÓN DESDE 1981 • SCROLL REVEAL</div>
+        <div class="section-eyebrow" data-i18n="manifesto_eyebrow">NUESTRA MISIÓN DESDE 1981 • SCROLL REVEAL</div>
 
         <p class="scrub-manifesto-text" id="scrub-manifesto">
           Fundada en 1981 por una necesidad humanitaria urgente, nacimos para brindar representación legal ética, refugio comunitario y oportunidades económicas a cada familia inmigrante que construye su vida en Los Ángeles.
@@ -259,8 +274,8 @@
               <div class="why-pillar__icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               </div>
-              <h3 class="why-pillar__title">Defensa Legal con Historia</h3>
-              <p class="why-pillar__desc">
+              <h3 class="why-pillar__title" data-i18n="why_1_title">Defensa Legal con Historia</h3>
+              <p class="why-pillar__desc" data-i18n="why_1_desc">
                 Pioneros desde 1981 en casos de asilo, acuerdos históricos ABC, TPS, NACARA, DACA y reunificación familiar en California.
               </p>
             </article>
@@ -269,8 +284,8 @@
               <div class="why-pillar__icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
               </div>
-              <h3 class="why-pillar__title">Trato Humano y Bilingüe</h3>
-              <p class="why-pillar__desc">
+              <h3 class="why-pillar__title" data-i18n="why_2_title">Trato Humano y Bilingüe</h3>
+              <p class="why-pillar__desc" data-i18n="why_2_desc">
                 Cada consulta se realiza en tu idioma, con respeto absoluto por la historia de tu familia y sin tecnicismos intimidantes.
               </p>
             </article>
@@ -279,8 +294,8 @@
               <div class="why-pillar__icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
               </div>
-              <h3 class="why-pillar__title">Confidencialidad Absoluta</h3>
-              <p class="why-pillar__desc">
+              <h3 class="why-pillar__title" data-i18n="why_3_title">Confidencialidad Absoluta</h3>
+              <p class="why-pillar__desc" data-i18n="why_3_desc">
                 Tus datos y consultas están protegidos bajo secreto profesional. Jamás compartimos información con autoridades migratorias.
               </p>
             </article>
@@ -289,24 +304,43 @@
       </div>
     </section>
 
+    <!-- SHAPE DIVIDER 02: Olas suaves desde Manifiesto (#09192C) hacia Impacto (#F7F6F2) -->
+    <div class="wave-divider wave-divider--from-navy-to-warm" aria-hidden="true">
+      <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
+        <path class="wave-layer-back" d="M0,32 C320,98 680,4 1020,64 C1230,98 1360,36 1440,48 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-mid" d="M0,56 C280,10 640,106 980,44 C1210,8 1340,68 1440,58 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-front" d="M0,76 C360,26 710,112 1080,66 C1260,44 1370,82 1440,74 L1440,110 L0,110 Z"></path>
+      </svg>
+    </div>
+
     <!-- ======================================================================
-         4. BENTO GRID DE IMPACTO + STICKY SPLIT SCROLL (Video 1 — NEXORA)
+         4. BENTO GRID DE IMPACTO CON EFECTO CIFRADO / DECODIFICADOR / MATRIX
+            + COLOR SÓLIDO Y BORDE GLASEADO (Referencia Efecto Cifrado)
          ====================================================================== -->
     <section class="bento-impact-section" id="impacto">
       <div class="section-header-row">
         <div>
           <div class="hero-kicker">
             <span class="hero-kicker__line"></span>
-            <span>IMPACTO COMUNITARIO EN CIFRAS</span>
+            <span data-i18n="impact_kicker">IMPACTO COMUNITARIO EN CIFRAS</span>
           </div>
-          <h2 class="section-title">Soluciones integrales construidas<br />para ir más lejos</h2>
+          <h2 class="section-title">
+            <span data-i18n="impact_title_1">Soluciones integrales construidas</span><br />
+            <span data-i18n="impact_title_2">para ir más lejos</span>
+          </h2>
         </div>
-        <p class="section-subtitle">
-          Combinamos rigor jurídico, clínicas comunitarias semanales y educación financiera para fortalecer a toda la comunidad inmigrante del sur de California.
-        </p>
+        <div>
+          <p class="section-subtitle" data-i18n="impact_sub">
+            Combinamos rigor jurídico, clínicas comunitarias semanales y educación financiera para fortalecer a toda la comunidad inmigrante del sur de California.
+          </p>
+          <button type="button" class="cipher-replay-pill" id="btn-replay-cipher" aria-label="Repetir efecto de decodificación en cifras">
+            <span class="cipher-replay-pill__dot"></span>
+            <span data-i18n="impact_replay_btn">↻ Decodificar cifras en tiempo real</span>
+          </button>
+        </div>
       </div>
 
-      <div class="nexora-bento-grid">
+      <div class="nexora-bento-grid" id="cipher-bento-grid">
         <div class="bento-card bento-card--hero">
           <img
             src="assets/provisional-documentary-la-placita.jpg"
@@ -314,37 +348,77 @@
             class="bento-card--hero-bg"
           />
           <div style="position:relative; z-index:2;">
-            <span class="hero-kicker" style="color: var(--amber-400);">SEDE HISTÓRICA EN WESTLAKE, L.A.</span>
-            <h3 style="font-family: var(--font-display); font-size: 30px; font-weight: 800; max-width: 480px; margin-top: 8px;">
+            <span class="hero-kicker" style="color: var(--amber-400);" data-i18n="bento_hero_kicker">SEDE HISTÓRICA EN WESTLAKE, L.A.</span>
+            <h3 style="font-family: var(--font-display); font-size: 30px; font-weight: 800; max-width: 480px; margin-top: 8px;" data-i18n="bento_hero_title">
               De refugio humanitario en 1981 a institución comunitaria de referencia
             </h3>
           </div>
           <div style="position:relative; z-index:2; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-            <a href="#historia-3d" class="btn-primary-editorial" style="background: var(--amber-500); color: var(--navy-950);">
+            <a href="#historia-3d" class="btn-primary-editorial" style="background: var(--amber-500); color: var(--navy-950);" data-i18n="bento_hero_cta">
               Explorar Autobús Histórico 3D →
             </a>
           </div>
         </div>
 
-        <div class="bento-card bento-card--stat-light">
-          <div class="bento-stat__label">FAMILIAS ACOMPAÑADAS</div>
-          <div class="bento-stat__number" data-count="45">45K+</div>
-        </div>
+        <!-- TARJETA CIFRADA 01: Sólido Azul Eléctrico Institucional + Borde Glaseado -->
+        <article class="bento-card cipher-stat-card cipher-stat-card--electric" data-cipher-card="0">
+          <div class="cipher-stat-card__glaze-rim" aria-hidden="true"></div>
+          <div class="cipher-stat-card__solid-core">
+            <span class="cipher-reg-node cipher-reg-node--top" aria-hidden="true"></span>
+            <span class="cipher-reg-node cipher-reg-node--bottom" aria-hidden="true"></span>
+            <div class="cipher-stat-card__head">
+              <span class="cipher-stat-card__code">DEC // 01</span>
+              <span class="cipher-stat-card__status">VERIFIED</span>
+            </div>
+            <div class="bento-stat__number cipher-odometer" data-cipher-value="45K+">45K+</div>
+            <div class="bento-stat__label cipher-label" data-cipher-text="Familias acompañadas" data-cipher-text-es="Familias acompañadas" data-cipher-text-en="Families supported">Familias acompañadas</div>
+          </div>
+        </article>
 
-        <div class="bento-card bento-card--stat-navy">
-          <div class="bento-stat__label">AÑOS DE TRAYECTORIA</div>
-          <div class="bento-stat__number">45+</div>
-        </div>
+        <!-- TARJETA CIFRADA 02: Sólido Obsidiana Profundo + Borde Glaseado -->
+        <article class="bento-card cipher-stat-card cipher-stat-card--obsidian" data-cipher-card="1">
+          <div class="cipher-stat-card__glaze-rim" aria-hidden="true"></div>
+          <div class="cipher-stat-card__solid-core">
+            <span class="cipher-reg-node cipher-reg-node--top" aria-hidden="true"></span>
+            <span class="cipher-reg-node cipher-reg-node--bottom" aria-hidden="true"></span>
+            <div class="cipher-stat-card__head">
+              <span class="cipher-stat-card__code">DEC // 02</span>
+              <span class="cipher-stat-card__status">EST. 1981</span>
+            </div>
+            <div class="bento-stat__number cipher-odometer" data-cipher-value="45+">45+</div>
+            <div class="bento-stat__label cipher-label" data-cipher-text="Años de trayectoria" data-cipher-text-es="Años de trayectoria" data-cipher-text-en="Years of service">Años de trayectoria</div>
+          </div>
+        </article>
 
-        <div class="bento-card bento-card--stat-blue">
-          <div class="bento-stat__label">CONFIDENCIALIDAD</div>
-          <div class="bento-stat__number">100%</div>
-        </div>
+        <!-- TARJETA CIFRADA 03: Sólido Azul Pizarra Profundo + Borde Glaseado -->
+        <article class="bento-card cipher-stat-card cipher-stat-card--slate" data-cipher-card="2">
+          <div class="cipher-stat-card__glaze-rim" aria-hidden="true"></div>
+          <div class="cipher-stat-card__solid-core">
+            <span class="cipher-reg-node cipher-reg-node--top" aria-hidden="true"></span>
+            <span class="cipher-reg-node cipher-reg-node--bottom" aria-hidden="true"></span>
+            <div class="cipher-stat-card__head">
+              <span class="cipher-stat-card__code">DEC // 03</span>
+              <span class="cipher-stat-card__status">ENCRYPTED</span>
+            </div>
+            <div class="bento-stat__number cipher-odometer" data-cipher-value="100%">100%</div>
+            <div class="bento-stat__label cipher-label" data-cipher-text="Confidencialidad" data-cipher-text-es="Confidencialidad" data-cipher-text-en="Confidentiality">Confidencialidad</div>
+          </div>
+        </article>
 
-        <div class="bento-card bento-card--stat-amber">
-          <div class="bento-stat__label">SEGUIMIENTO DE CASOS</div>
-          <div class="bento-stat__number">98%</div>
-        </div>
+        <!-- TARJETA CIFRADA 04: Sólido Ámbar Institucional + Borde Glaseado -->
+        <article class="bento-card cipher-stat-card cipher-stat-card--amber" data-cipher-card="3">
+          <div class="cipher-stat-card__glaze-rim" aria-hidden="true"></div>
+          <div class="cipher-stat-card__solid-core">
+            <span class="cipher-reg-node cipher-reg-node--top" aria-hidden="true"></span>
+            <span class="cipher-reg-node cipher-reg-node--bottom" aria-hidden="true"></span>
+            <div class="cipher-stat-card__head">
+              <span class="cipher-stat-card__code">DEC // 04</span>
+              <span class="cipher-stat-card__status">ACTIVE</span>
+            </div>
+            <div class="bento-stat__number cipher-odometer" data-cipher-value="98%">98%</div>
+            <div class="bento-stat__label cipher-label" data-cipher-text="Seguimiento de casos" data-cipher-text-es="Seguimiento de casos" data-cipher-text-en="Case follow-through">Seguimiento de casos</div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -354,40 +428,43 @@
         <div class="sticky-left-col">
           <div class="hero-kicker">
             <span class="hero-kicker__line"></span>
-            <span>MODELO DE ATENCIÓN INTEGRAL</span>
+            <span data-i18n="split_kicker">MODELO DE ATENCIÓN INTEGRAL</span>
           </div>
-          <h2 class="section-title">Construido sobre confianza.<br />Impulsado por dignidad.</h2>
-          <p class="section-subtitle" style="margin-top: 14px;">
+          <h2 class="section-title">
+            <span data-i18n="split_title_1">Construido sobre confianza.</span><br />
+            <span data-i18n="split_title_2">Impulsado por dignidad.</span>
+          </h2>
+          <p class="section-subtitle" style="margin-top: 14px;" data-i18n="split_sub">
             A medida que avanzas, conoce los tres pilares con los que acompañamos a cada persona desde su primera charla hasta la resolución de su caso.
           </p>
 
           <div class="sticky-pillar-list" id="sticky-pillar-list">
             <div class="sticky-pillar-item is-active" data-pillar="0">
               <div class="sticky-pillar-item__head">
-                <span>Representación y Orientación Legal</span>
+                <span data-i18n="pillar_1_title">Representación y Orientación Legal</span>
                 <span class="sticky-pillar-item__num">01</span>
               </div>
-              <p class="sticky-pillar-item__body">
+              <p class="sticky-pillar-item__body" data-i18n="pillar_1_body">
                 Evaluación honesta de elegibilidad para asilo, TPS, DACA, peticiones familiares, visas humanitarias (U/VAWA) y naturalización.
               </p>
             </div>
 
             <div class="sticky-pillar-item" data-pillar="1">
               <div class="sticky-pillar-item__head">
-                <span>Clínicas Legales de Miércoles y Sábados</span>
+                <span data-i18n="pillar_2_title">Clínicas Legales de Miércoles y Sábados</span>
                 <span class="sticky-pillar-item__num">02</span>
               </div>
-              <p class="sticky-pillar-item__body">
+              <p class="sticky-pillar-item__body" data-i18n="pillar_2_body">
                 Jornadas semanales de orientación comunitaria con reserva en línea para resolver dudas urgentes en un entorno seguro.
               </p>
             </div>
 
             <div class="sticky-pillar-item" data-pillar="2">
               <div class="sticky-pillar-item__head">
-                <span>Empoderamiento Económico y Social</span>
+                <span data-i18n="pillar_3_title">Empoderamiento Económico y Social</span>
                 <span class="sticky-pillar-item__num">03</span>
               </div>
-              <p class="sticky-pillar-item__body">
+              <p class="sticky-pillar-item__body" data-i18n="pillar_3_body">
                 Asesoría para pequeños negocios migrantes, talleres de ciudadanía y redes de apoyo familiar en Los Ángeles.
               </p>
             </div>
@@ -398,24 +475,24 @@
           <article class="wipe-media-card" data-wipe-card="0">
             <img src="assets/provisional-documentary-la-placita.jpg" alt="Orientación Legal Comunitaria" />
             <div class="wipe-media-card__overlay">
-              <span class="wipe-media-card__top-tag">PILAR 01 • DEFENSA JURÍDICA</span>
+              <span class="wipe-media-card__top-tag" data-i18n="wipe_1_tag">PILAR 01 • DEFENSA JURÍDICA</span>
               <div class="wipe-media-card__bottom">
                 <div>
-                  <h3 style="font-family:var(--font-display); font-size:24px; font-weight:800; margin-bottom:6px;">
+                  <h3 style="font-family:var(--font-display); font-size:24px; font-weight:800; margin-bottom:6px;" data-i18n="wipe_1_title">
                     Amparo y Representación Ética
                   </h3>
-                  <p style="font-size:14px; color:rgba(234,241,246,0.85);">
+                  <p style="font-size:14px; color:rgba(234,241,246,0.85);" data-i18n="wipe_1_desc">
                     Más de cuatro décadas defendiendo el derecho a permanecer en familia.
                   </p>
                 </div>
                 <div class="wipe-media-card__kpis">
                   <div>
                     <div class="wipe-kpi__val">98%</div>
-                    <div class="wipe-kpi__lbl">Casos con seguimiento</div>
+                    <div class="wipe-kpi__lbl" data-i18n="wipe_1_kpi1">Casos con seguimiento</div>
                   </div>
                   <div>
                     <div class="wipe-kpi__val">1981</div>
-                    <div class="wipe-kpi__lbl">Origen en L.A.</div>
+                    <div class="wipe-kpi__lbl" data-i18n="wipe_1_kpi2">Origen en L.A.</div>
                   </div>
                 </div>
               </div>
@@ -425,24 +502,24 @@
           <article class="wipe-media-card" data-wipe-card="1">
             <img src="assets/provisional-documentary-macarthur-park.jpg" alt="Clínicas Comunitarias en Westlake" />
             <div class="wipe-media-card__overlay">
-              <span class="wipe-media-card__top-tag">PILAR 02 • CLÍNICAS SEMANALES</span>
+              <span class="wipe-media-card__top-tag" data-i18n="wipe_2_tag">PILAR 02 • CLÍNICAS SEMANALES</span>
               <div class="wipe-media-card__bottom">
                 <div>
-                  <h3 style="font-family:var(--font-display); font-size:24px; font-weight:800; margin-bottom:6px;">
+                  <h3 style="font-family:var(--font-display); font-size:24px; font-weight:800; margin-bottom:6px;" data-i18n="wipe_2_title">
                     Charlas Legales Miércoles y Sábados
                   </h3>
-                  <p style="font-size:14px; color:rgba(234,241,246,0.85);">
+                  <p style="font-size:14px; color:rgba(234,241,246,0.85);" data-i18n="wipe_2_desc">
                     Agenda tu horario en menos de un minuto sin compartir datos con terceros.
                   </p>
                 </div>
                 <div class="wipe-media-card__kpis">
                   <div>
                     <div class="wipe-kpi__val">2x</div>
-                    <div class="wipe-kpi__lbl">Jornadas por semana</div>
+                    <div class="wipe-kpi__lbl" data-i18n="wipe_2_kpi1">Jornadas por semana</div>
                   </div>
                   <div>
                     <div class="wipe-kpi__val">100%</div>
-                    <div class="wipe-kpi__lbl">Privacidad garantizada</div>
+                    <div class="wipe-kpi__lbl" data-i18n="wipe_2_kpi2">Privacidad garantizada</div>
                   </div>
                 </div>
               </div>
@@ -452,24 +529,24 @@
           <article class="wipe-media-card" data-wipe-card="2">
             <img src="assets/provisional-documentary-la-placita.jpg" alt="Desarrollo Comunitario en Los Ángeles" />
             <div class="wipe-media-card__overlay">
-              <span class="wipe-media-card__top-tag">PILAR 03 • COMUNIDAD Y FUTURO</span>
+              <span class="wipe-media-card__top-tag" data-i18n="wipe_3_tag">PILAR 03 • COMUNIDAD Y FUTURO</span>
               <div class="wipe-media-card__bottom">
                 <div>
-                  <h3 style="font-family:var(--font-display); font-size:24px; font-weight:800; margin-bottom:6px;">
+                  <h3 style="font-family:var(--font-display); font-size:24px; font-weight:800; margin-bottom:6px;" data-i18n="wipe_3_title">
                     Raíz Cultural y Futuro Económico
                   </h3>
-                  <p style="font-size:14px; color:rgba(234,241,246,0.85);">
+                  <p style="font-size:14px; color:rgba(234,241,246,0.85);" data-i18n="wipe_3_desc">
                     Formación cívica, ciudadanía y fortalecimiento del tejido vecinal en Westlake.
                   </p>
                 </div>
                 <div class="wipe-media-card__kpis">
                   <div>
                     <div class="wipe-kpi__val">360°</div>
-                    <div class="wipe-kpi__lbl">Acompañamiento</div>
+                    <div class="wipe-kpi__lbl" data-i18n="wipe_3_kpi1">Acompañamiento</div>
                   </div>
                   <div>
                     <div class="wipe-kpi__val">ES/EN</div>
-                    <div class="wipe-kpi__lbl">Atención bilingüe</div>
+                    <div class="wipe-kpi__lbl" data-i18n="wipe_3_kpi2">Atención bilingüe</div>
                   </div>
                 </div>
               </div>
@@ -479,6 +556,15 @@
       </div>
     </section>
 
+    <!-- SHAPE DIVIDER 03: Olas suaves desde Sticky Split (#F7F6F2) hacia Servicios (#122B4A) -->
+    <div class="wave-divider wave-divider--to-services" aria-hidden="true">
+      <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
+        <path class="wave-layer-back" d="M0,44 C310,106 670,-8 1010,52 C1210,88 1340,26 1440,46 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-mid" d="M0,66 C350,14 710,108 1060,48 C1250,18 1360,62 1440,70 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-front" d="M0,80 C320,114 680,28 1040,78 C1240,104 1360,68 1440,82 L1440,110 L0,110 Z"></path>
+      </svg>
+    </div>
+
     <!-- ======================================================================
          5. SERVICIOS INTERACTIVOS: MAZO "CARD SHUFFLE" (Video 4 RIFF 28)
             + ARCO 3D EN PERSPECTIVA (Video 2 C&A)
@@ -487,18 +573,18 @@
       <div class="services-showcase-inner">
         <div class="section-header-row" style="margin-bottom: 36px;">
           <div>
-            <div class="section-eyebrow">ÁREAS DE PRÁCTICA Y PROGRAMAS • INTERACTIVO</div>
-            <h2 class="section-title" style="color: var(--white);">
+            <div class="section-eyebrow" data-i18n="srv_eyebrow">ÁREAS DE PRÁCTICA Y PROGRAMAS • INTERACTIVO</div>
+            <h2 class="section-title" style="color: var(--white);" data-i18n="srv_title">
               Explora nuestros servicios en Mazo Shuffle o Arco 3D
             </h2>
           </div>
 
           <!-- Conmutador entre el Mazo Shuffle (Video 4) y el Arco 3D (Video 2) -->
           <div class="view-mode-switcher" role="tablist" aria-label="Modo de visualización de servicios">
-            <button type="button" class="view-mode-btn is-active" id="btn-mode-shuffle">
+            <button type="button" class="view-mode-btn is-active" id="btn-mode-shuffle" data-i18n="srv_mode_shuffle">
               Mazo Interactivo (Card Shuffle)
             </button>
-            <button type="button" class="view-mode-btn" id="btn-mode-arc3d">
+            <button type="button" class="view-mode-btn" id="btn-mode-arc3d" data-i18n="srv_mode_arc">
               Galería en Arco 3D
             </button>
           </div>
@@ -518,10 +604,10 @@
               Representación legal especializada para personas y familias que buscan protección en Estados Unidos, incluyendo asilo afirmativo y defensivo, visas U para víctimas de delitos y peticiones VAWA.
             </p>
             <div style="display:flex; gap:16px; flex-wrap:wrap;">
-              <a href="#clinica-citas" class="btn-primary-editorial" style="background:var(--amber-500); color:var(--navy-950);">
+              <a href="#clinica-citas" class="btn-primary-editorial" style="background:var(--amber-500); color:var(--navy-950);" data-i18n="srv_cta_book">
                 Agendar consulta para este servicio →
               </a>
-              <button type="button" class="btn-primary-editorial" id="btn-trigger-shuffle" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.22);">
+              <button type="button" class="btn-primary-editorial" id="btn-trigger-shuffle" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.22);" data-i18n="srv_cta_shuffle">
                 Barajar siguiente tarjeta ↻
               </button>
             </div>
@@ -541,36 +627,36 @@
             <article class="arc3d-card" data-service-idx="0">
               <img src="assets/provisional-documentary-la-placita.jpg" alt="Asilo y Refugio" />
               <div class="arc3d-card__info">
-                <div class="arc3d-card__tag">01 • PROTECCIÓN</div>
-                <div class="arc3d-card__title">Asilo, Refugio y Visas U/VAWA</div>
+                <div class="arc3d-card__tag" data-i18n="arc_1_tag">01 • PROTECCIÓN</div>
+                <div class="arc3d-card__title" data-i18n="arc_1_title">Asilo, Refugio y Visas U/VAWA</div>
               </div>
             </article>
             <article class="arc3d-card" data-service-idx="1">
               <img src="assets/provisional-documentary-macarthur-park.jpg" alt="TPS, DACA y NACARA" />
               <div class="arc3d-card__info">
-                <div class="arc3d-card__tag">02 • AMPARO LEGAL</div>
-                <div class="arc3d-card__title">Renovaciones TPS, DACA y NACARA</div>
+                <div class="arc3d-card__tag" data-i18n="arc_2_tag">02 • AMPARO LEGAL</div>
+                <div class="arc3d-card__title" data-i18n="arc_2_title">Renovaciones TPS, DACA y NACARA</div>
               </div>
             </article>
             <article class="arc3d-card" data-service-idx="2">
               <img src="assets/provisional-documentary-la-placita.jpg" alt="Residencia y Familia" />
               <div class="arc3d-card__info">
-                <div class="arc3d-card__tag">03 • REUNIFICACIÓN</div>
-                <div class="arc3d-card__title">Peticiones Familiares y Residencia</div>
+                <div class="arc3d-card__tag" data-i18n="arc_3_tag">03 • REUNIFICACIÓN</div>
+                <div class="arc3d-card__title" data-i18n="arc_3_title">Peticiones Familiares y Residencia</div>
               </div>
             </article>
             <article class="arc3d-card" data-service-idx="3">
               <img src="assets/provisional-documentary-macarthur-park.jpg" alt="Ciudadanía y Educación Cívica" />
               <div class="arc3d-card__info">
-                <div class="arc3d-card__tag">04 • CIUDADANÍA</div>
-                <div class="arc3d-card__title">Naturalización y Talleres Cívicos</div>
+                <div class="arc3d-card__tag" data-i18n="arc_4_tag">04 • CIUDADANÍA</div>
+                <div class="arc3d-card__title" data-i18n="arc_4_title">Naturalización y Talleres Cívicos</div>
               </div>
             </article>
             <article class="arc3d-card" data-service-idx="4">
               <img src="assets/provisional-documentary-la-placita.jpg" alt="Clínicas y Comunidad" />
               <div class="arc3d-card__info">
-                <div class="arc3d-card__tag">05 • COMUNIDAD</div>
-                <div class="arc3d-card__title">Clínicas Semanales y Microfinanzas</div>
+                <div class="arc3d-card__tag" data-i18n="arc_5_tag">05 • COMUNIDAD</div>
+                <div class="arc3d-card__title" data-i18n="arc_5_title">Clínicas Semanales y Microfinanzas</div>
               </div>
             </article>
           </div>
@@ -578,13 +664,22 @@
       </div>
     </section>
 
+    <!-- SHAPE DIVIDER 04: Olas suaves desde Servicios (#081526) hacia Archivo 3D (#F3F2EE) -->
+    <div class="wave-divider wave-divider--from-services-to-unveil" aria-hidden="true">
+      <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
+        <path class="wave-layer-back" d="M0,34 C340,104 660,2 1000,62 C1220,98 1350,34 1440,50 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-mid" d="M0,58 C290,12 650,106 1010,46 C1230,10 1350,64 1440,60 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-front" d="M0,78 C360,30 720,112 1080,68 C1260,46 1370,84 1440,76 L1440,110 L0,110 Z"></path>
+      </svg>
+    </div>
+
     <!-- ======================================================================
          6. GALERÍA ESPACIAL 3D ESTILO "UNVEIL® PROJECTS" (Imagen 2)
          ====================================================================== -->
     <section class="unveil-stack-section" id="archivo-3d">
       <div class="unveil-header-bar">
         <div class="unveil-top-cell">
-          <span>EL RESCATE® ARCHIVO VIVO</span>
+          <span data-i18n="unveil_cell_1">EL RESCATE® ARCHIVO VIVO</span>
           <span>●</span>
         </div>
         <div class="unveil-top-cell">
@@ -592,12 +687,12 @@
           <span>34.0522° N</span>
         </div>
         <div class="unveil-top-cell">
-          <span>CAPAS DE IMPACTO 3D</span>
+          <span data-i18n="unveil_cell_3">CAPAS DE IMPACTO 3D</span>
           <span id="unveil-active-counter">01 / 07</span>
         </div>
         <div class="unveil-top-cell">
-          <span>INTERACCIÓN</span>
-          <span>HOVER / CLICK EN CAPAS</span>
+          <span data-i18n="unveil_cell_4_l">INTERACCIÓN</span>
+          <span data-i18n="unveil_cell_4_r">CLICK PARA EXPANDIR IMAGEN</span>
         </div>
       </div>
 
@@ -610,19 +705,28 @@
       <div class="unveil-bottom-controls">
         <div>
           <div class="unveil-mode-toggle" role="group" aria-label="Cambiar vista de galería 3D">
-            <button type="button" class="unveil-mode-btn is-active" id="unveil-btn-overview">OVERVIEW (CAPAS 3D)</button>
-            <button type="button" class="unveil-mode-btn" id="unveil-btn-index">INDEX (CUADRÍCULA)</button>
+            <button type="button" class="unveil-mode-btn is-active" id="unveil-btn-overview" data-i18n="unveil_btn_overview">OVERVIEW (CAPAS 3D)</button>
+            <button type="button" class="unveil-mode-btn" id="unveil-btn-index" data-i18n="unveil_btn_index">INDEX (CUADRÍCULA)</button>
           </div>
         </div>
 
         <div class="unveil-filter-pills" id="unveil-filter-pills">
-          <button type="button" class="unveil-filter-pill is-active" data-filter="all">ALL <sup>07</sup></button>
-          <button type="button" class="unveil-filter-pill" data-filter="legal">DEFENSA LEGAL <sup>03</sup></button>
-          <button type="button" class="unveil-filter-pill" data-filter="comunidad">COMUNIDAD &amp; CULTURA <sup>02</sup></button>
-          <button type="button" class="unveil-filter-pill" data-filter="clinica">CLÍNICAS SEMANALES <sup>02</sup></button>
+          <button type="button" class="unveil-filter-pill is-active" data-filter="all"><span data-i18n="unveil_f_all">ALL</span> <sup>07</sup></button>
+          <button type="button" class="unveil-filter-pill" data-filter="legal"><span data-i18n="unveil_f_legal">DEFENSA LEGAL</span> <sup>03</sup></button>
+          <button type="button" class="unveil-filter-pill" data-filter="comunidad"><span data-i18n="unveil_f_comm">COMUNIDAD &amp; CULTURA</span> <sup>02</sup></button>
+          <button type="button" class="unveil-filter-pill" data-filter="clinica"><span data-i18n="unveil_f_clinic">CLÍNICAS SEMANALES</span> <sup>02</sup></button>
         </div>
       </div>
     </section>
+
+    <!-- SHAPE DIVIDER 05: Olas suaves desde Archivo 3D (#F3F2EE) hacia Historia 3D (#DAE6F0) -->
+    <div class="wave-divider wave-divider--to-history" aria-hidden="true">
+      <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
+        <path class="wave-layer-back" d="M0,40 C300,98 640,8 980,58 C1200,90 1340,32 1440,48 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-mid" d="M0,64 C350,18 700,104 1050,50 C1240,22 1360,64 1440,70 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-front" d="M0,78 C320,112 670,30 1030,76 C1230,100 1350,64 1440,80 L1440,110 L0,110 Z"></path>
+      </svg>
+    </div>
 
     <!-- ======================================================================
          7. LÍNEA DEL TIEMPO HISTÓRICA 3D (THREE.JS AUTOBÚS COMUNITARIO 1981–2026)
@@ -633,11 +737,11 @@
       <div class="nexora-timeline-route-bar">
         <div class="nexora-route-bar__head">
           <div>
-            <div class="section-eyebrow" style="margin-bottom:4px;">RECORRIDO HISTÓRICO INTERACTIVO EN THREE.JS / WEBGL</div>
-            <div class="nexora-route-bar__title">Cada década de compromiso comunitario, seguida paso a paso (1981 — 2026)</div>
+            <div class="section-eyebrow" style="margin-bottom:4px;" data-i18n="hist_eyebrow">RECORRIDO HISTÓRICO INTERACTIVO EN THREE.JS / WEBGL</div>
+            <div class="nexora-route-bar__title" data-i18n="hist_route_title">Cada década de compromiso comunitario, seguida paso a paso (1981 — 2026)</div>
           </div>
-          <span style="font-family:var(--font-mono); font-size:12px; color:var(--amber-400);">
-            Haz clic en cualquier año o usa las flechas para hacer avanzar el autobús 3D
+          <span style="font-family:var(--font-mono); font-size:12px; color:var(--amber-400);" data-i18n="hist_route_hint">
+            Haz clic en cualquier año, polaroid o flecha para explorar e inspeccionar imágenes
           </span>
         </div>
 
@@ -654,7 +758,7 @@
 
         <div class="bus-3d-header">
           <h2 class="bus-3d-header__title">EL RESCATE</h2>
-          <p class="bus-3d-header__sub">IMMIGRATION, COMMUNITY &amp; LEGAL SERVICES • ARCHIVO 3D</p>
+          <p class="bus-3d-header__sub" data-i18n="hist_stage_sub">IMMIGRATION, COMMUNITY &amp; LEGAL SERVICES • ARCHIVO 3D</p>
         </div>
 
         <button type="button" class="nav-arrow-btn nav-arrow-btn--prev" id="btn-prev" aria-label="Hito anterior">
@@ -669,7 +773,7 @@
           <!-- Izquierda: Galería Polaroid -->
           <aside class="floating-panel polaroid-gallery" id="panel-polaroids">
             <div class="polaroid-gallery__label">
-              ARCHIVO FOTOGRÁFICO • <span id="polaroid-year-badge">1981</span>
+              <span data-i18n="hist_polaroid_lbl">ARCHIVO FOTOGRÁFICO</span> • <span id="polaroid-year-badge">1981</span>
             </div>
             <div class="polaroid-stack" id="polaroid-stack"></div>
           </aside>
@@ -678,7 +782,7 @@
 
           <!-- Derecha: Portapapeles Legal -->
           <article class="floating-panel legal-clipboard" id="panel-clipboard">
-            <div class="legal-clipboard__clip">EL RESCATE • LEGAL DOCKET</div>
+            <div class="legal-clipboard__clip" data-i18n="hist_clip_top">EL RESCATE • LEGAL DOCKET</div>
             <div class="legal-clipboard__sheet">
               <div class="legal-clipboard__header">
                 <span id="clip-docket" style="font-weight:700; color:var(--blue-700);">EXP. #ER-1981-001</span>
@@ -705,6 +809,228 @@
       </div>
     </section>
 
+    <!-- SHAPE DIVIDER 06: Olas suaves desde Historia 3D (#F7F6F2) hacia Donaciones (#09192C) -->
+    <div class="wave-divider wave-divider--to-donations" aria-hidden="true">
+      <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
+        <path class="wave-layer-back" d="M0,36 C290,102 630,-6 970,48 C1190,84 1330,22 1440,40 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-mid" d="M0,60 C350,14 690,106 1050,48 C1240,18 1360,58 1440,68 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-front" d="M0,76 C310,114 670,26 1030,78 C1230,104 1350,64 1440,80 L1440,110 L0,110 Z"></path>
+      </svg>
+    </div>
+
+    <!-- ======================================================================
+         7.5. SECCIÓN DE DONACIONES ONG ("Referencia Donaciones" Adaptada)
+              - Opciones superiores por Campaña Activa o para la Organización General
+              - Subrayado curvo dibujado a mano + Flecha curva ámbar + Cortina deslizante
+              - Al pulsar "Donar ahora" redirige a la vista dedicada #donation-checkout-view
+         ====================================================================== -->
+    <section class="donations-section" id="donaciones">
+      <!-- Atmósfera fotográfica documental con viñeta azul profundo -->
+      <div class="donations-backdrop" aria-hidden="true">
+        <img
+          src="assets/provisional-documentary-la-placita.jpg"
+          alt="Acompañamiento comunitario de El Rescate en Los Ángeles"
+          class="donations-backdrop__img"
+          id="donation-bg-preview-img"
+        />
+        <div class="donations-backdrop__overlay"></div>
+      </div>
+
+      <div class="donations-inner">
+        <!-- COLUMNA IZQUIERDA: Narrativa Emotiva + Subrayado Curvo Ámbar + Resumen Dinámico de Campaña -->
+        <div class="donations-editorial">
+          <div class="section-eyebrow" data-i18n="don_eyebrow">SOLIDARIDAD EN ACCIÓN • ONG 501(c)(3) DESDE 1981</div>
+
+          <h2 class="donations-headline">
+            <span data-i18n="don_h2_pre">Tu aporte construye un</span>
+            <span class="donations-headline__highlight">
+              <span data-i18n="don_h2_hi">refugio seguro</span>
+              <!-- Trazo curvo estilo pincel / mano alzada de Referencia_Donaciones.mp4 -->
+              <svg class="donations-underline-svg" viewBox="0 0 320 26" fill="none" aria-hidden="true">
+                <path
+                  d="M4 19.5C78 6.5 196 3.5 315 16.5"
+                  stroke="#E8A04A"
+                  stroke-width="4.5"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M36 22.5C118 13.5 224 12.5 292 20.5"
+                  stroke="#F4B668"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  opacity="0.75"
+                />
+              </svg>
+            </span>
+            <span data-i18n="don_h2_post">para miles de familias.</span>
+          </h2>
+
+          <p class="donations-lead" id="donation-live-lead" data-i18n="don_lead">
+            Cada contribución sostiene directamente nuestras brigadas de defensa jurídica, clínicas gratuitas de miércoles y sábados y el acompañamiento humano a familias inmigrantes en Los Ángeles.
+          </p>
+
+          <!-- Tarjeta de Contexto en Vivo de la Campaña Seleccionada -->
+          <div class="donation-campaign-spotlight" id="donation-campaign-spotlight">
+            <div class="donation-campaign-spotlight__top">
+              <span class="donation-campaign-spotlight__badge" id="spotlight-badge">FONDO INSTITUCIONAL GENERAL</span>
+              <span class="donation-campaign-spotlight__code" id="spotlight-code">CAMPAÑA #ER-ORG</span>
+            </div>
+            <h3 class="donation-campaign-spotlight__title" id="spotlight-title">
+              Organización General — El Rescate Los Ángeles
+            </h3>
+            <p class="donation-campaign-spotlight__desc" id="spotlight-desc">
+              Fortalece todas las áreas operativas de El Rescate: defensa legal de emergencia, clínicas semanales en Westlake y programas de integración comunitaria.
+            </p>
+
+            <div class="donation-goal-bar-wrap">
+              <div class="donation-goal-bar__labels">
+                <span id="spotlight-raised">Recaudado: $84,500 USD</span>
+                <span id="spotlight-goal">Meta: $100,000 USD (85%)</span>
+              </div>
+              <div class="donation-goal-bar__track">
+                <div class="donation-goal-bar__fill" id="spotlight-bar-fill" style="width: 85%;"></div>
+              </div>
+            </div>
+
+            <div class="donation-spotlight-metrics">
+              <div class="donation-spotlight-metric">
+                <span class="donation-spotlight-metric__val" id="spotlight-stat1-val">100%</span>
+                <span class="donation-spotlight-metric__lbl" id="spotlight-stat1-lbl">Deducible de impuestos (501c3)</span>
+              </div>
+              <div class="donation-spotlight-metric">
+                <span class="donation-spotlight-metric__val" id="spotlight-stat2-val">+1,200</span>
+                <span class="donation-spotlight-metric__lbl" id="spotlight-stat2-lbl">Consultas gratuitas al año</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: Widget Interactivo de Donación (Efectos de Referencia_Donaciones.mp4) -->
+        <div class="donation-widget-card">
+          <div class="donation-widget__top-label">
+            <span data-i18n="don_wid_top">DESTINO DE TU APORTE SOLIDARIO</span>
+            <span class="donation-widget__live-indicator" data-i18n="don_wid_badge">● CAMPAÑAS HABILITADAS</span>
+          </div>
+
+          <!-- En lugar de "One-Time / Monthly", selector superior de Campañas Habilitadas o la Organización General -->
+          <div class="donation-campaign-tabs" id="donation-campaign-tabs" role="tablist" aria-label="Seleccionar campaña o fondo de la organización">
+            <button type="button" class="donation-campaign-tab is-active" data-campaign="organizacion" role="tab" aria-selected="true">
+              <span class="donation-campaign-tab__check">✓</span>
+              <span class="donation-campaign-tab__txt" data-i18n="camp_tab_org">Organización General</span>
+            </button>
+            <button type="button" class="donation-campaign-tab" data-campaign="asilo" role="tab" aria-selected="false">
+              <span class="donation-campaign-tab__check">✓</span>
+              <span class="donation-campaign-tab__txt" data-i18n="camp_tab_asilo">Defensa Legal y Asilo</span>
+            </button>
+            <button type="button" class="donation-campaign-tab" data-campaign="clinicas" role="tab" aria-selected="false">
+              <span class="donation-campaign-tab__check">✓</span>
+              <span class="donation-campaign-tab__txt" data-i18n="camp_tab_clinicas">Clínicas Comunitarias</span>
+            </button>
+            <button type="button" class="donation-campaign-tab" data-campaign="daca" role="tab" aria-selected="false">
+              <span class="donation-campaign-tab__check">✓</span>
+              <span class="donation-campaign-tab__txt" data-i18n="camp_tab_daca">Futuro Joven &amp; DACA</span>
+            </button>
+          </div>
+
+          <!-- Nota manuscrita + Flecha curva hacia arriba (Efecto característico de Referencia_Donaciones.mp4) -->
+          <div class="donation-handwritten-callout">
+            <span class="donation-handwritten-callout__text" id="donation-callout-text">
+              Elige una causa específica o apoya a toda la organización en general
+            </span>
+            <svg class="donation-curved-arrow" viewBox="0 0 68 46" fill="none" aria-hidden="true">
+              <path
+                d="M6 38 C28 40, 48 28, 52 7"
+                stroke="#E8A04A"
+                stroke-width="2.6"
+                stroke-linecap="round"
+              />
+              <path
+                d="M44 13 L52 5 L59 15"
+                stroke="#E8A04A"
+                stroke-width="2.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+
+          <!-- Cuadrícula de Montos con efecto de Cortina Deslizante (::before scaleX) -->
+          <div class="donation-amounts-label" data-i18n="don_amt_label">Selecciona el monto de tu donación (USD)</div>
+          <div class="donation-amounts-grid" id="donation-amounts-grid">
+            <button type="button" class="donation-amount-btn" data-amount="35">
+              <span class="donation-amount-btn__check">✓</span>
+              <span class="donation-amount-btn__label">$35</span>
+            </button>
+            <button type="button" class="donation-amount-btn is-selected" data-amount="75">
+              <span class="donation-amount-btn__check">✓</span>
+              <span class="donation-amount-btn__label">$75</span>
+            </button>
+            <button type="button" class="donation-amount-btn" data-amount="150">
+              <span class="donation-amount-btn__check">✓</span>
+              <span class="donation-amount-btn__label">$150</span>
+            </button>
+            <button type="button" class="donation-amount-btn" data-amount="250">
+              <span class="donation-amount-btn__check">✓</span>
+              <span class="donation-amount-btn__label">$250</span>
+            </button>
+            <button type="button" class="donation-amount-btn" data-amount="500">
+              <span class="donation-amount-btn__check">✓</span>
+              <span class="donation-amount-btn__label">$500</span>
+            </button>
+            <button type="button" class="donation-amount-btn" data-amount="1000">
+              <span class="donation-amount-btn__check">✓</span>
+              <span class="donation-amount-btn__label">$1,000</span>
+            </button>
+          </div>
+
+          <!-- Equivalencia de impacto del monto elegido -->
+          <div class="donation-impact-pill" id="donation-impact-equivalence">
+            ✨ Con <strong>$75 USD</strong> cubres la apertura de expediente y orientación jurídica inicial de una familia.
+          </div>
+
+          <!-- Input de monto personalizado ($) -->
+          <div class="donation-custom-input-wrap">
+            <span class="donation-custom-input__prefix">$</span>
+            <input
+              type="number"
+              id="donation-custom-amount"
+              class="donation-custom-input"
+              value="75"
+              min="5"
+              step="5"
+              aria-label="Monto personalizado en dólares"
+              placeholder="Otra cantidad"
+              data-i18n-placeholder="don_other_amt"
+            />
+            <span class="donation-custom-input__suffix">USD</span>
+          </div>
+
+          <!-- Botón principal "DONAR AHORA" con cortina deslizante que abre la Nueva Vista de Donación -->
+          <button type="button" class="btn-donate-now" id="btn-donate-now">
+            <span class="btn-donate-now__text" id="btn-donate-now-label">DONAR AHORA • $75 USD</span>
+            <span class="btn-donate-now__arrow">→</span>
+          </button>
+
+          <div class="donation-secure-footer">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span data-i18n="don_ssl_note">Pasarela Segura SSL • Organización 501(c)(3) Deducible de Impuestos</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHAPE DIVIDER 07: Olas suaves desde Donaciones (#09192C) hacia Clínica Legal (#F4F8FC) -->
+    <div class="wave-divider wave-divider--from-donations-to-clinic" aria-hidden="true">
+      <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
+        <path class="wave-layer-back" d="M0,34 C330,102 670,4 1010,62 C1220,96 1350,34 1440,48 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-mid" d="M0,58 C290,12 650,106 1000,46 C1220,10 1350,66 1440,60 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-front" d="M0,78 C360,28 720,112 1080,68 C1260,46 1370,84 1440,76 L1440,110 L0,110 Z"></path>
+      </svg>
+    </div>
+
     <!-- ======================================================================
          8. DISPONIBILIDAD DE LA CLÍNICA + TUS DATOS (Imagen 1 Exacta + Funcional)
          ====================================================================== -->
@@ -713,10 +1039,10 @@
         <div class="clinic-header">
           <div class="hero-kicker" style="justify-content:center;">
             <span class="hero-kicker__line"></span>
-            <span>ORIENTACIÓN LEGAL PRESENCIAL Y CONFIDENCIAL</span>
+            <span data-i18n="clinic_kicker">ORIENTACIÓN LEGAL PRESENCIAL Y CONFIDENCIAL</span>
           </div>
-          <h2 class="section-title" style="margin-bottom: 12px;">Agenda tu charla en la clínica</h2>
-          <p style="font-size: 17px; color: var(--text-body);">
+          <h2 class="section-title" style="margin-bottom: 12px;" data-i18n="clinic_title">Agenda tu charla en la clínica</h2>
+          <p style="font-size: 17px; color: var(--text-body);" data-i18n="clinic_sub">
             Selecciona uno de los días marcados en azul (miércoles o sábados), elige tu horario y confirmaremos tu cita.
           </p>
         </div>
@@ -726,21 +1052,21 @@
           <div class="clinic-card">
             <h3 class="clinic-card__title">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#173B63" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              <span>Disponibilidad de la clínica</span>
+              <span data-i18n="clinic_avail_title">Disponibilidad de la clínica</span>
             </h3>
 
             <div class="clinic-schedule-badges">
               <div class="schedule-badge">
                 <svg class="schedule-badge__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 <div>
-                  <div class="schedule-badge__day">Miércoles</div>
+                  <div class="schedule-badge__day" data-i18n="clinic_wed">Miércoles</div>
                   <div class="schedule-badge__hours">2:00 PM – 5:00 PM</div>
                 </div>
               </div>
               <div class="schedule-badge">
                 <svg class="schedule-badge__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 <div>
-                  <div class="schedule-badge__day">Sábados</div>
+                  <div class="schedule-badge__day" data-i18n="clinic_sat">Sábados</div>
                   <div class="schedule-badge__hours">10:00 AM – 1:00 PM</div>
                 </div>
               </div>
@@ -757,7 +1083,7 @@
             </div>
 
             <div class="calendar-weekdays">
-              <span>DOM</span><span>LUN</span><span>MAR</span><span>MIÉ</span><span>JUE</span><span>VIE</span><span>SÁB</span>
+              <span data-i18n="wd_sun">DOM</span><span data-i18n="wd_mon">LUN</span><span data-i18n="wd_tue">MAR</span><span data-i18n="wd_wed">MIÉ</span><span data-i18n="wd_thu">JUE</span><span data-i18n="wd_fri">VIE</span><span data-i18n="wd_sat">SÁB</span>
             </div>
 
             <div class="calendar-days-grid" id="calendar-days-grid">
@@ -766,7 +1092,7 @@
 
             <div class="calendar-legend">
               <span class="calendar-legend__swatch"></span>
-              <span>Días con charla</span>
+              <span data-i18n="clinic_legend">Días con charla</span>
             </div>
 
             <div class="timeslot-heading" id="timeslot-heading">
@@ -780,45 +1106,45 @@
 
           <!-- TARJETA DERECHA: Tus datos -->
           <div class="clinic-card">
-            <h3 class="clinic-card__title">Tus datos</h3>
+            <h3 class="clinic-card__title" data-i18n="clinic_form_title">Tus datos</h3>
 
             <div class="selection-banner" id="selection-banner">
-              <strong>Tu elección:</strong> <span id="selection-summary-text">Sábado, 21 De Noviembre, 11:00 AM – 12:00 PM</span>
+              <strong data-i18n="clinic_your_choice">Tu elección:</strong> <span id="selection-summary-text">Sábado, 21 De Noviembre, 11:00 AM – 12:00 PM</span>
             </div>
 
             <form id="clinic-booking-form" novalidate>
               <div class="form-field">
-                <label for="input-name">Nombre completo</label>
-                <input type="text" id="input-name" class="form-input" placeholder="Ej. María Elena Morales" required />
+                <label for="input-name" data-i18n="lbl_fullname">Nombre completo</label>
+                <input type="text" id="input-name" class="form-input" placeholder="Ej. María Elena Morales" data-i18n-placeholder="ph_fullname" required />
               </div>
 
               <div class="form-field">
-                <label for="input-phone">Teléfono</label>
+                <label for="input-phone" data-i18n="lbl_phone">Teléfono</label>
                 <input type="tel" id="input-phone" class="form-input" placeholder="(555) 123-4567" required />
               </div>
 
               <div class="form-field">
-                <label for="input-email">Correo electrónico</label>
-                <input type="email" id="input-email" class="form-input" placeholder="correo@ejemplo.com" />
+                <label for="input-email" data-i18n="lbl_email">Correo electrónico</label>
+                <input type="email" id="input-email" class="form-input" placeholder="correo@ejemplo.com" data-i18n-placeholder="ph_email" />
               </div>
 
               <div class="form-field">
-                <label for="input-case-type">Tipo de caso</label>
+                <label for="input-case-type" data-i18n="lbl_case_type">Tipo de caso</label>
                 <select id="input-case-type" class="form-select" required>
-                  <option value="">Selecciona una opción</option>
-                  <option value="Asilo / Refugio Humanitario">Asilo / Refugio Humanitario</option>
-                  <option value="TPS / Ley NACARA">TPS / Ley NACARA</option>
-                  <option value="Renovación o Consulta DACA">Renovación o Consulta DACA</option>
-                  <option value="Petición Familiar / Residencia">Petición Familiar / Residencia</option>
-                  <option value="Ciudadanía y Naturalización">Ciudadanía y Naturalización</option>
-                  <option value="Visa U / Protección VAWA">Visa U / Protección VAWA</option>
-                  <option value="Orientación General en Clínica">Orientación General en Clínica</option>
+                  <option value="" data-i18n="opt_select">Selecciona una opción</option>
+                  <option value="Asilo / Refugio Humanitario" data-i18n="opt_asilo">Asilo / Refugio Humanitario</option>
+                  <option value="TPS / Ley NACARA" data-i18n="opt_tps">TPS / Ley NACARA</option>
+                  <option value="Renovación o Consulta DACA" data-i18n="opt_daca">Renovación o Consulta DACA</option>
+                  <option value="Petición Familiar / Residencia" data-i18n="opt_family">Petición Familiar / Residencia</option>
+                  <option value="Ciudadanía y Naturalización" data-i18n="opt_cit">Ciudadanía y Naturalización</option>
+                  <option value="Visa U / Protección VAWA" data-i18n="opt_visau">Visa U / Protección VAWA</option>
+                  <option value="Orientación General en Clínica" data-i18n="opt_gen">Orientación General en Clínica</option>
                 </select>
               </div>
 
-              <button type="submit" class="btn-book-submit">Reservar mi charla</button>
+              <button type="submit" class="btn-book-submit" data-i18n="btn_book_submit">Reservar mi charla</button>
 
-              <p class="privacy-reassurance">
+              <p class="privacy-reassurance" data-i18n="clinic_privacy_note">
                 Usamos tus datos solo para confirmar tu charla. Nunca los compartimos con autoridades de inmigración.
               </p>
 
@@ -828,46 +1154,362 @@
         </div>
       </div>
     </section>
+
+    <!-- SHAPE DIVIDER 08: Olas suaves desde Clínica Legal (#EAF1F6) hacia Footer (#09192C) -->
+    <div class="wave-divider wave-divider--to-footer" aria-hidden="true">
+      <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
+        <path class="wave-layer-back" d="M0,38 C320,104 660,-8 1000,52 C1210,88 1340,26 1440,44 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-mid" d="M0,64 C350,16 700,106 1050,50 C1240,20 1360,60 1440,70 L1440,110 L0,110 Z"></path>
+        <path class="wave-layer-front" d="M0,80 C320,114 680,28 1040,78 C1240,104 1360,68 1440,84 L1440,110 L0,110 Z"></path>
+      </svg>
+    </div>
   </main>
 
   <!-- ========================================================================
-       9. BOTÓN FLOTANTE "💬 Evaluador" + MODAL ASISTENTE (Imagen 1)
+       8.5. NUEVA VISTA DEDICADA DE CHECKOUT DE DONACIÓN (#donation-checkout-view)
+            Se activa al hacer clic en "Donar ahora" y adapta toda la información
+            y el formulario a la campaña seleccionada o a la organización general.
        ======================================================================== -->
-  <button type="button" class="evaluador-fab" id="evaluador-fab" aria-label="Abrir Evaluador de Caso">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
-    </svg>
-    <span>Evaluador</span>
+  <section class="donation-checkout-view" id="donation-checkout-view" aria-hidden="true">
+    <div class="donation-checkout-topbar">
+      <div class="donation-checkout-topbar__inner">
+        <button type="button" class="btn-back-to-site" id="btn-back-to-site">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <span data-i18n="chk_back_btn">Volver al sitio principal de El Rescate</span>
+        </button>
+
+        <div class="donation-checkout-topbar__brand">
+          <img src="assets/logo-el-rescate-oficial.png" alt="El Rescate" />
+          <span data-i18n="chk_portal_tag">PORTAL OFICIAL DE DONACIONES • 501(c)(3)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="donation-checkout-container">
+      <div class="donation-checkout-grid">
+        <!-- COLUMNA IZQUIERDA: Información Completa de la Campaña Seleccionada o la Organización -->
+        <aside class="checkout-campaign-dossier">
+          <div class="checkout-dossier__media">
+            <img
+              src="assets/provisional-documentary-la-placita.jpg"
+              alt="Campaña seleccionada de El Rescate"
+              id="checkout-campaign-img"
+            />
+            <div class="checkout-dossier__media-overlay">
+              <span class="checkout-dossier__badge" id="checkout-campaign-badge">FONDO INSTITUCIONAL GENERAL</span>
+              <span class="checkout-dossier__code" id="checkout-campaign-code">EXP. SOLIDARIO #ER-ORG-2026</span>
+            </div>
+          </div>
+
+          <div class="checkout-dossier__body">
+            <div class="checkout-dossier__kicker" data-i18n="chk_selected_kicker">CAMPAÑA SELECCIONADA PARA TU APORTE</div>
+            <h1 class="checkout-dossier__title" id="checkout-campaign-title">
+              Organización General — El Rescate Los Ángeles
+            </h1>
+            <p class="checkout-dossier__desc" id="checkout-campaign-desc">
+              Tu donación respalda de manera integral todas las áreas de impacto de El Rescate desde 1981: representación jurídica humanitaria, clínicas comunitarias semanales en Westlake y programas de integración familiar en el sur de California.
+            </p>
+
+            <!-- Selector rápido por si el usuario desea cambiar de campaña dentro de la vista -->
+            <div class="checkout-campaign-switcher-box">
+              <div class="checkout-campaign-switcher__label" data-i18n="chk_switch_lbl">¿Deseas cambiar la campaña destino?</div>
+              <div class="checkout-campaign-pills" id="checkout-campaign-pills">
+                <button type="button" class="checkout-campaign-pill is-active" data-campaign="organizacion" data-i18n="camp_tab_org">Organización General</button>
+                <button type="button" class="checkout-campaign-pill" data-campaign="asilo" data-i18n="camp_tab_asilo">Defensa Legal y Asilo</button>
+                <button type="button" class="checkout-campaign-pill" data-campaign="clinicas" data-i18n="camp_tab_clinicas">Clínicas Comunitarias</button>
+                <button type="button" class="checkout-campaign-pill" data-campaign="daca" data-i18n="camp_tab_daca">Futuro Joven &amp; DACA</button>
+              </div>
+            </div>
+
+            <!-- Desglose transparente de fondos de la campaña -->
+            <div class="checkout-allocation-box">
+              <div class="checkout-allocation__title" data-i18n="chk_alloc_title">Transparencia y destino de fondos en esta campaña</div>
+              <div class="checkout-allocation-list" id="checkout-allocation-list">
+                <!-- Barras de distribución renderizadas dinámicamente según la campaña -->
+              </div>
+            </div>
+
+            <!-- Entregables / Logros concretos de la campaña -->
+            <div class="checkout-deliverables-box">
+              <div class="checkout-deliverables__title" data-i18n="chk_deliv_title">Lo que tu donación hace posible hoy:</div>
+              <ul class="checkout-deliverables-list" id="checkout-deliverables-list">
+                <!-- Puntos de impacto específicos de la campaña -->
+              </ul>
+            </div>
+
+            <!-- Sello institucional ONG -->
+            <div class="checkout-ngo-trust-card">
+              <div>
+                <div class="checkout-ngo-trust__title" data-i18n="chk_ngo_title">El Rescate • Organización sin Fines de Lucro 501(c)(3)</div>
+                <div class="checkout-ngo-trust__sub">1501 W. 8th Street, Los Angeles, CA 90017 • Tax ID (EIN): 95-3759142</div>
+              </div>
+              <span class="checkout-ngo-trust__seal" data-i18n="chk_ngo_seal">100% DEDUCIBLE</span>
+            </div>
+          </div>
+        </aside>
+
+        <!-- COLUMNA DERECHA: Formulario Completo para Realizar la Donación -->
+        <div class="checkout-form-card">
+          <div class="checkout-summary-banner">
+            <div>
+              <div class="checkout-summary-banner__eyebrow" data-i18n="chk_sum_eyebrow">RESUMEN DE TU DONACIÓN</div>
+              <div class="checkout-summary-banner__campaign" id="checkout-summary-campaign-name">
+                Destino: Organización General — El Rescate
+              </div>
+            </div>
+            <div class="checkout-summary-banner__amount" id="checkout-summary-amount">$75 USD</div>
+          </div>
+
+          <form id="donation-checkout-form" novalidate>
+            <!-- 1. Ajuste rápido de monto y frecuencia -->
+            <div class="checkout-form-section">
+              <div class="checkout-form-section__title" data-i18n="chk_sec1_title">1. Confirma el monto y frecuencia de tu aporte</div>
+              <div class="checkout-quick-amounts" id="checkout-quick-amounts">
+                <button type="button" class="checkout-amt-chip" data-amount="35">$35</button>
+                <button type="button" class="checkout-amt-chip is-selected" data-amount="75">$75</button>
+                <button type="button" class="checkout-amt-chip" data-amount="150">$150</button>
+                <button type="button" class="checkout-amt-chip" data-amount="250">$250</button>
+                <button type="button" class="checkout-amt-chip" data-amount="500">$500</button>
+                <div class="checkout-custom-amt-inline">
+                  <span>$</span>
+                  <input type="number" id="checkout-amount-input" value="75" min="5" aria-label="Monto en USD" />
+                  <span>USD</span>
+                </div>
+              </div>
+
+              <div class="checkout-frequency-row" role="group" aria-label="Frecuencia de donación">
+                <button type="button" class="checkout-freq-btn is-active" data-freq="once" data-i18n="chk_freq_once">
+                  ✓ Aporte Único Solidario
+                </button>
+                <button type="button" class="checkout-freq-btn" data-freq="monthly" data-i18n="chk_freq_monthly">
+                  ↻ Aporte Mensual Continuo (Protector Comunitario)
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. Información del Donante -->
+            <div class="checkout-form-section">
+              <div class="checkout-form-section__title" data-i18n="chk_sec2_title">2. Datos del donante (para recibo fiscal 501c3)</div>
+              <div class="checkout-fields-grid">
+                <div class="form-field">
+                  <label for="donor-first-name" data-i18n="chk_lbl_fname">Nombre(s) *</label>
+                  <input type="text" id="donor-first-name" class="form-input" placeholder="Ej. Carlos Alberto" data-i18n-placeholder="chk_ph_fname" required />
+                </div>
+                <div class="form-field">
+                  <label for="donor-last-name" data-i18n="chk_lbl_lname">Apellidos *</label>
+                  <input type="text" id="donor-last-name" class="form-input" placeholder="Ej. Mendoza Ríos" data-i18n-placeholder="chk_ph_lname" required />
+                </div>
+              </div>
+
+              <div class="checkout-fields-grid">
+                <div class="form-field">
+                  <label for="donor-email" data-i18n="chk_lbl_email">Correo electrónico *</label>
+                  <input type="email" id="donor-email" class="form-input" placeholder="carlos.mendoza@ejemplo.org" required />
+                </div>
+                <div class="form-field">
+                  <label for="donor-phone" data-i18n="chk_lbl_phone">Teléfono de contacto</label>
+                  <input type="tel" id="donor-phone" class="form-input" placeholder="(213) 555-0192" />
+                </div>
+              </div>
+
+              <div class="checkout-fields-grid">
+                <div class="form-field">
+                  <label for="donor-city" data-i18n="chk_lbl_city">Ciudad / Estado</label>
+                  <input type="text" id="donor-city" class="form-input" placeholder="Los Ángeles, CA" />
+                </div>
+                <div class="form-field">
+                  <label for="donor-zip" data-i18n="chk_lbl_zip">Código Postal</label>
+                  <input type="text" id="donor-zip" class="form-input" placeholder="90017" />
+                </div>
+              </div>
+
+              <div class="form-field" style="margin-bottom:0;">
+                <label for="donor-message" data-i18n="chk_lbl_msg">Dedicatoria o nota para la campaña (Opcional)</label>
+                <input
+                  type="text"
+                  id="donor-message"
+                  class="form-input"
+                  placeholder="Ej. En honor a las familias trabajadoras de nuestra comunidad en L.A."
+                  data-i18n-placeholder="chk_ph_msg"
+                />
+              </div>
+            </div>
+
+            <!-- 3. Método de Pago -->
+            <div class="checkout-form-section">
+              <div class="checkout-form-section__title" data-i18n="chk_sec3_title">3. Método de pago seguro</div>
+              <div class="checkout-payment-tabs" id="checkout-payment-tabs" role="tablist">
+                <button type="button" class="checkout-pay-tab is-active" data-pay="card" data-i18n="chk_pay_card">
+                  💳 Tarjeta de Crédito / Débito
+                </button>
+                <button type="button" class="checkout-pay-tab" data-pay="ach" data-i18n="chk_pay_ach">
+                  🏦 Transferencia ACH / Zelle
+                </button>
+                <button type="button" class="checkout-pay-tab" data-pay="paypal" data-i18n="chk_pay_paypal">
+                  🛡️ PayPal Solidario
+                </button>
+              </div>
+
+              <!-- Panel A: Tarjeta -->
+              <div class="checkout-pay-panel is-visible" id="pay-panel-card">
+                <div class="form-field">
+                  <label for="card-holder" data-i18n="chk_lbl_cholder">Nombre en la tarjeta</label>
+                  <input type="text" id="card-holder" class="form-input" placeholder="CARLOS A MENDOZA" />
+                </div>
+                <div class="form-field">
+                  <label for="card-number" data-i18n="chk_lbl_cnum">Número de tarjeta</label>
+                  <input type="text" id="card-number" class="form-input" placeholder="4532 •••• •••• 8891" maxlength="19" />
+                </div>
+                <div class="checkout-fields-grid">
+                  <div class="form-field" style="margin-bottom:0;">
+                    <label for="card-exp" data-i18n="chk_lbl_cexp">Vencimiento (MM/AA)</label>
+                    <input type="text" id="card-exp" class="form-input" placeholder="08/29" maxlength="5" />
+                  </div>
+                  <div class="form-field" style="margin-bottom:0;">
+                    <label for="card-cvv" data-i18n="chk_lbl_ccvv">Código CVV</label>
+                    <input type="text" id="card-cvv" class="form-input" placeholder="394" maxlength="4" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel B: ACH / Zelle -->
+              <div class="checkout-pay-panel" id="pay-panel-ach">
+                <div class="checkout-alt-pay-box">
+                  <div class="checkout-alt-pay__title" data-i18n="chk_ach_title">Transferencia Institucional Directa (Sin comisiones de red)</div>
+                  <p data-i18n="chk_ach_desc">Puedes realizar tu aporte mediante transferencia bancaria ACH o Zelle oficial a nombre de El Rescate (501c3):</p>
+                  <div class="checkout-alt-pay__meta">
+                    <span><strong>Zelle:</strong> donaciones@elrescate.org</span>
+                    <span><strong data-i18n="chk_ach_ref">Referencia automática:</strong> <em id="ach-reference-code">ER-DON-2026</em></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel C: PayPal -->
+              <div class="checkout-pay-panel" id="pay-panel-paypal">
+                <div class="checkout-alt-pay-box">
+                  <div class="checkout-alt-pay__title" data-i18n="chk_pp_title">PayPal Giving Fund &amp; Billetera Digital</div>
+                  <p data-i18n="chk_pp_desc">Al confirmar tu donación se vinculará directamente con la cuenta institucional verificada de El Rescate Los Ángeles con emisión inmediata de comprobante fiscal.</p>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-complete-donation" id="btn-complete-donation">
+              <span id="btn-complete-donation-text">Completar Donación de $75 USD a Organización General</span>
+              <span>→</span>
+            </button>
+
+            <p class="privacy-reassurance" style="text-align:center; margin-top:12px;" data-i18n="chk_sec_footer">
+              🔒 Transacción protegida con cifrado de 256 bits. El Rescate emite certificado fiscal deducible 501(c)(3) al instante.
+            </p>
+
+            <!-- Certificado / Recibo visual al completar la donación -->
+            <div class="donation-receipt-box" id="donation-receipt-box" role="status"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       9. ASISTENTE VIRTUAL CON SIMULACIÓN DE CONVERSACIÓN INTERACTIVA
+          (Ajuste #5 — Referencia_asistente_virtual.mp4 + Icono Silueta de Mujer)
+       ======================================================================== -->
+  <button
+    type="button"
+    class="asistente-virtual-fab"
+    id="evaluador-fab"
+    aria-label="Abrir Asistente de El Rescate"
+  >
+    <span class="asistente-virtual-fab__pulse" aria-hidden="true"></span>
+    <span class="asistente-virtual-fab__avatar" aria-hidden="true">
+      <!-- Silueta artística de una mujer -->
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="29" stroke="rgba(244, 182, 104, 0.45)" stroke-width="1.5" />
+        <path
+          d="M17 35C16.2 22.8 22.8 14 32.5 14C42 14 47.8 21.5 47.2 33.5C46.9 39.2 49.2 43.2 51 45.5C46.5 45.8 43.4 43.4 42.2 39.5C41.2 36.2 42 30.2 40.5 26.2C38.6 21.5 35.5 20.5 32 20.5C28.2 20.5 25 23 23.8 28.2C22.6 33.4 23.2 39.6 21.2 43.8C19.6 44.2 17.5 40.5 17 35Z"
+          fill="#FAD49B"
+        />
+        <path
+          d="M32 19.5C36.7 19.5 40.2 23.3 40.2 28.2C40.2 32.9 37 36.8 32 36.8C27.1 36.8 23.8 32.9 23.8 28.2C23.8 23.3 27.3 19.5 32 19.5Z"
+          fill="#FFFFFF"
+        />
+        <path
+          d="M14.5 53.5C15.8 45.4 22.4 40.8 32 40.8C41.6 40.8 48.2 45.4 49.5 53.5C44.5 56.6 38.5 58 32 58C25.5 58 19.5 56.6 14.5 53.5Z"
+          fill="#FFFFFF"
+        />
+        <path d="M27.5 41.2L32 47.5L36.5 41.2" stroke="#173B63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+    <span class="asistente-virtual-fab__status-dot" aria-hidden="true"></span>
+    <span class="asistente-virtual-fab__tooltip" data-i18n="fab_tooltip">Asistente Virtual</span>
   </button>
 
   <div class="evaluador-modal-backdrop" id="evaluador-modal" role="dialog" aria-modal="true" aria-labelledby="evaluador-title">
-    <div class="evaluador-drawer">
+    <div class="evaluador-drawer asistente-virtual-drawer">
       <div class="evaluador-drawer__head">
-        <div>
-          <div style="font-family:var(--font-mono); font-size:10.5px; color:var(--amber-400);">ORIENTACIÓN RÁPIDA Y CONFIDENCIAL</div>
-          <div id="evaluador-title" style="font-family:var(--font-display); font-size:17px; font-weight:800;">Evaluador de Consulta — El Rescate</div>
+        <div class="asistente-head-profile">
+          <div class="asistente-head-avatar" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none">
+              <path d="M17 35C16.2 22.8 22.8 14 32.5 14C42 14 47.8 21.5 47.2 33.5C46.9 39.2 49.2 43.2 51 45.5C46.5 45.8 43.4 43.4 42.2 39.5C41.2 36.2 42 30.2 40.5 26.2C38.6 21.5 35.5 20.5 32 20.5C28.2 20.5 25 23 23.8 28.2C22.6 33.4 23.2 39.6 21.2 43.8C19.6 44.2 17.5 40.5 17 35Z" fill="#FAD49B"/>
+              <path d="M32 19.5C36.7 19.5 40.2 23.3 40.2 28.2C40.2 32.9 37 36.8 32 36.8C27.1 36.8 23.8 32.9 23.8 28.2C23.8 23.3 27.3 19.5 32 19.5Z" fill="#FFFFFF"/>
+              <path d="M14.5 53.5C15.8 45.4 22.4 40.8 32 40.8C41.6 40.8 48.2 45.4 49.5 53.5C44.5 56.6 38.5 58 32 58C25.5 58 19.5 56.6 14.5 53.5Z" fill="#FFFFFF"/>
+            </svg>
+          </div>
+          <div>
+            <div class="asistente-head-kicker" data-i18n="bot_head_kicker">● EN LÍNEA • PRE-EVALUACIÓN INTERACTIVA</div>
+            <div id="evaluador-title" class="asistente-head-title" data-i18n="bot_head_title">Asistente de El Rescate</div>
+          </div>
         </div>
-        <button type="button" id="evaluador-close" style="background:none; border:none; color:#fff; font-size:22px; cursor:pointer;">×</button>
+        <button type="button" id="evaluador-close" class="asistente-close-btn" aria-label="Cerrar Asistente Virtual">×</button>
       </div>
-      <div class="evaluador-drawer__body">
-        <p style="font-size:14px; color:var(--text-body); margin-bottom:16px;">
-          ¿Sobre qué tema necesitas orientación principal? Selecciona una opción y pre-configuraremos tu cita en la clínica:
-        </p>
-        <button type="button" class="eval-option-btn" data-case="Asilo / Refugio Humanitario">
-          🛡️ Protección de Asilo, Refugio o miedo de regresar
-        </button>
-        <button type="button" class="eval-option-btn" data-case="TPS / Ley NACARA">
-          📋 Renovación de TPS, permiso de trabajo o NACARA
-        </button>
-        <button type="button" class="eval-option-btn" data-case="Renovación o Consulta DACA">
-          🎓 Jóvenes Dreamers / Renovación de DACA
-        </button>
-        <button type="button" class="eval-option-btn" data-case="Petición Familiar / Residencia">
-          👨‍👩‍👧 Petición de familiares o Residencia Permanente
-        </button>
-        <button type="button" class="eval-option-btn" data-case="Ciudadanía y Naturalización">
-          🗳️ Trámite de Ciudadanía y talleres de entrevista
-        </button>
+
+      <!-- Historial de mensajes simulados (scrollable con la rueda del ratón) -->
+      <div class="asistente-chat-log" id="asistente-chat-log" data-lenis-prevent aria-live="polite">
+        <!-- Burbujas del bot y del usuario generadas dinámicamente por prototype.js -->
+      </div>
+
+      <!-- Barra inferior de opciones de respuesta rápida (Referencia_asistente_virtual.mp4) -->
+      <div class="asistente-options-bar" id="asistente-options-bar">
+        <div class="asistente-options-bar__hint" id="asistente-options-hint" data-i18n="bot_opt_hint">
+          Selecciona un tema o respuesta para continuar la conversación:
+        </div>
+        <div class="asistente-options-pills" id="asistente-options-pills">
+          <!-- Botones de opciones dinámicos -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       9.5. MODAL LIGHTBOX DE EXPANSIÓN DE IMAGEN (Ajuste #2: Galería 3D e Historia 3D)
+       ======================================================================== -->
+  <div class="media-lightbox-backdrop" id="media-lightbox-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="lightbox-title">
+    <div class="media-lightbox-card" data-lenis-prevent>
+      <button type="button" class="media-lightbox__close" id="media-lightbox-close" aria-label="Cerrar vista ampliada">×</button>
+      <div class="media-lightbox__grid">
+        <div class="media-lightbox__img-wrap">
+          <img src="assets/provisional-documentary-la-placita.jpg" alt="Vista ampliada" id="lightbox-img" />
+          <span class="media-lightbox__tag" id="lightbox-badge">ARCHIVO DOCUMENTAL</span>
+        </div>
+        <div class="media-lightbox__info">
+          <div class="media-lightbox__meta-row">
+            <span class="media-lightbox__code" id="lightbox-code">EXP. #ER-1981</span>
+            <span class="media-lightbox__source" id="lightbox-source">ARCHIVO EL RESCATE • L.A.</span>
+          </div>
+          <h3 class="media-lightbox__title" id="lightbox-title">Título del registro fotográfico</h3>
+          <p class="media-lightbox__desc" id="lightbox-desc">
+            Descripción documental detallada del registro histórico o capa espacial seleccionada.
+          </p>
+          <div class="media-lightbox__stats" id="lightbox-stats"></div>
+          <div class="media-lightbox__actions">
+            <a href="#clinica-citas" class="btn-primary-editorial" id="lightbox-cta-clinic" data-i18n="lightbox_cta">
+              Solicitar orientación relacionada →
+            </a>
+            <button type="button" class="media-lightbox__secondary-btn" id="lightbox-btn-dismiss" data-i18n="lightbox_close_btn">
+              Cerrar vista ampliada
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -875,16 +1517,16 @@
   <!-- ========================================================================
        10. FOOTER INSTITUCIONAL
        ======================================================================== -->
-  <footer class="site-footer">
+  <footer class="site-footer" id="site-footer">
     <div class="site-footer__inner">
       <div style="display:flex; align-items:center; gap:16px;">
         <img src="assets/logo-el-rescate-oficial.png" alt="El Rescate" style="height:36px; background:#fff; padding:4px 8px; border-radius:6px;" />
         <div>
-          <div style="font-family:var(--font-display); font-weight:800; font-size:15px;">El Rescate — Los Ángeles, California</div>
-          <div style="font-size:13px; color:rgba(234,241,246,0.7);">1501 W. 8th Street, Los Angeles, CA 90017 • Desde 1981 junto a la comunidad inmigrante</div>
+          <div style="font-family:var(--font-display); font-weight:800; font-size:15px;" data-i18n="footer_title">El Rescate — Los Ángeles, California</div>
+          <div style="font-size:13px; color:rgba(234,241,246,0.7);" data-i18n="footer_sub">1501 W. 8th Street, Los Angeles, CA 90017 • Desde 1981 junto a la comunidad inmigrante</div>
         </div>
       </div>
-      <div style="font-family:var(--font-mono); font-size:12px; color:var(--amber-400);">
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--amber-400);" data-i18n="footer_badge">
         PROTOTIPO INTERACTIVO INTEGRAL • THREE.JS + GSAP + LENIS
       </div>
     </div>
